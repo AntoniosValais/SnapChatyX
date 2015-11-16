@@ -1,3 +1,6 @@
+/**
+ * pairnei tis  metavlhtes apo ta textbox kai kalei tis parakatw sunarthseis
+ */
 function signUp() {
 	var name = document.getElementById("name").value;
 	
@@ -13,16 +16,20 @@ function signUp() {
 	
 	var jSONRegistration = new UserToJSONRegistration(user);
 	
-	document.getElementById("test").innerHTML = jSONRegistration.registerToJSON();
+	var jSONtoJava = jSONRegistration.registerToJSON();
 }
 
 /**
- * Class UserToJSONRegistration
+ * pairnei ena user kai to metatrepei se JSON
  */
 var UserToJSONRegistration = function (user) {
     this.user = user;
 };
 
+/**
+ * pairnei ta dedomena kai dhmiourgei to JSON
+ * @returns
+ */
 UserToJSONRegistration.prototype.registerToJSON = function () {
     var firstName = this.user.getFirstName();
 
@@ -34,33 +41,34 @@ UserToJSONRegistration.prototype.registerToJSON = function () {
 
     var eMail = this.user.getEMail();
 
+    var ourJSON = JSON.stringify({
+        onoma: firstName,
+
+        epitheto: lastName,
+
+        username: userName,
+
+        pass: password,
+
+        email: eMail
+    });
+    
     var request = $.ajax({
         type: "POST",
 
         contentType: "text/plain",
 
-        url: "http://localhost:8080/SnapChaty/rest/signup",
+        url: "http://localhost:8080/SnapChatyX/signup",
 
         dataType: "text",
 
-        data: JSON.stringify({
-            onoma: firstName,
-
-            epitheto: lastName,
-
-            username: userName,
-
-            pass: password,
-
-            email: eMail
-        })
+        data: ourJSON
     })
-    
-    return request;
+    return ourJSON
 };
 
 /**
- * Class User
+ * pairnei ta stoixeia tou user
  */
 var User = function (firstName, lastName, userName, password, eMail) {
     this.firstName = firstName;
@@ -74,6 +82,10 @@ var User = function (firstName, lastName, userName, password, eMail) {
     this.eMail = eMail;
 };
 
+/**
+ * apo edw kai katw epistrefei ta stoixeia
+ * @returns
+ */
 User.prototype.getFirstName = function () {
     return this.firstName;
 };
