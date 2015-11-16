@@ -6,6 +6,13 @@
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js'></script>
 <script src="signup.js" type="text/javascript"></script>
 </head>
+
+<%@ import = "gr.teicm.toulou.SnapChatyX.MockSignUpResource" %>
+
+<%
+
+%>
+
 <body>
 <label>Name: </label><input id="name" type="text">
 <br>
