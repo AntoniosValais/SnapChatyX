@@ -1,16 +1,17 @@
 package gr.teicm.toulou.SnapChatyX.WebSocketServlet;
 
-import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
+
+import com.google.gson.Gson;
+
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageHandlers.InterfaceMessageHandler;
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageHandlers.MessageHandlerFactory;
 
 
 
@@ -22,49 +23,35 @@ import javax.ws.rs.core.Response.Status;
 @ServerEndpoint(value = "/createSession")
 public class WebSocketServlet
 {
-	private static Set< Session > connectedClients = new HashSet< Session >();
+	private static InterfaceDataAccessObject dataAccessObject = DataAccessMock.DAO;
+	private static MessageHandlerFactory messageHandlerFactory = new MessageHandlerFactory();
+	private static Gson jsonHandler = new Gson();
 
 	@OnOpen
 	public void onOpen( Session session )
 	{
-		System.out.println( session.getId() + " has opened a connection!" );
+		dataAccessObject.addSession( session );
 		
-		connectedClients.add( session );
-		session.getAsyncRemote().sendText( "Server says: Connection Established" );
+		session.getAsyncRemote().sendText( "bla bla json!" );
 	}
 
 	@OnMessage
 	public void onMessage( String message, Session session )
 	{
-		System.out.println( "Message from " + session.getId() + ": " + message );
-
-			for(Session client : connectedClients)
-			{
-				try
-				{
-					client.getBasicRemote().sendText( message );
-				}
-				catch(IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
+		ClientServerMessage receivedMessage = jsonHandler.fromJson( message, ClientServerMessage.class );
+		
+		InterfaceMessageHandler messageHandler = messageHandlerFactory.createHandler( receivedMessage );
+		
+		messageHandler.serve( session );
 	}
 
 	@OnClose
-	public Response onClose( Session session )
+	public void onClose( Session session )
 	{
-		if(connectedClients.remove( session ))
-		{
-			System.out.println( session.getId() + ": has closed the connection!\n"
-					+ connectedClients.size() + "Clients online" );
-			
-			return Response.ok().build();
-		}
-		else
-		{
-			return Response.status( Status.BAD_REQUEST ).build();
-		}
-
+		dataAccessObject.removeSession( session );
+		
+		System.out.println( session.getId() + " left the network!" );
+		
+		
 	}	
 }
