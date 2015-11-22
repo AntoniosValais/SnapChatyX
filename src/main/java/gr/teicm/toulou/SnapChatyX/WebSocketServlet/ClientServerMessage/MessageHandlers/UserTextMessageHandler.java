@@ -18,12 +18,17 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 {
 	private UserTextMessage userTextMessage;
 	private Gson jsonHandler;
+	private ClientServerMessage receivedMessage;
 	
 	public UserTextMessageHandler( ClientServerMessage receivedMessage )
 	{
+		this.receivedMessage = receivedMessage;
+		
 		jsonHandler = new Gson();
 		
 		userTextMessage = jsonHandler.fromJson( receivedMessage.getData(), UserTextMessage.class );
+	
+		//TODO: send userTextMessage to DAO
 	}
 
 	@Override
@@ -31,11 +36,13 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 	{
 		Boolean messageDelivered = Boolean.FALSE;
 		
+		String snapTextMessage = jsonHandler.toJson( receivedMessage );
+		
 		for(Session session : DataAccessMock.DAO.getAllSessions() )
 		{
 			try
 			{
-				session.getAsyncRemote().sendText( userTextMessage.getMessageText() );
+				session.getAsyncRemote().sendText( snapTextMessage );
 				
 				messageDelivered = Boolean.TRUE;
 			}

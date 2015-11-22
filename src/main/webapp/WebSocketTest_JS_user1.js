@@ -9,12 +9,12 @@ var webSocketUser1;
 
 function connectUser1()
 {
-	webSocketUser1 = new WebSocket("ws://localhost:8080/SnapChatyX/createSession")
+	webSocketUser1 = new WebSocket("ws://localhost:8080/SnapChatyX/createSession");
 	
 	webSocketUser1.onmessage = function( message)
 	{
-		document.getElementById("console").innerHTML += message.data + "<br/>"
-	}
+		document.getElementById("console").innerHTML += message.data + "<br/>";
+	};
 	
 	webSocketUser1.onopen = function( message )
 	{
@@ -23,7 +23,7 @@ function connectUser1()
 							 '}';
 	
 		webSocketUser1.send( connectJson );
-	}
+	};
 }
 
 

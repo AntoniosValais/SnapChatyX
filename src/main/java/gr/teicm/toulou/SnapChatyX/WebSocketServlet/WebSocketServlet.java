@@ -31,8 +31,6 @@ public class WebSocketServlet
 	public void onOpen( Session session )
 	{
 		dataAccessObject.addSession( session );
-		
-		session.getAsyncRemote().sendText( "bla bla json!" );
 	}
 
 	@OnMessage
