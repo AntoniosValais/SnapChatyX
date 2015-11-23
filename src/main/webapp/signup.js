@@ -2,9 +2,9 @@
  * pairnei tis  metavlhtes apo ta textbox kai kalei tis parakatw sunarthseis
  */
 function signUp() {
-	var name = document.getElementById("name").value;
+	var firstName = document.getElementById("firstName").value;
 	
-	var lastname = document.getElementById("lastname").value;
+	var lastName = document.getElementById("lastName").value;
 	
 	var username = document.getElementById("username").value;
 	
@@ -16,92 +16,99 @@ function signUp() {
 	
 	var jSONRegistration = new UserToJSONRegistration(user);
 	
-	var jSONtoJava = jSONRegistration.registerToJSON();
+	jSONRegistration.registerToJSON();
 }
 
 /**
  * pairnei ena user kai to metatrepei se JSON
  */
-var UserToJSONRegistration = function (user) {
+var UserToJSONRegistration = function(user) {
     this.user = user;
-};
+}
 
 /**
  * pairnei ta dedomena kai dhmiourgei to JSON
- * @returns
  */
-UserToJSONRegistration.prototype.registerToJSON = function () {
+UserToJSONRegistration.prototype.registerToJSON = function() {
     var firstName = this.user.getFirstName();
 
     var lastName = this.user.getLastName();
 
-    var userName = this.user.getUserName();
+    var username = this.user.getUsername();
 
     var password = this.user.getPassword();
 
-    var eMail = this.user.getEMail();
+    var email = this.user.getEmail();
 
-    var ourJSON = JSON.stringify({
-        onoma: firstName,
+    var ourJSON = {
+        "firstname": firstName,
 
-        epitheto: lastName,
+        "lastname": lastName,
 
-        username: userName,
+        "username": userName,
 
-        pass: password,
+        "password": password,
 
-        email: eMail
-    });
+        "email": eMail
+    };
     
-    var request = $.ajax({
-        type: "POST",
+    $.ajax({
+        type: "post",
 
-        contentType: "text/plain",
+        url: "http://localhost:8080/SnapChatyX/webapi/signup",
+        
+        datatype: "text",
 
-        url: "http://localhost:8080/SnapChatyX/signup",
-
-        dataType: "text",
-
-        data: ourJSON
-    })
-    return ourJSON
-};
+        data: JSON.stringfy(ourJSON)
+    });
+}
 
 /**
  * pairnei ta stoixeia tou user
  */
-var User = function (firstName, lastName, userName, password, eMail) {
+var User = function(firstName, lastName, username, password, email) {
     this.firstName = firstName;
 
     this.lastName = lastName;
 
-    this.userName = userName;
+    this.username = username;
 
     this.password = password;
 
-    this.eMail = eMail;
-};
+    this.email = email;
+}
 
 /**
- * apo edw kai katw epistrefei ta stoixeia
- * @returns
+ * epistrefei to first name tou user
  */
-User.prototype.getFirstName = function () {
+User.prototype.getFirstName = function() {
     return this.firstName;
-};
+}
 
-User.prototype.getLastName = function () {
+/**
+ * epistrefei to last name tou user
+ */
+User.prototype.getLastName = function() {
     return this.lastName;
-};
+}
 
-User.prototype.getUserName = function () {
+/**
+ * epistrefei to username tou user
+ */
+User.prototype.getUsername = function() {
     return this.userName;
-};
+}
 
-User.prototype.getPassword = function () {
+/**
+ * epistrefei to password tou user
+ */
+User.prototype.getPassword = function() {
     return this.password;
-};
+}
 
-User.prototype.getEMail = function () {
+/**
+ * epistrefei to e - mail tou user
+ */
+User.prototype.getEmail = function() {
     return this.eMail;
-};
+}
