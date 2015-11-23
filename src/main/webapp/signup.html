@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="signup.js" type="text/javascript"></script>
-</head>
-<body>
-<label>Name: </label><input id="name" type="text">
-<br>
-<label>Last Name: </label><input id="lastName" type="text">
-<br>
-<label>Username: </label><input id="userName" type="text">
-<br>
-<label>Password: </label><input id="password" type="password">
-<br>
-<label>Email: </label><input id="email" type="email">
-<br>
-<input id="submit" type="submit" value="submit" onclick="signUp();">
-<p id="test">
-</p>
-</body>
+    <head>
+        <link rel="stylesheet" href="style.css" media="screen" />
+        <meta charset="UTF-8">
+        <title>Sign Up for SnapChaty!</title>
+        <script src="signUp.js"></script>
+    </head>
+    <body>
+	
+		<div id="header">
+		<h1>Sign up to be connected</h1>
+		</div>
+		<br/><br/>
+		<div id="textInSignUp">
+		
+			<b>First name:</b><br/>
+			<input id="firstName" type="text"> <br/><br/>
+			<b>Last name:</b><br/>
+			<input id="lastName" type="text"><br/><br/>
+			<b>Username:</b><br/>
+			<input id="username" type="text"><br/><br/>
+			<b>Password:</b><br/> 
+			<input id="password" type="password"><br/><br/>
+			<b>Repeat Password:</b><br/> 
+			<input id="repeatPassword" type="password"><br/><br/>
+			<b>e - mail:</b><br/>
+			<input id="email" type="email"><br/><br/><br/>
+			<div id="sign_up_button">
+				<button class="button" onclick="signUp()">SIGN UP</button>
+			</div>
+		</div>
+
+    </body>
 </html>

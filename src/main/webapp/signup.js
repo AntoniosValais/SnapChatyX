@@ -55,7 +55,7 @@ UserToJSONRegistration.prototype.registerToJSON = function() {
     $.ajax({
         type: "post",
 
-        url: "http://localhost:8080/SnapChatyX/webapi/signup",
+        url: "webapi/signup",
         
         datatype: "text",
 
