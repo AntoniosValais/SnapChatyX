@@ -13,45 +13,26 @@ import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
+import com.mongodb.util.JSONParseException;
 
 @Path("signin")
 public class SignInResource {
 	
+	public IDAO dao = new DAO();
+	
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.TEXT_PLAIN)
-    public Response postUser(String user) {
+	@Produces(MediaType.APPLICATION_JSON)
+    public String postUser(String user) {
        System.out.println("signin");
-        DBObject dbObjectUser = (DBObject)JSON.parse(user);
-
-        MongoClient mongoClient = new MongoClient("localhost" , 27017);
-
-        DB db = mongoClient.getDB("snapchatydb");
-        DBCollection coll = db.getCollection("user");
-        
-        System.out.println("Before query" + dbObjectUser.get("username"));
-        
-        DBObject userObject = coll.findOne(new BasicDBObject("username",dbObjectUser.get("username")));
-        System.out.println("{username:\""+ dbObjectUser.get("username")+"\"}");
-        System.out.println("done query" + userObject);
-        if(userObject != null)
-        {
-                    System.out.println("found a USER");
-
-            mongoClient = new MongoClient("localhost" , 27017);
-
-            db = mongoClient.getDB("snapchatydb");
-            coll = db.getCollection("signInHistory");
-            coll.insert(userObject);
-            
-            String result = "User exists";
-    		return Response.status(200).entity(result).build();
-        }else{
-            System.out.println("DID NOT found a USER");
-
-            String result = "User Does Not Exist";
-    		return Response.status(500).entity(result).build();
-            
-        }
+       try{
+    	   		DBObject dbObjectUser = (DBObject)JSON.parse(user);
+    	   		
+    	   		return this.dao.signInUser(dbObjectUser);
+    	   		
+	       }catch(JSONParseException e){
+	  		 return "{\"result\":\"Cannot parse input\"}";
+	      }
+       
     }
 }

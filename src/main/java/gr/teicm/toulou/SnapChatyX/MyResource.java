@@ -1,9 +1,12 @@
 package gr.teicm.toulou.SnapChatyX;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -20,6 +23,9 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
-        return "Got it!";
+    	System.out.println("In resource");
+    	return "Got it!";    
+    	
     }
+    
 }
