@@ -1,0 +1,47 @@
+html {
+	 background-color:#FAEBD7;
+	
+}
+
+
+
+#header{
+	background-color:black;
+    color:white;
+    text-align:center;
+    padding:5px;
+}
+
+
+.button{
+	background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 5px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#inputWindow {
+	background: #4CAF50;
+	padding: 3px;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+}
+
+#inputElement {
+	border: 0;
+	padding: 10px;
+	width: 80%;
+	margin-right: .5%;
+}
+
+#sendButton
+{
+	width: 200px;
+	padding: 10px;
+	margin-left: 30px;
+}
