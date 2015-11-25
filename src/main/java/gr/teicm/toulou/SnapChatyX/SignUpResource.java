@@ -21,7 +21,7 @@ import com.mongodb.util.JSONParseException;
 @Path("signup")
 public class SignUpResource {
 
-	public IDAO dao = new DAO();
+	public IDAO dao = new DaoOnRam();
 	
     /**
      * Method handling HTTP POST requests. The returned object will be sent

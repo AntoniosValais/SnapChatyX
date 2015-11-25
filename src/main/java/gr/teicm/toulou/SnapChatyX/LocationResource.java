@@ -19,7 +19,7 @@ import com.mongodb.util.JSONParseException;
 @Path("location")
 public class LocationResource {
 
-		public IDAO dao = new DAO();
+		public IDAO dao = new DaoOnRam();
 	
 		@POST
 		@Consumes({MediaType.TEXT_PLAIN})
