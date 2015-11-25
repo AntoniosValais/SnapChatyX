@@ -44,12 +44,11 @@
             <!-- use the following artifactId if you don't need servlet 2.x compatibility -->
             <!-- artifactId>jersey-container-servlet</artifactId -->
         </dependency>
-        <!-- uncomment this to get JSON support
+        
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>
         </dependency>
-        -->
         
         <dependency>
 		  <groupId>javax.servlet</groupId>
@@ -96,6 +95,17 @@
 		</dependency>
 		
 		
+        <dependency>
+        	<groupId>com.google.code.gson</groupId>
+        	<artifactId>gson</artifactId>
+        	<version>2.4</version>
+        </dependency>
+        
+        <dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>1.11.1</version>
+		</dependency>
     </dependencies>
     
     
