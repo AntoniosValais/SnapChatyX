@@ -18,7 +18,7 @@ import com.mongodb.util.JSONParseException;
 @Path("signin")
 public class SignInResource {
 	
-	public IDAO dao = new DaoOnRam();
+	public IDAO dao = DataAccessObject.DAO;
 	
 	@POST
 	@Consumes(MediaType.TEXT_PLAIN)

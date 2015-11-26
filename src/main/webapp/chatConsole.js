@@ -6,6 +6,8 @@
 
 var websocket = new WebSocket("ws://localhost:8080/SnapChatyX/createSession");
 
+var signInUsername = localStorage.getItem("username");
+
 websocket.onmessage = function( message)
 {
 	var clientServerMessage = JSON.parse( message.data );
@@ -27,7 +29,7 @@ websocket.onopen = function( message )
 		messageType : "UserConnectedMessage",
 		data : 
 		{
-			username : "Antonios" 	
+			username :  signInUsername	
 		}
 	};
 	
@@ -45,7 +47,7 @@ function sendMessage()
 		messageType : "SnapTextMessage",
 		data : 
 		{
-			senderUsername : "Antonios",
+			senderUsername : signInUsername,
 			messageText : textMessageToSent
 		}
 	};

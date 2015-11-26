@@ -2,7 +2,8 @@ package gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageH
 
 import javax.websocket.Session;
 
-import gr.teicm.toulou.SnapChatyX.WebSocketServlet.DataAccessMock;
+import gr.teicm.toulou.SnapChatyX.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
 
 /*
@@ -14,9 +15,12 @@ import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientSer
 public class UserConnectedMessageHandler implements InterfaceMessageHandler
 {
 	private String username;
+	private InterfaceDataAccessObject DAO;
 
 	public UserConnectedMessageHandler( ClientServerMessage message )
 	{
+		this.DAO = DataAccessObject.DAO;
+		
 		this.username = message.getData().getAsJsonObject().get( "username" ).getAsString();
 	}
 	
@@ -25,7 +29,7 @@ public class UserConnectedMessageHandler implements InterfaceMessageHandler
 	{
 		try
 		{
-			DataAccessMock.DAO.relateUsernameWithSession( username, session );
+			this.DAO.relateUsernameWithSession( username, session );
 			
 			return Boolean.TRUE;
 		}

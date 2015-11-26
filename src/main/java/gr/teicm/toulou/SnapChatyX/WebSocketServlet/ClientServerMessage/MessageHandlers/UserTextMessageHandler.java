@@ -4,7 +4,9 @@ import javax.websocket.Session;
 
 import com.google.gson.Gson;
 
+import gr.teicm.toulou.SnapChatyX.DataAccessObject;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.DataAccessMock;
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.UserTextMessage;
 
@@ -19,9 +21,12 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 	private UserTextMessage userTextMessage;
 	private Gson jsonHandler;
 	private ClientServerMessage receivedMessage;
+	private InterfaceDataAccessObject DAO;
 	
 	public UserTextMessageHandler( ClientServerMessage receivedMessage )
 	{
+		this.DAO = DataAccessObject.DAO;
+		
 		this.receivedMessage = receivedMessage;
 		
 		jsonHandler = new Gson();
@@ -38,7 +43,7 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 		
 		String snapTextMessage = jsonHandler.toJson( receivedMessage );
 		
-		for(Session session : DataAccessMock.DAO.getAllSessions() )
+		for(Session session : this.DAO.getAllSessions() )
 		{
 			try
 			{
