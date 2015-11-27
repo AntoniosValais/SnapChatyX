@@ -2,7 +2,7 @@
 /* CSS Document */
 
 body{
-
+	background-color: #4CAF50;
     font-family: "Comic Sans MS", cursive, sans-serif;
     background-image: url("photo1.jpg");
     background-repeat: repeat-x;
@@ -31,4 +31,10 @@ a {
 
 a:hover {
     color: yellow;
+}
+
+#btnAbout {
+	position: fixed;
+	bottom: 0;
+	left: 80%;
 }
