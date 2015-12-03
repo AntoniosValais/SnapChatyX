@@ -42,13 +42,16 @@ function sendMessage()
 {
 	var textMessageToSent = document.getElementById("inputElement").value;
 	
+	var messageLifeTime = document.getElementById("message_time").value;
+	
 	var textMessageJson =
 	{
 		messageType : "SnapTextMessage",
 		data : 
 		{
 			senderUsername : signInUsername,
-			messageText : textMessageToSent
+			messageText : textMessageToSent,
+			messageTime : messageLifeTime
 		}
 	};
 	
