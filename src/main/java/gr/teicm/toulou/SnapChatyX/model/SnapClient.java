@@ -1,4 +1,4 @@
-package gr.teicm.toulou.SnapChatyX.WebSocketServlet;
+package gr.teicm.toulou.SnapChatyX.model;
 
 /*
 *
@@ -22,10 +22,12 @@ public class SnapClient
 	
 	private Double latitude;
 	
+	private String locationName;
+	
 
 	public SnapClient()
 	{
-		
+		locationName = "Wonderland"; //TODO: temporary mexri na pernei timh to locationName
 	}
 
 	public String getUsername()
@@ -96,6 +98,16 @@ public class SnapClient
 	public void setLatitude( Double latitude )
 	{
 		this.latitude = latitude;
+	}
+
+	public String getLocationName()
+	{
+		return locationName;
+	}
+
+	public void setLocationName( String locationName )
+	{
+		this.locationName = locationName;
 	}
 	
 	

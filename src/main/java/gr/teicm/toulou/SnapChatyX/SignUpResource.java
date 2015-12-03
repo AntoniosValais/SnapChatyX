@@ -15,6 +15,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 import com.mongodb.util.JSONParseException;
 
+import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.IDAO;
+
 /**
  * Root resource (exposed at "myresource" path)
  */
