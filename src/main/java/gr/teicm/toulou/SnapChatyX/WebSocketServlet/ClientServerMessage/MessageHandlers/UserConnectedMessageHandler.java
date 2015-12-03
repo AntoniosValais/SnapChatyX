@@ -2,9 +2,9 @@ package gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageH
 
 import javax.websocket.Session;
 
-import gr.teicm.toulou.SnapChatyX.DataAccessObject;
-import gr.teicm.toulou.SnapChatyX.WebSocketServlet.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
+import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 
 /*
 *

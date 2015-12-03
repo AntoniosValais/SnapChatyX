@@ -6,12 +6,13 @@ package gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage;
 *
 */
 
-public class UserTextMessage
+public class SnapClientTextMessage
 {
 	private String senderUsername;
 	private String messageText;
+	private Integer timeToLive;
 	
-	public UserTextMessage()
+	public SnapClientTextMessage()
 	{
 		this.senderUsername = new String();
 		this.messageText = new String();
@@ -35,6 +36,16 @@ public class UserTextMessage
 	public void setMessageText( String messageText )
 	{
 		this.messageText = messageText;
+	}
+
+	public Integer getTimeToLive()
+	{
+		return timeToLive;
+	}
+
+	public void setTimeToLive( Integer timeToLive )
+	{
+		this.timeToLive = timeToLive;
 	}
 	
 	

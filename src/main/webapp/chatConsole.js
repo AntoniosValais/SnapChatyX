@@ -42,7 +42,7 @@ function sendMessage()
 {
 	var textMessageToSent = document.getElementById("inputElement").value;
 	
-	var messageLifeTime = document.getElementById("message_time").value;
+	var timeToLive = document.getElementById("message_time").value;
 	
 	var textMessageJson =
 	{
@@ -51,7 +51,7 @@ function sendMessage()
 		{
 			senderUsername : signInUsername,
 			messageText : textMessageToSent,
-			messageTime : messageLifeTime
+			timeToLive : timeToLive
 		}
 	};
 	

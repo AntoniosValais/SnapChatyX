@@ -9,10 +9,11 @@ import javax.websocket.server.ServerEndpoint;
 
 import com.google.gson.Gson;
 
-import gr.teicm.toulou.SnapChatyX.DataAccessObject;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageHandlers.InterfaceMessageHandler;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageHandlers.MessageHandlerFactory;
+import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 
 
 

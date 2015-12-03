@@ -16,6 +16,9 @@ import com.mongodb.MongoException;
 import com.mongodb.util.JSON;
 import com.mongodb.util.JSONParseException;
 
+import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.IDAO;
+
 @Path("location")
 public class LocationResource {
 
