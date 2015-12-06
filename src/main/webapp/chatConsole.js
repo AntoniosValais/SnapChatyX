@@ -19,6 +19,13 @@ websocket.onmessage = function( message)
 								+ clientServerMessage.data.messageText;
 		
 		document.getElementById("messagesIO").innerHTML += receivedMessage + "<br/>";
+		
+		setTimeout(function(){
+			var messagesHtml = document.getElementById("messagesIO").innerHTML; 
+		    var res = messagesHtml.replace(receivedMessage, "");
+		    document.getElementById("messagesIO").innerHTML = res;
+		    $('#messagesIO br:first').remove();
+		}, clientServerMessage.data.timeToLive * 1000 );
 	}
 };
 
@@ -42,17 +49,21 @@ function sendMessage()
 {
 	var textMessageToSent = document.getElementById("inputElement").value;
 	
+	var timeToLive = document.getElementById("message_time").value;
+	
 	var textMessageJson =
 	{
 		messageType : "SnapTextMessage",
 		data : 
 		{
 			senderUsername : signInUsername,
-			messageText : textMessageToSent
+			messageText : textMessageToSent,
+			timeToLive : timeToLive
 		}
 	};
 	
 	var textMessage = JSON.stringify( textMessageJson );
+	alert(textMessage);
 	
 	websocket.send( textMessage );
 }
