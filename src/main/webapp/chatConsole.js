@@ -18,14 +18,10 @@ websocket.onmessage = function( message)
 								+": "
 								+ clientServerMessage.data.messageText;
 		
-		document.getElementById("messagesIO").innerHTML += receivedMessage + "<br/>";
+		document.getElementById("messagesIO").innerHTML += "<div id='"+clientServerMessage.data.messageId+"'>"+ receivedMessage + "</div>";
 		
-		setTimeout(function(){
-			var messagesHtml = document.getElementById("messagesIO").innerHTML; 
-		    var res = messagesHtml.replace(receivedMessage, "");
-		    document.getElementById("messagesIO").innerHTML = res;
-		    $('#messagesIO br:first').remove();
-		}, clientServerMessage.data.timeToLive * 1000 );
+	}else if( clientServerMessage.messageType == "SnapTextMessageRemove"){
+		$('#'+clientServerMessage.data.messageId).remove();
 	}
 };
 
