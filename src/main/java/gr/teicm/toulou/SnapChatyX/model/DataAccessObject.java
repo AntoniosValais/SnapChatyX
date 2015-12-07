@@ -50,8 +50,9 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 			SnapClient snapClientToUpdate = this.getOnlineSnapClientWithUsername( usernameOnLocationDATA );
 
-			snapClientToUpdate.setLatitude( (Double) location.get( "latitude" ) );
-			snapClientToUpdate.setLongitude( (Double) location.get( "longitude" ) );
+			//snapClientToUpdate.setLatitude( (Double) location.get( "latitude" ) );
+			//snapClientToUpdate.setLongitude( (Double) location.get( "longitude" ) );
+			snapClientToUpdate.setLocationName( (String) location.get("location") );
 
 			return "{\"result\":\"success\"}";
 		}
