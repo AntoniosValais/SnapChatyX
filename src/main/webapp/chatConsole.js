@@ -29,6 +29,7 @@ websocket.onmessage = function( message)
 	}
 };
 
+
 websocket.onopen = function( message )
 {
 	var connectJson =
