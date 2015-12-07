@@ -29,11 +29,13 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 		
 		this.receivedMessage = receivedMessage;
 		
-		jsonHandler = new Gson();
+		this.jsonHandler = new Gson();
 		
-		userTextMessage = jsonHandler.fromJson( receivedMessage.getData(), SnapClientTextMessage.class );
+		this.userTextMessage = this.jsonHandler.fromJson( receivedMessage.getData(), SnapClientTextMessage.class );
 	
 		this.DAO.saveMessage( userTextMessage );
+		
+		this.receivedMessage.setData( jsonHandler.toJsonTree( userTextMessage ) );
 	}
 
 	@Override

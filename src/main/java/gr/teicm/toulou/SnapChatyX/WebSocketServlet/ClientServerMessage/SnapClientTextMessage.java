@@ -11,6 +11,7 @@ public class SnapClientTextMessage
 	private String senderUsername;
 	private String messageText;
 	private Integer timeToLive;
+	private String messageId;
 	
 	public SnapClientTextMessage()
 	{
@@ -47,6 +48,18 @@ public class SnapClientTextMessage
 	{
 		this.timeToLive = timeToLive;
 	}
+
+	public String getMessageId()
+	{
+		return messageId;
+	}
+
+	public void setMessageId( String messageId )
+	{
+		this.messageId = messageId;
+	}
+
+	
 	
 	
 }

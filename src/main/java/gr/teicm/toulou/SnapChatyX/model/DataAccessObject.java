@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.websocket.Session;
 
@@ -260,7 +261,10 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 		if( snapClient != null )
 		{
+			userTextMessage.setMessageId( UUID.randomUUID().toString() );
+			
 			List< SnapClientTextMessage > snapClientMessageList = snapClientTextMessageMap.get( snapClient );
+			
 			snapClientMessageList.add( userTextMessage );
 
 			return Boolean.TRUE;
