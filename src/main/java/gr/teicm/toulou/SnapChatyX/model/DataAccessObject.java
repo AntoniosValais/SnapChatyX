@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.websocket.Session;
 
@@ -49,8 +50,9 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 			SnapClient snapClientToUpdate = this.getOnlineSnapClientWithUsername( usernameOnLocationDATA );
 
-			snapClientToUpdate.setLatitude( (Double) location.get( "latitude" ) );
-			snapClientToUpdate.setLongitude( (Double) location.get( "longitude" ) );
+			//snapClientToUpdate.setLatitude( (Double) location.get( "latitude" ) );
+			//snapClientToUpdate.setLongitude( (Double) location.get( "longitude" ) );
+			snapClientToUpdate.setLocationName( (String) location.get("location") );
 
 			return "{\"result\":\"success\"}";
 		}
@@ -260,7 +262,10 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 		if( snapClient != null )
 		{
+			userTextMessage.setMessageId( UUID.randomUUID().toString() );
+			
 			List< SnapClientTextMessage > snapClientMessageList = snapClientTextMessageMap.get( snapClient );
+			
 			snapClientMessageList.add( userTextMessage );
 
 			return Boolean.TRUE;
