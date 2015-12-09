@@ -349,14 +349,14 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 		return connectedSessionsWithSnapClient;
 	}
-	
+
 	public void initializeDeleterTimer(){
 		TimerTask hourlyTask = new TimerTask () {
 		    @Override
 		    public void run () {
 		        System.out.println("Timer giouxou");
 		        HashMap< SnapClient, List< SnapClientTextMessage > > snapClientTextMessageMapToBeErased = new HashMap< SnapClient, List< SnapClientTextMessage > >();
-
+		        
 		        for(SnapClient user : onlineSnapClients )
 		        {
 		        	List<SnapClientTextMessage> messages = snapClientTextMessageMap.get(user);
@@ -386,13 +386,22 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 		        updateCollections(snapClientTextMessageMapToBeErased);
 		    }
 		};
-
+		
 		// schedule the task to run starting now and then every hour...
 		messageDeleterTimer.schedule (hourlyTask, 0l, 1000);
 	}
-
+	
 	public void updateCollections(HashMap< SnapClient, List< SnapClientTextMessage > > snapClientTextMessageMapToBeErased)
 	{
 		
 	}
+	
+	public List<SnapClientTextMessage> findAllSentMessagesByUsername(String username) {
+		SnapClient snapClient = this.getOnlineSnapClientWithUsername(username);
+		
+		List<SnapClientTextMessage> allSentMessages = snapClientTextMessageMap.get(snapClient);
+		
+		return allSentMessages;
+	}
+	
 }
