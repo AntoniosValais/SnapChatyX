@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import javax.websocket.Session;
@@ -28,8 +30,13 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 	private HashMap< SnapClient, List< SnapClientTextMessage > > snapClientTextMessageMap;
 
+	private Timer messageDeleterTimer = new Timer ();
+	
 	private DataAccessObject()
 	{
+		this.initializeDeleterTimer();
+		System.out.println("Timer giouxou1");
+		
 		registeredSnapClients = new HashSet< SnapClient >();
 		
 		sessions = new HashSet< Session >();
@@ -342,5 +349,50 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 		return connectedSessionsWithSnapClient;
 	}
+	
+	public void initializeDeleterTimer(){
+		TimerTask hourlyTask = new TimerTask () {
+		    @Override
+		    public void run () {
+		        System.out.println("Timer giouxou");
+		        HashMap< SnapClient, List< SnapClientTextMessage > > snapClientTextMessageMapToBeErased = new HashMap< SnapClient, List< SnapClientTextMessage > >();
 
+		        for(SnapClient user : onlineSnapClients )
+		        {
+		        	List<SnapClientTextMessage> messages = snapClientTextMessageMap.get(user);
+		        	List<SnapClientTextMessage> messagesToBeErased=new ArrayList<>();
+		        	for(SnapClientTextMessage msg : messages)
+		        	{
+		        		if(msg.getTimeToLive() == 0)
+		        		{
+		        			messagesToBeErased.add(msg);
+		        			//erazeSnapTextMessageRemove
+		        			String message = "{\"messageType\":\"SnapTextMessageRemove\",{\"data\":{\"messageId\":\""+msg.getMessageId()+"\"}}}";
+		        			System.out.println(message);
+		        			for( Session session : sessions)
+		        			{
+		        				session.getAsyncRemote().sendText(message);
+		        				
+		        			}
+		        			
+		        		}else{
+		        			msg.setTimeToLive(msg.getTimeToLive()-1);
+		        		}
+		        	}
+		        	snapClientTextMessageMapToBeErased.put(user, messagesToBeErased);
+		        	
+		        }
+		        //apostoli mnmatos pros diagrafi
+		        updateCollections(snapClientTextMessageMapToBeErased);
+		    }
+		};
+
+		// schedule the task to run starting now and then every hour...
+		messageDeleterTimer.schedule (hourlyTask, 0l, 1000);
+	}
+
+	public void updateCollections(HashMap< SnapClient, List< SnapClientTextMessage > > snapClientTextMessageMapToBeErased)
+	{
+		
+	}
 }
