@@ -2,7 +2,7 @@ package gr.teicm.toulou.SnapChatyX.model;
 
 import java.util.List;
 
-import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
 
 /**
  * @since Dec 3, 2015
@@ -13,9 +13,9 @@ public class UserHistory {
 	
 	private String username;
 	
-	private List<ClientServerMessage> messageList;
+	private List<SnapClientTextMessage> messageList;
 	
-	public UserHistory(String username, List<ClientServerMessage> messageList) {
+	public UserHistory(String username, List<SnapClientTextMessage> messageList) {
 		this.messageList = messageList;
 	}
 	
@@ -27,11 +27,11 @@ public class UserHistory {
 		this.username = username;
 	}
 	
-	public List<ClientServerMessage> getMessageList() {
+	public List<SnapClientTextMessage> getMessageList() {
 		return messageList;
 	}
 	
-	public void setMessageList(List<ClientServerMessage> messageList) {
+	public void setMessageList(List<SnapClientTextMessage> messageList) {
 		this.messageList = messageList;
 	}
 	

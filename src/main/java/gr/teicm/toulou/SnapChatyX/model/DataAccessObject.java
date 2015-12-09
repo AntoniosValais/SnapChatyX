@@ -342,5 +342,13 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 		return connectedSessionsWithSnapClient;
 	}
+	
+	public List<SnapClientTextMessage> findAllSentMessagesByUsername(String username) {
+		SnapClient snapClient = this.getOnlineSnapClientWithUsername(username);
+		
+		List<SnapClientTextMessage> allSentMessages = snapClientTextMessageMap.get(snapClient);
+		
+		return allSentMessages;
+	}
 
 }
