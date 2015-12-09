@@ -393,7 +393,17 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 	
 	public void updateCollections(HashMap< SnapClient, List< SnapClientTextMessage > > snapClientTextMessageMapToBeErased)
 	{
-		
+		 for(SnapClient user : snapClientTextMessageMapToBeErased.keySet()  )
+	        {
+			 	//messages to be erased
+	        	List<SnapClientTextMessage> messagesToBeErased = snapClientTextMessageMapToBeErased.get(user);
+	        	//all user messages
+	        	List<SnapClientTextMessage> userMessages = snapClientTextMessageMap.get(user);
+	        	for(SnapClientTextMessage msg : messagesToBeErased)
+	        	{
+	        		userMessages.remove(msg);
+	        	}
+	        }
 	}
 	
 	public List<SnapClientTextMessage> findAllSentMessagesByUsername(String username) {
