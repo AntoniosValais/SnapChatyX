@@ -1,8 +1,10 @@
-package gr.teicm.toulou.SnapChatyX.WebSocketServlet;
+package gr.teicm.toulou.SnapChatyX.model;
 
 import java.util.Set;
 
 import javax.websocket.Session;
+
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
 
 /*
 *
@@ -26,5 +28,13 @@ public interface InterfaceDataAccessObject
 	Boolean relateUsernameWithSession( String username, Session session );
 
 	Set< Session > getAllSessions();
+	
+	Set< Session > getSessionsConnectedWith( SnapClient snapClient );
+
+	Boolean saveMessage( SnapClientTextMessage userTextMessage );
+	
+	SnapClient getOnlineSnapClientWithUsername( String username );
+	
+	SnapClient getRegisteredSnapClientWithUsername( String username );
 
 }

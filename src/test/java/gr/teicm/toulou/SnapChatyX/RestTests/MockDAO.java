@@ -2,7 +2,7 @@ package gr.teicm.toulou.SnapChatyX.RestTests;
 
 import com.mongodb.DBObject;
 
-import gr.teicm.toulou.SnapChatyX.IDAO;
+import gr.teicm.toulou.SnapChatyX.model.IDAO;
 
 public class MockDAO implements IDAO {
 

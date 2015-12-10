@@ -4,11 +4,11 @@ import javax.websocket.Session;
 
 import com.google.gson.Gson;
 
-import gr.teicm.toulou.SnapChatyX.DataAccessObject;
-import gr.teicm.toulou.SnapChatyX.WebSocketServlet.DataAccessMock;
-import gr.teicm.toulou.SnapChatyX.WebSocketServlet.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
-import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.UserTextMessage;
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
+import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 
 /*
 *
@@ -18,7 +18,7 @@ import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.UserTextM
 
 public class UserTextMessageHandler implements InterfaceMessageHandler
 {
-	private UserTextMessage userTextMessage;
+	private SnapClientTextMessage userTextMessage;
 	private Gson jsonHandler;
 	private ClientServerMessage receivedMessage;
 	private InterfaceDataAccessObject DAO;
@@ -29,11 +29,13 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 		
 		this.receivedMessage = receivedMessage;
 		
-		jsonHandler = new Gson();
+		this.jsonHandler = new Gson();
 		
-		userTextMessage = jsonHandler.fromJson( receivedMessage.getData(), UserTextMessage.class );
+		this.userTextMessage = this.jsonHandler.fromJson( receivedMessage.getData(), SnapClientTextMessage.class );
 	
-		//TODO: send userTextMessage to DAO
+		this.DAO.saveMessage( userTextMessage );
+		
+		this.receivedMessage.setData( jsonHandler.toJsonTree( userTextMessage ) );
 	}
 
 	@Override
@@ -42,8 +44,12 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 		Boolean messageDelivered = Boolean.FALSE;
 		
 		String snapTextMessage = jsonHandler.toJson( receivedMessage );
+	
+		String senderUserName = userTextMessage.getSenderUsername();
 		
-		for(Session session : this.DAO.getAllSessions() )
+		SnapClient sender = this.DAO.getOnlineSnapClientWithUsername( senderUserName );
+		
+		for( Session session : this.DAO.getSessionsConnectedWith( sender ) )
 		{
 			try
 			{

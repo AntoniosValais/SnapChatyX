@@ -1,4 +1,4 @@
-package gr.teicm.toulou.SnapChatyX;
+package gr.teicm.toulou.SnapChatyX.model;
 
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
