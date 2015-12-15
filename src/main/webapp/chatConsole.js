@@ -18,7 +18,10 @@ websocket.onmessage = function( message)
 								+": "
 								+ clientServerMessage.data.messageText;
 		
-		document.getElementById("messagesIO").innerHTML += receivedMessage + "<br/>";
+		document.getElementById("messagesIO").innerHTML += "<div id='"+clientServerMessage.data.messageId+"'>"+ receivedMessage + "</div>";
+		
+	}else if( clientServerMessage.messageType == "SnapTextMessageRemove"){
+		$('#'+clientServerMessage.data.messageId).remove();
 	}
 };
 
