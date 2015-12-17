@@ -10,8 +10,20 @@ function history() {
 		type : "GET"
 	}).done(function(message) 
 	{
-		document.getElementById("messageHistorySection").value += JSON.stringify(message);
 		
+		var userHistoryJson = JSON.parse(message);
+		
+		var messageList = userHistoryJson.get("messageList");
+		
+		var messageHistorySection = document.getElementById("messageHistorySection");
+		
+		messageHistorySection.value = "Messages sent by user with username: " + userHistoryJson.get("username") + "\n";
+		
+		for (var i = 0; i < messageList.length(); i++) {
+			
+			messageHistorySection.value += "\n" + messageList[i].get("messageText");
+			
+		}
 		
 	}).fail(function(xmlHttpRequest, statusText, ex) {
 		alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
