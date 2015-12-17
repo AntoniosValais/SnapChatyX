@@ -13,6 +13,9 @@ import java.util.Map;
  * @param <E> - the entry type
  */
 public interface IMapedDao<K, E> {
+	
+	boolean isExistingEntry(K key);
+	
 	boolean put(K key, E entry);
 	
 	E get(K key);
@@ -22,4 +25,5 @@ public interface IMapedDao<K, E> {
 	boolean delete(K key, E entry);
 	
 	Map<K, E> getMap();
+	
 }
