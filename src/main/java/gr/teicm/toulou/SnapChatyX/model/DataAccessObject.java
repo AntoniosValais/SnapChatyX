@@ -15,7 +15,7 @@ import com.mongodb.DBObject;
 
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
 
-public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
+public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHistoryDAO
 {
 
 	DAO;
@@ -32,6 +32,8 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 
 	private Timer messageDeleterTimer = new Timer ();
 	
+	private final List<IUserHistory> userHistoryList;
+	
 	private DataAccessObject()
 	{
 		this.initializeDeleterTimer();
@@ -46,6 +48,8 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 		snapClientSessionMap = new HashMap< SnapClient, Session >();
 		
 		snapClientTextMessageMap = new HashMap< SnapClient, List< SnapClientTextMessage > >();
+		
+		userHistoryList = new ArrayList<>();
 	}
 	
 	@Override
@@ -274,6 +278,18 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 			List< SnapClientTextMessage > snapClientMessageList = snapClientTextMessageMap.get( snapClient );
 			
 			snapClientMessageList.add( userTextMessage );
+			
+			if (this.usernameExistsInUserHistoryList(userTextMessage.getSenderUsername())) {
+				
+				this.getUserHistoryByUsername(userTextMessage.getSenderUsername()).getMessageList().add(userTextMessage);
+				
+			} else {
+				
+				UserHistory userHistory = new UserHistory(userTextMessage.getSenderUsername(), snapClientMessageList);
+				
+				this.addUserHistoryByUsername(userHistory);
+				
+			}
 
 			return Boolean.TRUE;
 		}
@@ -406,12 +422,131 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject
 	        }
 	}
 	
-	public List<SnapClientTextMessage> findAllSentMessagesByUsername(String username) {
-		SnapClient snapClient = this.getOnlineSnapClientWithUsername(username);
+	@Override
+	public Boolean usernameExistsInUserHistoryList(String username) {
 		
-		List<SnapClientTextMessage> allSentMessages = snapClientTextMessageMap.get(snapClient);
+		if (username == null || username == "") {
+			
+			return false;
+			
+		}
 		
-		return allSentMessages;
+		for (IUserHistory uh : userHistoryList) {
+			
+			if (uh.getUsername().equals(username)) {
+				
+				return true;
+				
+			}
+			
+		}
+		
+		return false;
+		
+	}
+	
+	@Override
+	public Boolean addUserHistoryByUsername(IUserHistory userHistory) {
+		
+		if (userHistory == null) {
+			
+			return false;
+			
+		}
+		
+		if (! this.usernameExistsInUserHistoryList(userHistory.getUsername())) {
+			
+			userHistoryList.add(userHistory);
+			
+			return true;
+			
+		}
+		
+		return false;
+		
+	}
+	
+	@Override
+	public IUserHistory getUserHistoryByUsername(String username) {
+		
+		if (username == null || username == "") {
+			
+			return null;
+			
+		}
+		
+		for (IUserHistory uh : userHistoryList) {
+			
+			if (uh.getUsername().equals(username)) {
+				
+				return uh;
+				
+			}
+			
+		}
+		
+		return null;
+		
+	}
+	
+	@Override
+	public Boolean updateUserHistoryByUsername(IUserHistory userHistory) {
+		
+		if (userHistory == null) {
+			
+			return false;
+			
+		}
+		
+		for (IUserHistory uh : userHistoryList) {
+			
+			if (uh.getUsername().equals(userHistory.getUsername())) {
+				
+				int index = userHistoryList.indexOf(uh);
+				
+				userHistoryList.set(index, userHistory);
+				
+				return true;
+				
+			}
+			
+		}
+		
+		return false;
+		
+	}
+	
+	@Override
+	public Boolean deleteUserHistoryByUsername(String username) {
+		
+		if (username == null || username == "") {
+			
+			return false;
+			
+		}
+		
+		for (IUserHistory uh : userHistoryList) {
+			
+			if (uh.getUsername().equals(username)) {
+				
+				int index = userHistoryList.indexOf(uh);
+				
+				userHistoryList.remove(index);
+				
+				return true;
+			}
+			
+		}
+		
+		return false;
+		
+	}
+	
+	@Override
+	public List<IUserHistory> getUserHistoryList() {
+		
+		return userHistoryList;
+		
 	}
 	
 }
