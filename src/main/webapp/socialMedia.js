@@ -176,4 +176,49 @@ window.fbAsyncInit = function() {
 	  });
 	}
   
-  
+function googlePlusLogIn(){
+	  
+	  OAuth.initialize('s1nT2_QhOIxVvXdV32sp5tdvSz8')
+	  OAuth.popup('google_plus').done(function(result) {
+	      console.log(result)
+	      // do some stuff with result
+	      alert("succes "+JSON.stringify(result));
+	      result.me()
+		    .done(function (response) {
+		    	//got data
+		        console.log(JSON.stringify(response));
+		        var request = $.ajax({
+	    			contentType : "text/plain",
+	    			data : JSON.stringify({
+	    				username :  response.raw.nickname,
+	    				pass : response.id
+	    			}),
+	    			dataType : "json",
+	    			url : "http://localhost:8080/SnapChatyX/webapi/socialsignin",
+	    			type : "POST",
+	    			async: false
+	    		}).done(function(message) 
+	    		{
+	    		
+	    			if( message["result"] === "User exists")
+	    			{
+	    				//2
+	    				userSocialLogin(response.raw.nickname,response.id);
+	    				
+	    			}else{
+	    				//5
+	    				userSocialSignUp(response.firstname,response.lastname,response.raw.nickname,response.id,response.url);
+	    			}
+	    			
+	    		}).fail(function(xmlHttpRequest, statusText, ex) {
+	    			alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
+	    		});
+		    })
+		    .fail(function (err) {
+		        //handle error with err
+		    	alert("fail fetch data");
+		    });
+	  })
+	  
+	  
+  }
