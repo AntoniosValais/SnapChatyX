@@ -383,7 +383,7 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		        		{
 		        			messagesToBeErased.add(msg);
 		        			//erazeSnapTextMessageRemove
-		        			String message = "{\"messageType\":\"SnapTextMessageRemove\",{\"data\":{\"messageId\":\""+msg.getMessageId()+"\"}}}";
+		        			String message = "{\"messageType\":\"SnapTextMessageRemove\",\"data\":{\"messageId\":\""+msg.getMessageId()+"\"}}";
 		        			System.out.println(message);
 		        			for( Session session : sessions)
 		        			{
