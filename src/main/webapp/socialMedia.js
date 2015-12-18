@@ -222,3 +222,54 @@ function googlePlusLogIn(){
 	  
 	  
   }
+
+function instagramLogIn(){
+	
+	// Initialize with your OAuth.io app public key
+	
+	OAuth.initialize('s1nT2_QhOIxVvXdV32sp5tdvSz8');
+	OAuth.popup('instagram').done(function(result) 
+			{
+		 //use result.access_token in your API request 
+		//or use result.get|post|put|del|patch|me methods (see below)
+		
+		alert("succes "+JSON.stringify(result));
+	    	//got data
+	        console.log(JSON.stringify(result));
+	        var request = $.ajax({
+    			contentType : "text/plain",
+    			data : JSON.stringify({
+    				username :  result.user.username,
+    				pass : result.user.id
+    			}),
+    			
+    			dataType : "json",
+    			url : "http://localhost:8080/SnapChatyX/webapi/socialsignin",
+    			type : "POST",
+    			async: false
+    		}).done(function(message) 
+    		{
+    		
+    			if( message["result"] === "User exists")
+    			{
+    				//2
+    				
+    				userSocialLogin(result.user.username,result.user.id);
+    				
+    			}	else
+    			{
+    				
+    				//5
+    				userSocialSignUp(result.user.full_name,"",result.user.username,result.user.id,result.user.website);
+    			}
+    			
+    		}).fail(function(xmlHttpRequest, statusText, ex) {
+    			alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
+    		});
+	    })
+	    .fail(function (err) {
+	        //handle error with err
+	    	alert("fail fetch data");
+	    });	
+		
+}
