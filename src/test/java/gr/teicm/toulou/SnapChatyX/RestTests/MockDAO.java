@@ -29,12 +29,18 @@ public class MockDAO implements IDAO {
 	@Override
 	public String signUpUser(DBObject user) {
 		// TODO Auto-generated method stub
+		if(user.get("username").equals("SocialTestUsername"))
+			return user.get("password").toString();
+		
 		return this.signUpResponce;
 	}
 
 	@Override
 	public String signInUser(DBObject user) {
 		// TODO Auto-generated method stub
+		if(user.get("username").equals("SocialTestUsername"))
+			return user.get("pass").toString();
+		
 		return this.signInResponce;
 	}
 

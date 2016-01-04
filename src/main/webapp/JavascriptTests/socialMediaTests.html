@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-2.4.1/jasmine_favicon.png">
+<link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-2.4.1/jasmine.css">
+
+<script type="text/javascript" src="jasmine/lib/jasmine-2.4.1/jasmine.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine-2.4.1/jasmine-html.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine-2.4.1/boot.js"></script>
+<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="../socialMedia.js"></script>
+<script type="text/javascript">
+
+window.alert = function() {};
+
+describe("Social Media userSocialLogin Tests for successfull credential", function() {
+	beforeEach(function() {
+		urlForUserSocialLogin = "http://localhost:8080/SnapChatyX/webapi/mockResources/successLogIn";
+	  });
+		  it("User Exists Successful LogIn :Correct return", function(done) {	  
+				userSocialLogin("Tania","Giossi",function(err,result){
+				expect(result).toBe("successfull Log In");
+		        done();
+			});
+		  });
+				
+		  it("User Exists Successful LogIn : Null error", function(done) {	  
+				userSocialLogin("Tania","Giossi",function(err,result){
+				expect(err).toBeNull();
+		        done();
+			}); 
+		  });
+		
+});
+describe("Social Media userSocialLogin Tests for NOT successfull credential", function() {
+	beforeEach(function() {
+		urlForUserSocialLogin = "http://localhost:8080/SnapChatyX/webapi/mockResources/failLogIn";
+	  });
+		it("User Not Exist : Corect Return", function(done) {	  
+			userSocialLogin("Tania","Giossi",function(err,result){
+			expect(result).toBe("user not exist");
+		    done();
+		 }); 
+		});
+		it("User Not Exist : Error Not Null", function(done) {	  
+			userSocialLogin("Tania","Giossi",function(err,result){
+			expect(err).not.toBeNull();
+		    done();
+		 }); 
+		});
+		it("User Not Exist : Corect Error return", function(done) {	  
+			userSocialLogin("Tania","Giossi",function(err,result){
+			expect(err).toBe("error");
+		    done();
+		 }); 
+		});
+		
+});
+describe("Social Media userSocialSignUp Tests for Successful SignUp", function() {
+	beforeEach(function() {
+		urlForUserSocialSignUp= "http://localhost:8080/SnapChatyX/webapi/mockResources/successSignUp";
+	  });
+		it("Successfull SignUp : Corect Return", function(done) {	  
+			userSocialSignUp("Tania","Giossi","TaniaG","password","tania@mail.com",function(err,result){
+			expect(result).toBe("successfull sign up");
+		    done();
+		 }); 
+		});
+		it("Successfull SignUp : Null Error", function(done) {	  
+			userSocialSignUp("Tania","Giossi","TaniaG","password","tania@mail.com",function(err,result){
+			expect(err).toBeNull();
+		    done();
+		 }); 
+		});
+		
+});
+
+describe("Social Media userSocialSignUp Tests for NOT successfull SignUp", function() {
+	beforeEach(function() {
+		urlForUserSocialSignUp = "http://localhost:8080/SnapChatyX/webapi/mockResources/failSignUp";
+	  });
+		it("Failed SignUp : Corect Return", function(done) {	  
+			userSocialSignUp("Tania","Giossi","TaniaG","password","tania@mail.com",function(err,result){
+			expect(result).toBe("fail sign up");
+		    done();
+		 }); 
+		});
+		it("Failed SignUp : Error Not Null", function(done) {	  
+			userSocialSignUp("Tania","Giossi","TaniaG","password","tania@mail.com",function(err,result){
+			expect(err).not.toBeNull();
+		    done();
+		 }); 
+		});
+		it("Failed SignUp : Corect Error return", function(done) {	  
+			userSocialSignUp("Tania","Giossi","TaniaG","password","tania@mail.com",function(err,result){
+			expect(err).toBe("error");
+		    done();
+		 }); 
+		});
+		
+});
+</script>
+
+</head>
+<body>
+
+</body>
+
+</html>

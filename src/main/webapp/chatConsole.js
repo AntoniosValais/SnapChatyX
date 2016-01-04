@@ -1,6 +1,7 @@
 /**
  * 
  * @Author AntoniosValais
+ * @Author TaniaG.
  * 
  */
 
@@ -21,7 +22,7 @@ websocket.onmessage = function( message)
 		document.getElementById("messagesIO").innerHTML += "<div id='"+clientServerMessage.data.messageId+"'>"+ receivedMessage + "</div>";
 		
 	}else if( clientServerMessage.messageType == "SnapTextMessageRemove"){
-		$('#'+clientServerMessage.data.messageId).remove();
+		removeMessageWithId(clientServerMessage.data.messageId);
 	}
 };
 
@@ -61,4 +62,8 @@ function sendMessage()
 	var textMessage = JSON.stringify( textMessageJson );
 	
 	websocket.send( textMessage );
+}
+
+function removeMessageWithId(msgId){
+	$('#'+msgId).remove();
 }

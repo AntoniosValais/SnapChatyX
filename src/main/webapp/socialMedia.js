@@ -1,5 +1,17 @@
 
-function userSocialLogin(username,password){
+var urlForUserSocialLogin = "http://localhost:8080/SnapChatyX/webapi/socialsignin";
+var urlForUserSocialSignUp = "http://localhost:8080/SnapChatyX/webapi/socialsignup";
+
+function pageRedirectToChatConsole(err,result){
+	if(err){
+		alert(result);
+	}else{
+		window.location.assign("chatConsole.html");
+		
+		localStorage.setItem("username",  username);
+	}
+}
+function userSocialLogin(username,password,callback){
 	  
 	  var request = $.ajax({
 			contentType : "text/plain",
@@ -8,7 +20,7 @@ function userSocialLogin(username,password){
 				pass : password
 			}),
 			dataType : "json",
-			url : "http://localhost:8080/SnapChatyX/webapi/socialsignin",
+			url : urlForUserSocialLogin,
 			type : "POST"
 		}).done(function(message) 
 		{
@@ -17,18 +29,22 @@ function userSocialLogin(username,password){
 			{
 				alert("Successful LogIn");
 				
-				window.location.assign("chatConsole.html");
+				callback(null,"successfull Log In");
 				
-				localStorage.setItem("username",  username);
-				
+			}else{
+				alert("no log in");
+
+				 callback("error","user not exist");
 			}
 			
 		}).fail(function(xmlHttpRequest, statusText, ex) {
 			alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
+				return "fail Log In";
+
 		});
   }
 
-function userSocialSignUp(firstName,lastName,username,password,email){
+function userSocialSignUp(firstName,lastName,username,password,email,callback){
 	  
 	  
 	  var request = $.ajax({
@@ -41,7 +57,7 @@ function userSocialSignUp(firstName,lastName,username,password,email){
 			"email" : email
 		}),
 		dataType : "json",
-		url : "http://localhost:8080/SnapChatyX/webapi/socialsignup",
+		url : urlForUserSocialSignUp,
 		type : "POST"
 	}).done( function( message ) 
 	{  		
@@ -49,12 +65,18 @@ function userSocialSignUp(firstName,lastName,username,password,email){
 		if ( message["result"] === "success") {
 			alert("You have signed up successfully!" + "\n" + "* " + message["result"] + " *");
 			
-			userSocialLogin(username,password);
-			 
+			userSocialLogin(username,password,pageRedirectToChatConsole);
+			 if(callback)
+			 callback(null,"successfull sign up");
+		}else{
+			alert("no log in");
+			if(callback)
+			 callback("error","fail sign up");
 		}
 		
 	}).fail(function(xmlHttpRequest, statusText, ex) {
 		alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
+		
 	});
 	  
 }
@@ -88,7 +110,7 @@ function twitterLogIn(){
     			if( message["result"] === "User exists")
     			{
     				//2
-    				userSocialLogin(response.alias,response.id);
+    				userSocialLogin(response.alias,response.id,pageRedirectToChatConsole);
     				
     			}else{
     				//5
@@ -151,7 +173,7 @@ window.fbAsyncInit = function() {
 			    		
 			    			if( message["result"] === "User exists")
 			    			{
-			    				userSocialLogin(response.name,response.id);
+			    				userSocialLogin(response.name,response.id,pageRedirectToChatConsole);
 			    				
 			    			}else{
 			    				userSocialSignUp(response.first_name,response.last_name,response.name,response.id,response.email);
@@ -203,7 +225,7 @@ function googlePlusLogIn(){
 	    			if( message["result"] === "User exists")
 	    			{
 	    				//2
-	    				userSocialLogin(response.raw.nickname,response.id);
+	    				userSocialLogin(response.raw.nickname,response.id,pageRedirectToChatConsole);
 	    				
 	    			}else{
 	    				//5
@@ -254,7 +276,7 @@ function instagramLogIn(){
     			{
     				//2
     				
-    				userSocialLogin(result.user.username,result.user.id);
+    				userSocialLogin(result.user.username,result.user.id,pageRedirectToChatConsole);
     				
     			}	else
     			{
