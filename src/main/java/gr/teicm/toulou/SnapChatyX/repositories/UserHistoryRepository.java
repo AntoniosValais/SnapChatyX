@@ -6,56 +6,69 @@ import java.util.List;
 
 import gr.teicm.toulou.SnapChatyX.daos.IMapedDao;
 import gr.teicm.toulou.SnapChatyX.daos.UserHistoryMapedDao;
-import gr.teicm.toulou.SnapChatyX.model.UserHistory;
+import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
 
 /**
+ * 
+ * 
  * @since Dec 3, 2015
  * 
  * @author Stamatios Tsalikis
  */
-public class UserHistoryRepository implements IRepository {
+public class UserHistoryRepository implements IUserHistoryRepository {
 	
-	private IMapedDao<String, UserHistory> dao;
+	private IMapedDao<String, IUserHistory> dao;
 	
 	public UserHistoryRepository() {
+		
 		dao = new UserHistoryMapedDao();
+		
 	}
 
 	/* (non-Javadoc)
-	 * @see gr.teicm.toulou.SnapChatyX.repositories.IRepository#addElement()
+	 * @see gr.teicm.toulou.SnapChatyX.repositories.IUserHistoryRepository#setUserHistoryByUsername()
 	 */
 	@Override
-	public boolean addElement(Object element) {
-		if (element instanceof UserHistory) {
-			UserHistory userHistory = (UserHistory) element;
+	public boolean setUserHistoryByUsername(IUserHistory userHistory) {
+		
+		if (! dao.isExistingEntry(userHistory.getUsername())) {
 			
 			return dao.put(userHistory.getUsername(), userHistory);
+			
+		} else {
+			
+			return dao.update(userHistory.getUsername(), userHistory);
+			
 		}
 		
-		return false;
 	}
 
 	/* (non-Javadoc)
-	 * @see gr.teicm.toulou.SnapChatyX.repositories.IRepository#findElement()
+	 * @see gr.teicm.toulou.SnapChatyX.repositories.IUserHistoryRepository#findElementByUsername()
 	 */
 	@Override
-	public Object findElementByUsername(String username) {
-		return dao.get(username);
-	}
-
-	/* (non-Javadoc)
-	 * @see gr.teicm.toulou.SnapChatyX.repositories.IRepository#findAllElements()
-	 */
-	@Override
-	public Object findAllElements() {
-		Iterator<UserHistory> daoAsIterator = dao.getMap().values().iterator();
+	public IUserHistory findUserHistoryByUsername(String username) {
 		
-		List<UserHistory> userHistoryList = new ArrayList<>();
+		return dao.get(username);
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see gr.teicm.toulou.SnapChatyX.repositories.IUserHistoryRepository#findAllUserHistories()
+	 */
+	@Override
+	public List<IUserHistory> findAllUserHistories() {
+		
+		Iterator<IUserHistory> daoAsIterator = dao.getMap().values().iterator();
+		
+		List<IUserHistory> userHistoryList = new ArrayList<>();
 		
 		while (daoAsIterator.hasNext()) {
+			
 			userHistoryList.add(daoAsIterator.next());
+			
 		}
 		
-		return (Object) userHistoryList;
+		return userHistoryList;
 	}
 }
