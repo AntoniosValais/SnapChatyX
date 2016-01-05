@@ -17,7 +17,7 @@ import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
  */
 public class UserHistoryRepository implements IUserHistoryRepository {
 	
-	private IMapedDao<String, IUserHistory> dao;
+	public IMapedDao<String, IUserHistory> dao;
 	
 	public UserHistoryRepository() {
 		
