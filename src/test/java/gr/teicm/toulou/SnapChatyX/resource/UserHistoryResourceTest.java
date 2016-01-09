@@ -1,4 +1,4 @@
-package gr.teicm.toulou.SnapChatyX.resources;
+package gr.teicm.toulou.SnapChatyX.resource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +18,7 @@ import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
 import gr.teicm.toulou.SnapChatyX.model.IUserHistoryDAO;
 import gr.teicm.toulou.SnapChatyX.model.UserHistory;
+import gr.teicm.toulou.SnapChatyX.resource.UserHistoryResource;
 
 /**
  * 
