@@ -1,11 +1,11 @@
-package gr.teicm.toulou.SnapChatyX.repositories;
+package gr.teicm.toulou.SnapChatyX.repository;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import gr.teicm.toulou.SnapChatyX.daos.IMapedDao;
-import gr.teicm.toulou.SnapChatyX.daos.UserHistoryMapedDao;
+import gr.teicm.toulou.SnapChatyX.dao.IMapedDao;
+import gr.teicm.toulou.SnapChatyX.dao.UserHistoryMapedDao;
 import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
 
 /**

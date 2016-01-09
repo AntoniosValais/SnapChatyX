@@ -1,4 +1,4 @@
-package gr.teicm.toulou.SnapChatyX.repositories;
+package gr.teicm.toulou.SnapChatyX.repository;
 
 import java.util.List;
 
