@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>User Account</title>
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		<script type="text/javascript" src="userAccount.js" charset="utf-8"> </script>
+	</head>
+
+	<body>
+		<div id="userName"></div>
+		<div id="firstName"></div>
+		<div id="lastName"></div>
+		<div id="email"></div>
+		<div id="location"></div>
+		
+		<br/>
+		
+		<table id="friendlistTable">
+			<tr id="friendlistTitle">
+				<td colspan="2">
+					FriendList
+				</td>
+			</tr>
+
+		</table>
+
+		
+		
+		<table id="blacklistTable">
+			<tr id="blacklistTitle">
+				<td colspan="2">
+					BlackList
+				</td>
+			</tr>
+
+		</table>
+
+		
+		<br/>
+		<span>
+			<button type="button" id="removeFromFriendlistButton" onclick="removeFromFriendList()">Remove from friendlist</button>
+		</span>
+		
+		<span>
+			<button type="button" id="removeFromBlacklistButton" onclick= "removeFromBlackList()">Remove from blacklist</button>
+		</span>
+		
+		<span>
+			<button type="button" onclick="location.reload()">Reload</button>
+		</span>
+
+	</body>
+</html>

@@ -93,6 +93,8 @@ public class WebSocketClientMock
 	{
 		try
 		{
+			message = "{\"messageType\":\"SnapTextMessage\",\"data\":{\"senderUsername\":\"Tonio\",\"messageText\":\""+message+"\",\"timeToLive\":\"1\"}}";
+			
 			this.session.getBasicRemote().sendText( message );
 			
 			return true;
