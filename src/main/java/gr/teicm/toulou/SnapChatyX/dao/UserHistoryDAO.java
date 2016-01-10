@@ -42,7 +42,9 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		if (entity.getId() == null || entity.getId().length() == 0) {
 			
-			throw new DataAccessException("The id field of the UserHistoryEntity object param should not be null nor empty.");
+			throw new DataAccessException(
+					"The id field of the UserHistoryEntity object param should not be null nor empty."
+			);
 			
 		}
 		
@@ -55,7 +57,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		if (id == null) {
 			
-			throw new IllegalArgumentException("The id param should not be null.");
+			throw new DataAccessException("The id param should not be null.");
 			
 		}
 		
@@ -65,7 +67,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 			
 			entity = getDatastore().get(UserHistoryEntity.class, id);
 			
-		} catch (ValidationException ex) {
+		} catch (final ValidationException ex) {
 			
 			throw new DataAccessException(ex);
 			
@@ -77,7 +79,9 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 			
 		}
 		
-		throw new DataAccessException("UserHistoryEntity object with " + Mapper.ID_KEY + " = \"" + id + "\".");
+		throw new DataAccessException(
+				"No UserHistoryEntity object was found with " + Mapper.ID_KEY + " = \"" + id + "\"."
+		);
 		
 	}
 	
@@ -86,11 +90,12 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		if (username == null || username.length() == 0) {
 			
-			throw new DataAccessException("The username should not be null nor empty.");
+			throw new DataAccessException("The username param should not be null nor empty.");
 			
 		}
 		
-		UserHistoryEntity entity = getDatastore().find(UserHistoryEntity.class, "username", username).get();
+		final UserHistoryEntity entity =
+				getDatastore().find(UserHistoryEntity.class, "username", username).get();
 		
 		if (entity != null) {
 			
@@ -98,7 +103,9 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 			
 		}
 		
-		throw new DataAccessException("No UserHistoryEntity object was found with username = \"" + username + "\"");
+		throw new DataAccessException(
+				"No UserHistoryEntity object was found with username = \"" + username + "\"."
+		);
 		
 	}
 	
@@ -124,7 +131,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		if (userHistory == null) {
 			
-			throw new DataAccessException("The UserHistoryEntity object should not be null.");
+			throw new DataAccessException("The UserHistoryEntity object param should not be null.");
 			
 		}
 		
@@ -141,7 +148,8 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 	}
 	
 	@Override
-	public void updateUserHistory(final String username, final List<SnapClientTextMessage> messageList) throws DataAccessException {
+	public void updateUserHistory(final String username, final List<SnapClientTextMessage> messageList)
+			throws DataAccessException {
 		
 		if (username == null || username.length() == 0) {
 			

@@ -66,9 +66,9 @@ public class UserHistoryService implements IUserHistoryService {
 			
 			entity = dao.findUserHistoryByUsername(username);
 			
-		} catch (DataAccessException ex) {
+		} catch (final DataAccessException ex) {
 			
-			throw new ServiceException(ex);
+			throw new ServiceException("A Data Access error occured.", ex);
 			
 		}
 		
@@ -79,21 +79,21 @@ public class UserHistoryService implements IUserHistoryService {
 	@Override
 	public List<IUserHistory> getUserHistoriesAsList() throws ServiceException {
 		
-		List<UserHistoryEntity> entityList;
+		final List<UserHistoryEntity> entityList;
 		
 		try {
 			
 			entityList = dao.findAllUserHistories();
 			
-		} catch (DataAccessException ex) {
+		} catch (final DataAccessException ex) {
 			
-			throw new ServiceException(ex);
+			throw new ServiceException("A Data Access error occured.", ex);
 			
 		}
 		
-		List<IUserHistory> userHistoryList = new ArrayList<>();
+		final List<IUserHistory> userHistoryList = new ArrayList<>();
 		
-		for (UserHistoryEntity entity : entityList) {
+		for (final UserHistoryEntity entity : entityList) {
 			
 			userHistoryList.add(entityToModelTransformer.transform(entity));
 			
