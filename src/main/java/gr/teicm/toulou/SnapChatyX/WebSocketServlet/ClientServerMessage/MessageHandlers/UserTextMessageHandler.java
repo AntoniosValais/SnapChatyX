@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
+import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageHandlers.SessionFilter.SessionFilterController;
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
@@ -19,9 +20,14 @@ import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 public class UserTextMessageHandler implements InterfaceMessageHandler
 {
 	private SnapClientTextMessage userTextMessage;
+	
 	private Gson jsonHandler;
+	
 	private ClientServerMessage receivedMessage;
+	
 	private InterfaceDataAccessObject DAO;
+	
+	private SessionFilterController sessionFilterController;
 	
 	public UserTextMessageHandler( ClientServerMessage receivedMessage )
 	{
@@ -36,6 +42,8 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 		this.DAO.saveMessage( userTextMessage );
 		
 		this.receivedMessage.setData( jsonHandler.toJsonTree( userTextMessage ) );
+		
+		sessionFilterController = new SessionFilterController();
 	}
 
 	@Override
@@ -49,7 +57,7 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 		
 		SnapClient sender = this.DAO.getOnlineSnapClientWithUsername( senderUserName );
 		
-		for( Session session : this.DAO.getSessionsConnectedWith( sender ) )
+		for( Session session : this.sessionFilterController.getSessionsConnectedWith( sender ) )
 		{
 			try
 			{
