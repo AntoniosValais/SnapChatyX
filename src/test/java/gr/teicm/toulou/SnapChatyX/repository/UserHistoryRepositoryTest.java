@@ -11,7 +11,6 @@ import org.junit.Test;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
 import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
 import gr.teicm.toulou.SnapChatyX.model.UserHistory;
-import gr.teicm.toulou.SnapChatyX.repository.UserHistoryRepository;
 
 public class UserHistoryRepositoryTest {
 
