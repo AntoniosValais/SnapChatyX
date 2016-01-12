@@ -37,7 +37,6 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 	private DataAccessObject()
 	{
 		this.initializeDeleterTimer();
-		System.out.println("Timer giouxou1");
 		
 		registeredSnapClients = new HashSet< SnapClient >();
 		
@@ -111,6 +110,16 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 			return "{\"result\":\"internal error\"}";
 		}
 
+	}
+	
+	public Boolean registerSnapClient( SnapClient snapClient )
+	{
+		return registeredSnapClients.add( snapClient );
+	}
+	
+	public Boolean signInSnapClient( SnapClient snapClient )
+	{
+		return onlineSnapClients.add( snapClient );
 	}
 
 	// username,password
@@ -340,37 +349,21 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 	}
 
 	@Override
-	public Set< Session > getSessionsConnectedWith( SnapClient snapClient )
+	public Set< SnapClient > getOnlineSnapClients()
 	{
-		Set< Session > connectedSessionsWithSnapClient = new HashSet< Session >();
-
-		String snapClientLocation = snapClient.getLocationName();
-
-		try
-		{
-			for( SnapClient onlineSnapClient : onlineSnapClients )
-			{
-				if( onlineSnapClient.getLocationName().equals( snapClient.getLocationName() ) )
-				{
-					Session onlineSnapClientSession = snapClientSessionMap.get( onlineSnapClient );
-
-					connectedSessionsWithSnapClient.add( onlineSnapClientSession );
-				}
-			}
-		}
-		catch( Exception e )
-		{
-			return null;
-		}
-
-		return connectedSessionsWithSnapClient;
+		return onlineSnapClients;
+	}
+	
+	@Override
+	public HashMap< SnapClient, Session > getSnapClientSessionMap()
+	{
+		return snapClientSessionMap;
 	}
 
 	public void initializeDeleterTimer(){
 		TimerTask hourlyTask = new TimerTask () {
 		    @Override
 		    public void run () {
-		        System.out.println("Timer giouxou");
 		        HashMap< SnapClient, List< SnapClientTextMessage > > snapClientTextMessageMapToBeErased = new HashMap< SnapClient, List< SnapClientTextMessage > >();
 		        
 		        for(SnapClient user : onlineSnapClients )
@@ -404,7 +397,7 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		};
 		
 		// schedule the task to run starting now and then every hour...
-		messageDeleterTimer.schedule (hourlyTask, 0l, 1000);
+		messageDeleterTimer.schedule (hourlyTask, 0l, 1000 * 60);
 	}
 	
 	public void updateCollections(HashMap< SnapClient, List< SnapClientTextMessage > > snapClientTextMessageMapToBeErased)
@@ -548,5 +541,4 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		return userHistoryList;
 		
 	}
-	
 }

@@ -2,7 +2,6 @@ var req = false;
 var username = localStorage.getItem("username");
 var url = "http://localhost:8080/SnapChatyX/webapi/location";
 
-
 function getLocation(){
 	var map = new google.maps.Map(document.getElementById('map'), {
 		center: {lat: -34.397, lng: 150.644},
