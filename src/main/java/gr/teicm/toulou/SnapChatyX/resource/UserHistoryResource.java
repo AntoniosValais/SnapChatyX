@@ -30,6 +30,8 @@ public class UserHistoryResource {
 	
 	private IUserHistoryService service;
 	
+	public UserHistoryResource() {}
+	
 	@GET
 	@Path("user-history/{username}")
 	@Consumes(MediaType.TEXT_PLAIN)

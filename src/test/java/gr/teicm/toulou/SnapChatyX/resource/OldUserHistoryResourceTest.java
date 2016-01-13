@@ -27,7 +27,7 @@ import gr.teicm.toulou.SnapChatyX.resource.UserHistoryResource;
  * 
  * @author Stamatios Tsalikis
  */
-public class UserHistoryResourceTest {
+public class OldUserHistoryResourceTest {
 	
 	private String testMitsosUsername;
 	
