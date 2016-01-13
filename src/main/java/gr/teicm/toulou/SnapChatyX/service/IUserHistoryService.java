@@ -14,9 +14,9 @@ import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
  */
 public interface IUserHistoryService {
 	
-	IUserHistoryDAO getUserHistoryEntityDAO();
+	IUserHistoryDAO getUserHistoryDAO();
 	
-	void setUserHistoryDao(final IUserHistoryDAO userHistoryDao);
+	void setUserHistoryDAO(final IUserHistoryDAO userHistoryDao);
 	
 	IUserHistory getUserHistoryByUsername(final String username) throws ServiceException;
 	

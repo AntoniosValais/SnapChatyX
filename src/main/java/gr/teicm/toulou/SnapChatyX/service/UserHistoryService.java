@@ -44,14 +44,14 @@ public class UserHistoryService implements IUserHistoryService {
 	}
 	
 	@Override
-	public IUserHistoryDAO getUserHistoryEntityDAO() {
+	public IUserHistoryDAO getUserHistoryDAO() {
 		
 		return this.dao;
 		
 	}
 	
 	@Override
-	public void setUserHistoryDao(final IUserHistoryDAO userHistoryDao) {
+	public void setUserHistoryDAO(final IUserHistoryDAO userHistoryDao) {
 		
 		this.dao = userHistoryDao;
 		
