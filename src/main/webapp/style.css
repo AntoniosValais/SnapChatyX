@@ -43,3 +43,27 @@ html {
 	display:none;
 }
 
+#friendlistTable
+{
+	border: 10px solid green;
+	display:inline-block;
+}
+
+#blacklistTable
+{
+	border: 10px solid black;
+	display:inline-block;	
+}
+
+#removeFromFriendlistButton
+{
+	width : 6%;
+	white-space: normal;
+}
+
+#removeFromBlacklistButton
+{
+	width : 6%;
+	white-space: normal;	
+}
+

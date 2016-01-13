@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>Insert title here</title>
+		<title>SnapChatyX</title>
 		<link rel="stylesheet" href="style.css" media="screen" />
 		<script type="text/javascript" src="chatConsole.js" charset="utf-8"> </script>
 		<!--<script src="geoLocation.js" type="text/javascript"></script>
@@ -20,7 +20,8 @@
 			<button type="button" id="sendButton" onclick="sendMessage()">Send Text Message</button>
 			<input type="button" value="Save Location" onclick="saveLocation()">
 			<input type="text" id="locdata" />
-			<label for="message_time">Message Life-Time (minutes) </label>
+			<br/>
+			<label for="message_time"> Message Life-Time (minutes) </label>
 			<select id='message_time'>
 				<option value=1>1</option>
 				<option value=2>2</option>
@@ -29,8 +30,10 @@
 				<option value=30>30</option>
 				<option value=60>60</option>
 			</select>
-			<br/>
-			<a href="userHistory.html">User History</a>
+			<button type="button" id="searchProfileButton" onclick="searchProfile()">Search Profile</button>			
+			<input type="text" id="profileSearchInput"/>
+			<a href="userHistory.html"  target="_blank">User History</a>
+			<a href="userAccount.html"  target="_blank">User Account</a>
 		</div>
 
 	</body>

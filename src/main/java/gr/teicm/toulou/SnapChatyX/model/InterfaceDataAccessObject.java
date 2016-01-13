@@ -1,5 +1,6 @@
 package gr.teicm.toulou.SnapChatyX.model;
 
+import java.util.HashMap;
 import java.util.Set;
 
 import javax.websocket.Session;
@@ -29,7 +30,9 @@ public interface InterfaceDataAccessObject
 
 	Set< Session > getAllSessions();
 	
-	Set< Session > getSessionsConnectedWith( SnapClient snapClient );
+	Set< SnapClient > getOnlineSnapClients();
+	
+	HashMap< SnapClient, Session > getSnapClientSessionMap();
 
 	Boolean saveMessage( SnapClientTextMessage userTextMessage );
 	

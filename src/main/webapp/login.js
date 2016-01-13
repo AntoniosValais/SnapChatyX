@@ -18,10 +18,9 @@ function singIn() {
 		
 		if( message["result"] === "User exists")
 		{
+			localStorage.setItem("username", inputUsername);
+			
 			window.location.assign("chatConsole.html");
-			
-			 localStorage.setItem("username", inputUsername);
-			
 		}
 		
 	}).fail(function(xmlHttpRequest, statusText, ex) {

@@ -15,7 +15,7 @@ websocket.onmessage = function( message)
 	
 	if( clientServerMessage.messageType == "SnapTextMessage" )
 	{
-		var receivedMessage = clientServerMessage.data.senderUsername 
+		var receivedMessage = 	clientServerMessage.data.senderUsername
 								+": "
 								+ clientServerMessage.data.messageText;
 		
@@ -62,6 +62,27 @@ function sendMessage()
 	var textMessage = JSON.stringify( textMessageJson );
 	
 	websocket.send( textMessage );
+}
+
+function searchProfile()
+{
+	var profileName = document.getElementById("profileSearchInput").value;
+	
+	if( profileName != "" )
+	{					
+			localStorage.setItem("userProfileName", profileName);
+			
+			var win = window.open('userProfile.html', '_blank');
+			
+			if(win)
+			{			    
+			    win.focus();
+			}
+			else
+			{
+			    alert('Please allow popups for this site');
+			}
+	}
 }
 
 function removeMessageWithId(msgId){
