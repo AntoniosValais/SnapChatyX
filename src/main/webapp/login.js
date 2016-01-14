@@ -1,13 +1,18 @@
 function singIn() {
+	
+	var user = new User(document.getElementById("username").value, document.getElementById("password").value);
 
-	var inputUsername = document.getElementById("username").value;
-	var inputPassword = document.getElementById("password").value;
+	
+	if(user.isValid())
+{
+		
+
 
 	var request = $.ajax({
 		contentType : "text/plain",
 		data : JSON.stringify({
-			username : inputUsername,
-			pass : inputPassword
+			username : user.userName,
+			pass : user.password
 		}),
 		dataType : "json",
 		url : "http://localhost:8080/SnapChatyX/webapi/signin",
@@ -18,7 +23,7 @@ function singIn() {
 		
 		if( message["result"] === "User exists")
 		{
-			localStorage.setItem("username", inputUsername);
+			localStorage.setItem("username", user.userName);
 			
 			window.location.assign("chatConsole.html");
 		}
@@ -27,4 +32,52 @@ function singIn() {
 		alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
 	});
 
+	}
 }
+
+
+var User = function(username, password) {
+	
+	this.userName = username;
+
+	this.password = password;
+	
+};
+
+
+
+
+
+User.prototype.isValid = function() {
+	var userIsValid = false;
+
+	if (this.isUserNameValid() && this.isPasswordValid()) {
+		userIsValid = true;
+	}
+
+	return userIsValid;
+};
+
+
+
+User.prototype.isUserNameValid = function() {
+	var  userNameIsValid = false;
+
+	if (!(this.userName == null || this.userName == "")) {
+		userNameIsValid = true;
+	}
+
+	return userNameIsValid;
+};
+
+
+
+User.prototype.isPasswordValid = function() {
+	var passwordIsValid = false;
+
+	if (!(this.password == null || this.password == "")) {
+		passwordIsValid = true;
+	} 
+
+	return passwordIsValid;
+};
