@@ -26,7 +26,7 @@ public class UserHistoryDAOTest {
 	private static IUserHistoryDAO target;
 	
 	@BeforeClass
-	public static void before() {
+	public static void setUpBeforeClass() {
 		
 		target = new UserHistoryDAO();
 		

@@ -26,17 +26,32 @@ import gr.teicm.toulou.SnapChatyX.service.UserHistoryService;
  * @author Stamatios Tsalikis
  */
 @Path("histories/user-histories")
-public class UserHistoryResource {
+public class UserHistoryResource implements IUserHistoryResource {
 	
 	private IUserHistoryService service;
 	
 	public UserHistoryResource() {}
 	
+	@Override
+	public IUserHistoryService getService() {
+		
+		return this.service;
+		
+	}
+	
+	@Override
+	public void setService(final IUserHistoryService service) {
+		
+		this.service = service;
+		
+	}
+	
+	// http://localhost:8080/SnapChatyX/webapi/histories/user-histories/user-history/mitsos
 	@GET
 	@Path("user-history/{username}")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response getUserHistoryByUsername(@PathParam("username") String username) {
+	public Response getUserHistoryByUsername(@PathParam("username") final String username) {
 		
 		System.out.println("A GET request made in UserHistoryResource with username: " + username);
 		
@@ -46,15 +61,19 @@ public class UserHistoryResource {
 			
 		}
 		
-		IUserHistory userHistory = null;
+		if (service == null) {
+			
+			service = new UserHistoryService(new UserHistoryDAO());
+			
+		}
 		
-		service = new UserHistoryService(new UserHistoryDAO());
+		final IUserHistory userHistory;
 		
 		try {
 			
 			userHistory = service.getUserHistoryByUsername(username);
 			
-		} catch (ServiceException ex) {
+		} catch (final ServiceException ex) {
 			
 			ex.printStackTrace();
 			
@@ -64,9 +83,9 @@ public class UserHistoryResource {
 		
 		if (userHistory != null) {
 			
-			Gson gson = new GsonBuilder().disableHtmlEscaping().serializeNulls().create();
+			final Gson gson = new GsonBuilder().disableHtmlEscaping().serializeNulls().create();
 			
-			String userHistoryJson = gson.toJson(userHistory);
+			final String userHistoryJson = gson.toJson(userHistory);
 			
 			return Response.ok().entity(userHistoryJson).build();
 			
