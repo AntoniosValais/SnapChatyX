@@ -1,4 +1,4 @@
-package gr.teicm.toulou.SnapChatyX.resources;
+package gr.teicm.toulou.SnapChatyX.resource;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -12,9 +12,11 @@ import javax.ws.rs.core.Response.Status;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.dao.UserHistoryDAO;
 import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
-import gr.teicm.toulou.SnapChatyX.model.IUserHistoryDAO;
+import gr.teicm.toulou.SnapChatyX.service.IUserHistoryService;
+import gr.teicm.toulou.SnapChatyX.service.ServiceException;
+import gr.teicm.toulou.SnapChatyX.service.UserHistoryService;
 
 /**
  * 
@@ -26,7 +28,9 @@ import gr.teicm.toulou.SnapChatyX.model.IUserHistoryDAO;
 @Path("histories/user-histories")
 public class UserHistoryResource {
 	
-	IUserHistoryDAO dao = DataAccessObject.DAO;
+	private IUserHistoryService service;
+	
+	public UserHistoryResource() {}
 	
 	@GET
 	@Path("user-history/{username}")
@@ -34,15 +38,31 @@ public class UserHistoryResource {
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response getUserHistoryByUsername(@PathParam("username") String username) {
 		
-		if (username.equals(null) || username.equals("")) {
+		System.out.println("A GET request made in UserHistoryResource with username: " + username);
+		
+		if (username == null || username.isEmpty()) {
 			
 			return Response.status(Status.BAD_REQUEST).build();
 			
 		}
 		
-		IUserHistory userHistory = dao.getUserHistoryByUsername(username);
+		IUserHistory userHistory = null;
 		
-		if (!userHistory.equals(null)) {
+		service = new UserHistoryService(new UserHistoryDAO());
+		
+		try {
+			
+			userHistory = service.getUserHistoryByUsername(username);
+			
+		} catch (ServiceException ex) {
+			
+			ex.printStackTrace();
+			
+			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+			
+		}
+		
+		if (userHistory != null) {
 			
 			Gson gson = new GsonBuilder().disableHtmlEscaping().serializeNulls().create();
 			
