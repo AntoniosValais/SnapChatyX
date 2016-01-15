@@ -1,4 +1,4 @@
-package gr.teicm.toulou.SnapChatyX.model;
+package gr.teicm.toulou.SnapChatyX.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,14 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
+import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
+import gr.teicm.toulou.SnapChatyX.model.IUserHistoryDAO;
+import gr.teicm.toulou.SnapChatyX.model.UserHistory;
 
 /**
  * 
@@ -17,7 +22,7 @@ import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClien
  * 
  * @author Stamatios Tsalikis
  */
-public class UserHistoryDAOTest {
+public class OldUserHistoryDAOTest {
 	
 	private String testMitsosUsername;
 	
@@ -33,6 +38,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUsernameExistsInUserHistoryListSuccess() {
 		
 		// set up
@@ -112,6 +118,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUsernameExistsInUserHistoryListParamIsNotEntry() {
 		
 		// set up
@@ -125,6 +132,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUsernameExistsInUserHistoryListParamIsNullOrEmpty() {
 		
 		boolean usernameIsNotNull = dao.usernameExistsInUserHistoryList(null);
@@ -137,6 +145,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testAddUserHistoryByUsernameSuccess() {
 		
 		// set up
@@ -209,6 +218,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testAddUserHistoryByUsernameParamNull() {
 		boolean objectAdded = dao.addUserHistoryByUsername(null);
 		
@@ -216,6 +226,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testAddUserHistoryByUsernameParamUsernameIsEntry() {
 		
 		// set up
@@ -300,6 +311,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGetUserHistoryByUsernameSuccess() {
 		
 		// set up
@@ -377,6 +389,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGetUserHistoryByUsernameFailure() {
 		
 		IUserHistory result = dao.getUserHistoryByUsername(testMitsosUsername);
@@ -386,6 +399,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUpdateUserHistoryByUsernameSuccess() {
 		
 		// set up
@@ -497,6 +511,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUpdateUserHistoryByUsernameParamNull() {
 		
 		boolean objectUpdated = dao.updateUserHistoryByUsername(null);
@@ -506,6 +521,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testUpdateUserHistoryByUsernameParamUsernameIsNotEntry() {
 		
 		// set up
@@ -543,6 +559,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testDeleteUserHistoryByUsernameSuccess() {
 		
 		// set up
@@ -599,6 +616,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testDeleteUserHistoryByUsernameParamNull() {
 		
 		boolean objectDeleted = dao.deleteUserHistoryByUsername(null);
@@ -608,6 +626,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testDeleteUserHistoryByUsernameParamIsNotEntry() {
 		
 		// set up
