@@ -65,6 +65,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		try {
 			
+			// Equivalent to -> getDatastore().find(UserHistoryEntity.class, "_id", id).get();
 			entity = getDatastore().get(UserHistoryEntity.class, id);
 			
 		} catch (final ValidationException ex) {
@@ -112,7 +113,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 	@Override
 	public List<UserHistoryEntity> findAllUserHistories() throws DataAccessException {
 		
-		List<UserHistoryEntity> allEntities = getDatastore().find(UserHistoryEntity.class).asList();
+		final List<UserHistoryEntity> allEntities = getDatastore().find(UserHistoryEntity.class).asList();
 		
 		if (allEntities != null) {
 			
