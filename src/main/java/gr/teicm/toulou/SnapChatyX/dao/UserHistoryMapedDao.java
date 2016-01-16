@@ -1,4 +1,4 @@
-package gr.teicm.toulou.SnapChatyX.daos;
+package gr.teicm.toulou.SnapChatyX.dao;
 
 import java.util.HashMap;
 import java.util.Map;

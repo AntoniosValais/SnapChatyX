@@ -21,6 +21,13 @@ public class UserHistory implements IUserHistory {
 		this.messageList = messageList;
 	}
 	
+	public UserHistory() {
+		
+		this(null,null);
+		
+	}
+	
+	
 	@Override
 	public String getUsername() {
 		return username;
