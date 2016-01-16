@@ -84,16 +84,36 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		try
 		{
 
-			newUser.setUsername( user.get( "username" ).toString() );
+			if(user.get("username") == null)
+			{
+				newUser.setUsername( "" );
+			}else{
+				newUser.setUsername( user.get( "username" ).toString() );
+			}
+			if(user.get("password") == null)
+			{
+				newUser.setPassword( "" );
+			}else{
+				newUser.setPassword( user.get( "password" ).toString() );
+			}
+			if(user.get("firstName")==null){
+				newUser.setFirstName( "" );
+			}else{
+				newUser.setFirstName( user.get( "firstName" ).toString() );
+			}
 
-			newUser.setPassword( user.get( "password" ).toString() );
-
-			newUser.setFirstName( user.get( "firstName" ).toString() );
-
-			newUser.setLastName( user.get( "lastName" ).toString() );
-
-			newUser.setEmail( user.get( "email" ).toString() );
-
+			if(user.get("lastName") == null){
+				newUser.setLastName( "" );
+			}else{
+				newUser.setLastName( user.get( "lastName" ).toString() );
+			}
+				
+			if(user.get( "email" ) == null)
+			{
+				newUser.setEmail( "" );
+			}else{
+				newUser.setEmail( user.get( "email" ).toString() );
+			}
 			this.registeredSnapClients.add( newUser );
 
 			List< SnapClientTextMessage > newUserMessageList = new ArrayList< SnapClientTextMessage >();
