@@ -2,6 +2,8 @@ package gr.teicm.toulou.SnapChatyX.resource;
 
 import javax.ws.rs.core.Response;
 
+import gr.teicm.toulou.SnapChatyX.service.IUserHistoryService;
+
 /**
  * 
  * 
@@ -11,6 +13,10 @@ import javax.ws.rs.core.Response;
  */
 public interface IUserHistoryResource {
 	
-	Response getUserHistoryByUsername(String username);
+	IUserHistoryService getService();
+	
+	void setService(final IUserHistoryService service);
+	
+	Response getUserHistoryByUsername(final String username);
 	
 }
