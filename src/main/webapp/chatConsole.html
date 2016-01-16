@@ -16,7 +16,7 @@
 		<div id="messagesIO"></div>
 		<div id="map"></div>
 		<div id="inputWindow">
-			<input type="text" id="inputElement" />
+			<input type="text" id="inputElement" onkeypress="return searchKeyPress(event);" />
 			<button type="button" id="sendButton" onclick="sendMessage()">Send Text Message</button>
 			<input type="button" value="Save Location" onclick="saveLocation()">
 			<input type="text" id="locdata" />

@@ -92,7 +92,7 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 	}
 	
 	public boolean updateSnapClientEntity(SnapClientEntity entity) {
-		
+		//FIXME : den kanei update ola ta properties
 		if(updateSnapClientFriendList(entity) && updateSnapClientBlackList(entity)) {
 			
 			return true;
