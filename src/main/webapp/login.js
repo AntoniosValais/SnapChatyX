@@ -26,5 +26,18 @@ function singIn() {
 	}).fail(function(xmlHttpRequest, statusText, ex) {
 		alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
 	});
+	
+	
 
+}
+
+function searchKeyPress(e)
+{
+    e = e || window.event;
+    if (e.keyCode == 13)
+    {
+        document.getElementById('sendLogin').click();
+        return false;
+    }
+    return true;
 }
