@@ -53,10 +53,14 @@ public class SnapClientService {
 	}
 	
 	public SnapClient getSnapClientByUsername(String username) {
+		List<SnapClientEntity> entityList = dao.getAllSnapClient();
+		for(SnapClientEntity entity : entityList) {
+			if(username == entity.getUsername()) {
+				//FIXME : Stamati!
+			}
+		}
 		
-		SnapClientEntity entity = dao.getSnapClientEntityByUsername(username);
-		
-		SnapClient snapClient =new SnapClient();
+		/*SnapClient snapClient =new SnapClient();
 		snapClient.setUsername(entity.getUsername());
 		snapClient.setPassword(entity.getPassword());
 		snapClient.setFirstName(entity.getFirstName());
@@ -72,7 +76,7 @@ public class SnapClientService {
 			snapClient.addToBlackList(this.getSnapClientByUsername(u));
 		}
 		
-		return snapClient;
+		return snapClient;*/
 	}
 	
 }
