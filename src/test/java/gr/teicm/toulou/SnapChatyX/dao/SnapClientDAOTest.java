@@ -699,10 +699,113 @@ public class SnapClientDAOTest {
 		// SetUp
 		
 		// Execution
-		boolean creationDone = target.createSnapClientEntity(null);
+		target.createSnapClientEntity(null);
 		
 		// Verification
-		assertFalse(creationDone);
+		
+		// TearDown
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testUpdateSnapClientFriendListParamNull() {
+		
+		// SetUp
+		
+		// Execution
+		target.updateSnapClientFriendList(null);
+		
+		// Verification
+		
+		// TearDown
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testUpdateSnapClientBlackListParamNull() {
+		
+		// SetUp
+		
+		// Execution
+		target.updateSnapClientBlackList(null);
+		
+		// Verification
+		
+		// TearDown
+		
+	}
+	
+	@Test
+	public void testUpdateSnapClientFriendListParamNoEntry() {
+		
+		// SetUp
+		SnapClientEntity entity = new SnapClientEntity(); 
+		entity.setUsername("orestis");
+		entity.setFriendList(new ArrayList<>());
+		entity.setBlackList(new ArrayList<>());
+		
+		// Execution
+		boolean updateDone = target.updateSnapClientFriendList(entity);
+		
+		// Verification
+		assertFalse(updateDone);
+		
+		// TearDown
+		
+	}
+	
+	@Test
+	public void testUpdateSnapClientBlackListParamNoEntry() {
+		
+		// SetUp
+		SnapClientEntity entity = new SnapClientEntity(); 
+		entity.setUsername("orestis");
+		entity.setFriendList(new ArrayList<>());
+		entity.setBlackList(new ArrayList<>());
+		
+		// Execution
+		boolean updateDone = target.updateSnapClientBlackList(entity);
+		
+		// Verification
+		assertFalse(updateDone);
+		
+		// TearDown
+		
+	}
+	
+	@Test
+	public void testUpdateSnapClientEntityParamNoEntry() {
+		
+		// SetUp
+		SnapClientEntity entity = new SnapClientEntity(); 
+		entity.setUsername("orestis");
+		entity.setFriendList(new ArrayList<>());
+		entity.setBlackList(new ArrayList<>());
+		
+		// Execution
+		boolean updateDone = target.updateSnapClientEntity(entity);
+		
+		// Verification
+		assertFalse(updateDone);
+		
+		// TearDown
+		
+	}
+	
+	@Test
+	public void testDeleteSnapClientEntityParamNoEntry() {
+		
+		// SetUp
+		SnapClientEntity entity = new SnapClientEntity(); 
+		entity.setUsername("orestis");
+		entity.setFriendList(new ArrayList<>());
+		entity.setBlackList(new ArrayList<>());
+		
+		// Execution
+		boolean updateDone = target.deleteSnapClientEntity(entity);
+		
+		// Verification
+		assertFalse(updateDone);
 		
 		// TearDown
 		
