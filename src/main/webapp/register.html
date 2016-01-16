@@ -25,9 +25,9 @@
 			<b>Repeat password:</b><br/> 
 			<input id="repeatedPassword" type="password"><br/><br/>
 			<b>e - mail:</b><br/>
-			<input id="email" type="email"><br/><br/><br/>
+			<input id="email" type="email" onkeypress="return searchKeyPress(event);"><br/><br/><br/>
 			<div id="button">
-				<button class="button" onclick="registerUser()">SIGN UP</button>
+				<button class="button" id="sendRegister" onclick="registerUser()">SIGN UP</button>
 			</div>
 		</div>
 	</body>
