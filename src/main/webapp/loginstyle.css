@@ -1,0 +1,45 @@
+@charset "utf-8";
+/* CSS Document */
+
+body{
+	background-color: #4CAF50;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    background-image: url("photo1.jpg");
+    background-repeat: repeat-x;
+    background-size: cover;
+
+}
+
+h1 {
+    text-align: left;
+}
+
+h3{
+    text-align: right;
+    margin-right: 150px;
+
+}
+
+form {
+    width: 50%;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    color: yellow;
+}
+
+#btnAbout {
+	position: fixed;
+	bottom: 0;
+	left: 80%;
+}
+#socialMediaTitle{
+	text-decoration: underline;
+	font-weight: bold;
+}
+

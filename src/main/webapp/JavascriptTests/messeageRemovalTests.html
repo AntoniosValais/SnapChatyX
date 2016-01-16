@@ -1,0 +1,97 @@
+<html>
+<head>
+
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.css">
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine-html.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/boot.js"></script>
+<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="../chatConsole.js"></script>
+<script type="text/javascript">
+
+describe("Message Removal Test", function() {
+	
+		  it("Successfull removal Test", function() {
+			  
+			  document.getElementById("testingGround").innerHTML += "<div id='1'>a test message</div>";
+			  removeMessageWithId("1");
+			  var innerHtml = document.getElementById("testingGround").innerHTML;
+			  expect(innerHtml).toBe("");	
+			  
+		  });
+ 		it("Message removal does not effect other messages", function() {
+			  
+			  document.getElementById("testingGround").innerHTML += "<div id='1'>a test message</div>";
+			  removeMessageWithId("2");
+			  var innerHtml = document.getElementById("testingGround").innerHTML;
+			  expect(innerHtml).toBe(innerHtml);	
+			  
+		  });
+ 		it("Not found div does not effect other messages", function() {
+	  
+			  document.getElementById("testingGround").innerHTML += "<div id='1'>a test message</div>";
+			  removeMessageWithId("");
+			  var innerHtml = document.getElementById("testingGround").innerHTML;
+			  expect(innerHtml).toBe(innerHtml);	
+	  
+ 		});
+ 		 afterEach(function() {
+ 			document.getElementById("testingGround").innerHTML="";
+ 		  });
+		
+});
+</script>
+
+</head>
+<body>
+<div id="testingGround"></div>
+</body>
+
+</html>
+
+
+<!-- <body>
+<h4>Test Results</h4>
+<div id="testResults"></div>
+<div id="testingGround"></div>
+<script>
+try {
+	document.getElementById("testingGround").innerHTML += "<div id='1'>a test message</div>";
+	removeMessageWithId("1");
+	var innerHtml = document.getElementById("testingGround").innerHTML;
+	var assertResult = unitjs.value(innerHtml).is('');
+	document.getElementById("testResults").innerHTML += JSON.stringify(assertResult)+'</br>';
+	document.getElementById("testingGround").innerHTML = "";
+
+	
+}catch(err){
+	document.getElementById("testResults").innerHTML += 'Test Fail : ' +err.message+'</br>';
+}
+try {
+
+	document.getElementById("testingGround").innerHTML += "<div id='1'>message</div>";
+	removeMessageWithId("2");
+	var innerHtml = document.getElementById("testingGround").innerHTML;
+	var assertResult = unitjs.value(innerHtml).isNot("");
+	document.getElementById("testResults").innerHTML += JSON.stringify(assertResult)+'</br>';	
+	document.getElementById("testingGround").innerHTML = "";
+
+}catch(err){
+	document.getElementById("testResults").innerHTML += err.message+'</br>';
+}
+try {
+
+	document.getElementById("testingGround").innerHTML += "<div id='1'>message</div>";
+	removeMessageWithId("");
+	var innerHtml = document.getElementById("testingGround").innerHTML;
+	var assertResult = unitjs.value(innerHtml).isNot("");
+	document.getElementById("testResults").innerHTML += JSON.stringify(assertResult)+'</br>';	
+	document.getElementById("testingGround").innerHTML = "";
+
+}catch(err){
+	document.getElementById("testResults").innerHTML += err.message+'</br>';
+}
+</script>
+</body>
+</html> -->

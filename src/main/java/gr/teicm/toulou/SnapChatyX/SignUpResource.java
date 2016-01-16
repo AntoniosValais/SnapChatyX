@@ -15,12 +15,17 @@ import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
 import com.mongodb.util.JSONParseException;
 
+import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.IDAO;
+
 /**
  * Root resource (exposed at "myresource" path)
  */
 @Path("signup")
 public class SignUpResource {
 
+	public IDAO dao = DataAccessObject.DAO;
+	
     /**
      * Method handling HTTP POST requests. The returned object will be sent
      * to the client as "text/plain" media type.
@@ -29,37 +34,17 @@ public class SignUpResource {
      */
     @POST
     @Consumes(MediaType.TEXT_PLAIN)
-    @Produces(MediaType.TEXT_PLAIN)
-    public Response signUp(String user) {
+    @Produces(MediaType.APPLICATION_JSON)
+    public String signUp(String user) {
     	 System.out.println(user);
 	        DBObject dbObjectUser;
 	        try{
 	                dbObjectUser = (DBObject)JSON.parse(user);
-
-	               try {  
-	                      MongoClient mongoClient = new MongoClient("localhost" , 27017);
-	                      System.out.println("Connected");
-
-	                      DB db = mongoClient.getDB("snapchatydb");
-	                      DBCollection coll = (DBCollection) db.getCollection("user");
-
-	                      coll.insert(dbObjectUser);
-	                      mongoClient.close();
-	                      String result = "User singed up";
-	              		  return Response.status(200).entity(result).build();
-	                     
-
-	              } catch (Exception e) {
-	            	  
-	            	  String result = "Database error";
-	         		  return Response.status(500).entity(result).build();
-	                     
-	              }
-	               
+	                
+	                return this.dao.signUpUser(dbObjectUser);
+          
 	        }catch(JSONParseException e){
-	        	 String result = "Cannot parse input";
-        		 return Response.status(400).entity(result).build();
-	            
+        		 return "{\"result\":\"Cannot parse input\"}";
 	        }
     }
 }
