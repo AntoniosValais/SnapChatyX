@@ -7,14 +7,24 @@ import java.util.UUID;
 import gr.teicm.toulou.SnapChatyX.dao.SnapClientDAO;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
+import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientEntityToModelTransformer;
+import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientModelToEntityTransformer;
 
 public class SnapClientService {
 	
 	private SnapClientDAO dao;
 	
+	private final SnapClientModelToEntityTransformer modelToEntityTransformer;
+	
+	private final SnapClientEntityToModelTransformer entityToModelTransformer;
+	
 	public SnapClientService() {
 		
 		dao = new SnapClientDAO();
+		
+		this.modelToEntityTransformer = new SnapClientModelToEntityTransformer();
+		
+		this.entityToModelTransformer = new SnapClientEntityToModelTransformer();
 		
 	}
 	
@@ -48,7 +58,7 @@ public class SnapClientService {
 		}
 		entity.setBlackList(blackListNames);
 		
-		dao.createSnapClientEntity(entity);
+		dao.createSnapClientEntity(modelToEntityTransformer.transform(snapClient));
 		
 	}
 	
@@ -76,7 +86,7 @@ public class SnapClientService {
 			snapClient.addToBlackList(this.getSnapClientByUsername(u));
 		}
 		
-		return snapClient;*/
+		return entityToModelTransformer.transform(entity);*/
 	}
 	
 	public boolean updateSnapClient(SnapClient snapClient)
