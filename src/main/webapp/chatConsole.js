@@ -20,7 +20,7 @@ websocket.onmessage = function( message)
 								+ clientServerMessage.data.messageText;
 		
 		document.getElementById("messagesIO").innerHTML += "<div id='"+clientServerMessage.data.messageId+"'>"+ receivedMessage + "</div>";
-		
+		document.getElementById('beep').play();
 	}else if( clientServerMessage.messageType == "SnapTextMessageRemove"){
 		removeMessageWithId(clientServerMessage.data.messageId);
 	}
@@ -72,6 +72,8 @@ function sendMessage()
 	var textMessage = JSON.stringify( textMessageJson );
 	
 	websocket.send( textMessage );
+	var clean = "";
+	document.getElementById("inputElement").value = clean;
 }
 
 function searchProfile()
