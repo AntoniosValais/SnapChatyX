@@ -344,25 +344,38 @@ public class SnapClientDAOTest {
 		);
 		
 		assertNotNull(resultList.get(1));
-		assertEquals(entity1.getId(), resultList.get(1).getId());
-		assertEquals(entity1.getUsername(), resultList.get(1).getUsername());
-		assertEquals(entity1.getPassword(), resultList.get(1).getPassword());
-		assertEquals(entity1.getEmail(), resultList.get(1).getEmail());
-		assertEquals(entity1.getFirstName(), resultList.get(1).getFirstName());
-		assertEquals(entity1.getLastName(), resultList.get(1).getLastName());
-		assertEquals(entity1.getLatitude(), resultList.get(1).getLatitude());
-		assertEquals(entity1.getLongitude(), resultList.get(1).getLongitude());
-		assertEquals(entity1.getLocationName(), resultList.get(1).getLocationName());
+		assertEquals(entity2.getId(), resultList.get(1).getId());
+		assertEquals(entity2.getUsername(), resultList.get(1).getUsername());
+		assertEquals(entity2.getPassword(), resultList.get(1).getPassword());
+		assertEquals(entity2.getEmail(), resultList.get(1).getEmail());
+		assertEquals(entity2.getFirstName(), resultList.get(1).getFirstName());
+		assertEquals(entity2.getLastName(), resultList.get(1).getLastName());
+		assertEquals(entity2.getLatitude(), resultList.get(1).getLatitude());
+		assertEquals(entity2.getLongitude(), resultList.get(1).getLongitude());
+		assertEquals(entity2.getLocationName(), resultList.get(1).getLocationName());
 		assertEquals(
-				entity1.getFriendList().get(0),
+				entity2.getFriendList().get(0),
 				resultList.get(1).getFriendList().get(0)
 		);
 		assertEquals(
-				entity1.getBlackList().get(0),
+				entity2.getBlackList().get(0),
 				resultList.get(1).getBlackList().get(0)
 		);
 		
 		// TearDown
+		target.getDatastore().delete(resultList.get(0));
+		
+		assertNull(
+				"The entity result must have been deleted.",
+				target.getDatastore().exists(resultList.get(0))
+		);
+		
+		target.getDatastore().delete(resultList.get(1));
+		
+		assertNull(
+				"The entity result must have been deleted.",
+				target.getDatastore().exists(resultList.get(1))
+		);
 		
 	}
 	
@@ -834,6 +847,34 @@ public class SnapClientDAOTest {
 		// TearDown
 		
 	}
+	
+	@Test
+	public void testGetSnapClientEntityByIdNoEntry() {
+		
+		//SetUp
+		
+		//Execution
+		SnapClientEntity result = target.getSnapClientEntityById("1");
+		
+		//Verification
+		assertNull(result);
+		
+		//TearDowwn
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testUpdateSnapClientEntityParamNull() {
+		
+		// SetUp
+
+		// Execution
+		target.updateSnapClientEntity(null);
+		
+		// Verification
+		
+		// TearDown
+	}	
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testUpdateSnapClientFriendListParamNull() {

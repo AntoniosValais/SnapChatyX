@@ -7,7 +7,7 @@ var pageRedirectToChatConsole = function(err,result,username){
 		alert(result);
 	}else{
 		localStorage.setItem("username", username);
-		
+		localStorage.setItem("username", username);
 		window.location.assign("chatConsole.html");
 		
 		
