@@ -120,10 +120,12 @@ public class SessionFilterController
 		{
 			try
 			{				
-				List< SnapClient > snapClientsOnSendersBlackList = snapClient.getBlackList();
+				List< String > snapClientsOnSendersBlackList = snapClient.getBlackList();
 				
-				for( SnapClient snapClientOnBlackList : snapClientsOnSendersBlackList )
+				for( String snapClientOnBlackListUsername : snapClientsOnSendersBlackList )
 				{
+					SnapClient snapClientOnBlackList = dataAccessObject.getRegisteredSnapClientWithUsername( snapClientOnBlackListUsername );
+					
 					if( connectedWithSnapClients.contains( snapClientOnBlackList ) )
 					{
 						connectedWithSnapClients.remove( snapClientOnBlackList );
@@ -132,9 +134,9 @@ public class SessionFilterController
 				
 				for( SnapClient connectedSnapClient : connectedWithSnapClients )
 				{
-					List< SnapClient > snapClientsOnReceiversBlackList = connectedSnapClient.getBlackList();
+					List< String > snapClientsOnReceiversBlackList = connectedSnapClient.getBlackList();
 					
-					if( snapClientsOnReceiversBlackList.contains( snapClient ) )
+					if( snapClientsOnReceiversBlackList.contains( snapClient.getUsername() ) )
 					{
 						connectedWithSnapClients.remove( connectedSnapClient );
 					}

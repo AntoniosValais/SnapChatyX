@@ -1,12 +1,15 @@
 package gr.teicm.toulou.SnapChatyX.dao;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
@@ -20,6 +23,7 @@ import gr.teicm.toulou.SnapChatyX.model.entity.UserHistoryEntity;
  * @since Jan 8, 2016
  * 
  * @author Stamatios Tsalikis
+ * @author Konstantina Avgeri
  */
 public class UserHistoryDAOTest {
 	
@@ -33,7 +37,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
-	public void testInsertUserHistorySuccess() throws DataAccessException {
+	public void testInsertUserHistorySuccess() throws Exception {
 		
 		// SetUp
 		final String username = "mitsos";
@@ -84,8 +88,52 @@ public class UserHistoryDAOTest {
 		
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testInsertUserHistoryParamNull() throws Exception {
+		
+		//SetUp
+		
+		//Execution
+		target.insertUserHistory(null);
+		//Verification
+		
+		//TearDown
+		
+	}
+	
+	@Test(expected = DataAccessException.class)
+	public void testInsertUserHistoryParamNullId() throws Exception {
+		
+		//SetUp
+		UserHistoryEntity entity = new UserHistoryEntity();
+		
+		//Execution
+		target.insertUserHistory(entity);
+		
+		//Verification
+		
+		//TearDown
+		
+	}
+	
+	@Test(expected = DataAccessException.class)
+	public void testInsertUserHistoryParamEmptyId() throws Exception {
+		
+		//SetUp
+		UserHistoryEntity entity = new UserHistoryEntity();
+		entity.setId("");
+		
+		//Execution
+		target.insertUserHistory(entity);
+		
+		//Verification
+		
+		//TearDown
+		
+	}
+	
 	@Test
-	public void testFindUserHistoryByIdSuccess() throws DataAccessException {
+	public void testFindUserHistoryByIdSuccess() throws Exception {
 		
 		// SetUp
 		final String username = "mitsos";
@@ -136,8 +184,38 @@ public class UserHistoryDAOTest {
 		
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFindUserHistoryByIdParamNull() throws Exception {
+		
+		//SetUp
+		
+		//Execution
+		UserHistoryEntity result = target.findUserHistoryById(null);
+		
+		//Verification
+		assertNull(result);
+		
+		//TearDown
+		
+	}
+	
+	@Test(expected = DataAccessException.class)
+	public void testFindUserHistoryByIdParamNoEntry() throws Exception {
+		
+		//SetUp
+		
+		//Execution
+		UserHistoryEntity result = target.findUserHistoryById("1");
+		
+		//Verification
+		assertNull(result);
+		
+		//TearDown
+		
+	}
+	
 	@Test
-	public void testFindUserHistoryByUsernameSuccess() throws DataAccessException {
+	public void testFindUserHistoryByUsernameSuccess() throws Exception {
 		
 		// SetUp
 		final String username = "mitsos";
@@ -184,8 +262,38 @@ public class UserHistoryDAOTest {
 		
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFindUserHistoryByUsernameParamNull() throws Exception {
+		
+		//SetUp
+		
+		//Execution
+		UserHistoryEntity result = target.findUserHistoryByUsername(null);
+		
+		//Verification
+		assertNull(result);
+		
+		//TearDown
+		
+	}
+	
+	@Test(expected = DataAccessException.class)
+	public void testFindUserHistoryByUsernameParamNoEntry() throws Exception {
+		
+		//SetUp
+		
+		//Execution
+		UserHistoryEntity result = target.findUserHistoryByUsername("Marigoula");
+		
+		//Verification
+		assertNull(result);
+		
+		//TearDown
+		
+	}
+	
 	@Test
-	public void testFindAllUserHistoriesSuccess() throws DataAccessException {
+	public void testFindAllUserHistoriesSuccess() throws Exception {
 		
 		// SetUp
 		final String username1 = "mitsos";
@@ -250,7 +358,41 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
-	public void testUpdateUserHistoryParamUserHistorySuccess() throws DataAccessException {
+	public void testFindAllUserHistoriesSuccessEmptyList() throws Exception {
+		
+		//SetUp
+		List< UserHistoryEntity > entityList = target.datastore().find(UserHistoryEntity.class).asList();
+		
+		if(0 < entityList.size()) {
+			
+			for(UserHistoryEntity entity : entityList) {
+				target.datastore().delete(entity);
+			}
+			
+		}
+		
+		assertEquals(0, target.datastore().find(UserHistoryEntity.class).asList().size());
+		
+		//Execute
+		List< UserHistoryEntity > resultList = target.findAllUserHistories();
+		
+		//Verification
+		assertEquals(0, resultList.size());
+		
+		//TearDown
+		
+		if(0 != entityList.size()) {
+			
+			for(UserHistoryEntity entity : entityList) {
+				target.datastore().save(entity);
+			}
+			
+		}
+		
+	}
+	
+	@Test
+	public void testUpdateUserHistoryParamUserHistorySuccess() throws Exception {
 		
 		// SetUp
 		final String username = "mitsos";
@@ -314,8 +456,23 @@ public class UserHistoryDAOTest {
 		
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testUpdateUserHistoryParamUserHistoryNull() throws Exception {
+		
+		//SetUp
+		
+		//Execution
+		target.updateUserHistory(null);
+		
+		//Verification
+		
+		//TearDown
+		
+	}
+	
 	@Test
-	public void testUpdateUserHistoryParamsUsernameAndMessageListSuccess() throws DataAccessException {
+	@Ignore
+	public void testUpdateUserHistoryParamsUsernameAndMessageListSuccess() throws Exception {
 		
 		// SetUp
 		final String username = "mitsos";
@@ -388,7 +545,7 @@ public class UserHistoryDAOTest {
 	}
 	
 	@Test
-	public void testRemoveUserHistoryByIdSuccess() throws DataAccessException {
+	public void testRemoveUserHistoryByIdSuccess() throws Exception {
 		
 		// SetUp
 		final String username = "mitsos";
@@ -417,8 +574,38 @@ public class UserHistoryDAOTest {
 		
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testRemoveUserHistoryByIdParamNull() throws Exception {
+		
+		//SetUp
+		
+		//Execution
+		target.removeUserHistoryById(null);
+		
+		//Verification
+		
+		//TearDown
+		
+	}
+	
+	@Test(expected = DataAccessException.class)
+	public void testRemoveUserHistoryByIdParamEmpty() throws Exception {
+		
+		//SetUp
+		UserHistoryEntity entity = new UserHistoryEntity();
+		entity.setId("");
+		
+		//Execution
+		target.removeUserHistoryById(entity.getId());
+		
+		//Verification
+		
+		//TearDown
+		
+	}
+	
 	@Test
-	public void testRemoveUserHistoryByUsernameSuccess() throws DataAccessException {
+	public void testRemoveUserHistoryByUsernameSuccess() throws Exception {
 		
 		// SetUp
 		final String username = "mitsos";
@@ -444,6 +631,36 @@ public class UserHistoryDAOTest {
 		
 		// Verification
 		assertNull("The entity must have been deleted.", target.datastore().exists(entityFixture));
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testRemoveUserHistoryByUsernameParamNull() throws Exception {
+		
+		//SetUp
+		
+		//Execution
+		target.removeUserHistoryByUsername(null);
+		
+		//Verification
+		
+		//TearDown
+		
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testRemoveUserHistoryByUsernameParamEmpty() throws Exception {
+		
+		//SetUp
+		UserHistoryEntity entity = new UserHistoryEntity();
+		entity.setUsername("");
+		
+		//Execution
+		target.removeUserHistoryByUsername(entity.getUsername());
+		
+		//Verification
+		
+		//TearDown
 		
 	}
 	

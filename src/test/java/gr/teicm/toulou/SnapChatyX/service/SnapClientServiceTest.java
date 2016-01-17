@@ -142,7 +142,7 @@ public class SnapClientServiceTest {
 		
 		//Verification
 		Assert.assertTrue(successUpdate);
-		String id;
+		String id = null;
 		for(SnapClientEntity sc : dao.getAllSnapClients())
 		{
 			if(snapClient2.getUsername() == sc.getUsername())

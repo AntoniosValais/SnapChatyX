@@ -1,0 +1,151 @@
+<html>
+<head>
+<!-- <link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-2.4.1/jasmine_favicon.png"> -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.css">
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/jasmine-html.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.4.1/boot.js"></script>
+<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="../login.js"></script>
+<script type="text/javascript">
+
+
+describe("login Tests UserName", function() {
+	
+	
+		  it("UserName isValid", function() {	  
+				var user = new User("Ntina", "12345");
+				var result = user.isUserNameValid();
+				var expected = true;
+				expect(result).toBe(expected);
+				
+			});
+		  
+		  it("UserName isNotValid", function() {	  
+				var user = new User("","12345");
+				var result = user.isUserNameValid();
+				var expected = false;
+				expect(result).toBe(expected);
+				
+			});
+		  
+		  it("UserName isNotValid", function() {	  
+				var user = new User(null,"12345");
+				var result = user.isUserNameValid();
+				var expected = false;
+				expect(result).toBe(expected);
+				
+			});
+		  
+		  
+ });
+ 
+ 
+describe("login Tests Password", function() {
+	
+	
+	  it("Password isValid", function() {	  
+			var user = new User("Ntina", "12345");
+			var result = user.isPasswordValid();
+			var expected = true;
+			expect(result).toBe(expected);
+			
+		});
+				
+	  it("Password isNotValid", function() {	  
+			var user = new User("Ntina","");
+			var result = user.isPasswordValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+	  
+	  it("Password isNotValid", function() {	  
+			var user = new User("Ntina",null);
+			var result = user.isPasswordValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+	  
+	  it("Password isNotValid", function() {	  
+			var user = new User("","");
+			var result = user.isPasswordValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+	  
+});
+
+
+describe("login Tests UserValidation", function() {
+	
+	
+	  it("User isValid", function() {	  
+			var user = new User("Ntina", "12345");
+			var result = user.isValid();
+			var expected = true;
+			expect(result).toBe(expected);
+			
+		});
+	  
+	  it("User isNotValid", function() {	  
+			var user = new User("", "12345");
+			var result = user.isValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+	  
+	  it("User isNotValid", function() {	  
+			var user = new User(null, "12345");
+			var result = user.isValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+	  
+	  it("User isNotValid", function() {	  
+			var user = new User("Ntina", "");
+			var result = user.isValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+	  
+	  it("User isNotValid", function() {	  
+			var user = new User("Ntina", null);
+			var result = user.isValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+	  
+	  it("User isNotValid", function() {	  
+			var user = new User(null, null);
+			var result = user.isValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+	  
+	  it("User isNotValid", function() {	  
+			var user = new User("", "");
+			var result = user.isValid();
+			var expected = false;
+			expect(result).toBe(expected);
+			
+		});
+		 
+		 
+
+});
+
+
+</script>
+</head>
+</html>
+
+

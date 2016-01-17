@@ -28,6 +28,7 @@ public interface IUserHistoryDAO {
 	
 	void updateUserHistory(final UserHistoryEntity userHistory) throws DataAccessException;
 	
+	@Deprecated
 	void updateUserHistory(final String username, final List<SnapClientTextMessage> userHistory) throws DataAccessException;
 	
 	void removeUserHistoryById(final String id) throws DataAccessException;
