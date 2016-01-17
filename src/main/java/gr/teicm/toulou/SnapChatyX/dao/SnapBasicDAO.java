@@ -6,6 +6,8 @@ import org.mongodb.morphia.dao.BasicDAO;
 import com.mongodb.MongoClient;
 
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
+import gr.teicm.toulou.SnapChatyX.model.entity.BannedUserEntity;
+import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
 import gr.teicm.toulou.SnapChatyX.model.entity.UserHistoryEntity;
 
 /**
@@ -74,6 +76,8 @@ class SnapBasicDAO<T, K> extends BasicDAO<T, K> {
 		// map participating classes, such as entities, below:
 		morphia.map(UserHistoryEntity.class);
 		morphia.map(SnapClientTextMessage.class);
+		morphia.map(SnapClientEntity.class);
+		morphia.map(BannedUserEntity.class);
 		
 		return morphia;
 		

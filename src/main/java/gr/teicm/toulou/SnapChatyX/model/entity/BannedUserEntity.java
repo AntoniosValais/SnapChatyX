@@ -2,8 +2,13 @@ package gr.teicm.toulou.SnapChatyX.model.entity;
 
 import java.util.Date;
 
+import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Id;
+
+@Entity("banList")
 public class BannedUserEntity {
 	
+	@Id
 	private String id;
 	
 	private String username;
