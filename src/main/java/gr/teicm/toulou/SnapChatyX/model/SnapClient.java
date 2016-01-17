@@ -27,18 +27,18 @@ public class SnapClient
 	
 	private String locationName;
 	
-	private List< SnapClient > friendList;
+	private List< String > friendList;
 	
-	private List< SnapClient > blackList;
+	private List< String > blackList;
 	
 
 	public SnapClient()
 	{
 		locationName = "Wonderland"; //TODO: temporary mexri na pernei timh to locationName
 		
-		friendList = new ArrayList< SnapClient >();
+		friendList = new ArrayList< String >();
 		
-		blackList = new ArrayList< SnapClient >();
+		blackList = new ArrayList< String >();
 	}
 
 	public String getUsername()
@@ -121,8 +121,13 @@ public class SnapClient
 		this.locationName = locationName;
 	}
 	
-	public Boolean addToFriendList( SnapClient snapClient )
+	public Boolean addToFriendList( String snapClient )
 	{
+		if( snapClient.isEmpty() )
+		{
+			return Boolean.FALSE;
+		}
+		
 		try
 		{
 			if( friendList.contains( snapClient ) == false )
@@ -138,8 +143,13 @@ public class SnapClient
 		}
 	}
 	
-	public Boolean addToBlackList( SnapClient snapClient )
+	public Boolean addToBlackList( String snapClient )
 	{
+		if( snapClient.isEmpty() )
+		{
+			return Boolean.FALSE;
+		}
+		
 		try
 		{
 			if( blackList.contains( snapClient ) == false )
@@ -155,8 +165,13 @@ public class SnapClient
 		}
 	}
 	
-	public Boolean removeFromFriendList( SnapClient snapClient )
+	public Boolean removeFromFriendList( String snapClient )
 	{
+		if( snapClient.isEmpty() )
+		{
+			return Boolean.FALSE;
+		}
+		
 		try
 		{
 			return friendList.remove( snapClient );
@@ -167,8 +182,13 @@ public class SnapClient
 		}
 	}	
 	
-	public Boolean removeFromBlackList( SnapClient snapClient )
+	public Boolean removeFromBlackList( String snapClient )
 	{
+		if( snapClient.isEmpty() )
+		{
+			return Boolean.FALSE;
+		}
+		
 		try
 		{
 			return blackList.remove( snapClient );
@@ -179,12 +199,12 @@ public class SnapClient
 		}
 	}
 	
-	public List< SnapClient > getBlackList()
+	public List< String > getBlackList()
 	{
 		return blackList;
 	}
 	
-	public List< SnapClient > getFriendList()
+	public List< String > getFriendList()
 	{
 		return friendList;
 	}
