@@ -1,5 +1,7 @@
 package gr.teicm.toulou.SnapChatyX.dao;
 
+import java.util.List;
+
 import org.mongodb.morphia.query.UpdateResults;
 
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
@@ -30,6 +32,12 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 	public SnapClientEntity getSnapClientEntityById(String id) {
 		
 		return getDatastore().get(SnapClientEntity.class, id );
+		
+	}
+	
+	public List<SnapClientEntity> getAllSnapClients() {
+		
+		return getDatastore().find(SnapClientEntity.class).asList();
 		
 	}
 	
