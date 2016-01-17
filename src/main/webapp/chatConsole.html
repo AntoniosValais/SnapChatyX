@@ -16,7 +16,8 @@
 		<div id="messagesIO"></div>
 		<div id="map"></div>
 		<div id="inputWindow">
-			<input type="text" id="inputElement" />
+			<audio id="beep" src="http://www.soundjay.com/button/beep-07.wav"></audio>
+			<input type="text" id="inputElement" onkeypress="return searchKeyPress(event);" />
 			<button type="button" id="sendButton" onclick="sendMessage()">Send Text Message</button>
 			<input type="button" value="Save Location" onclick="saveLocation()">
 			<input type="text" id="locdata" />
