@@ -15,6 +15,7 @@ import gr.teicm.toulou.SnapChatyX.model.entity.UserHistoryEntity;
  * @since Jan 5, 2016
  * 
  * @author Stamatios Tsalikis
+ * @author Konstantina Avgeri
  */
 public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> implements IUserHistoryDAO {
 	
@@ -36,7 +37,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		if (entity == null) {
 			
-			throw new DataAccessException("The UserHistoryEntity object param should not be null.");
+			throw new IllegalArgumentException("The UserHistoryEntity object param should not be null.");
 			
 		}
 		
@@ -57,7 +58,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		if (id == null) {
 			
-			throw new DataAccessException("The id param should not be null.");
+			throw new IllegalArgumentException("The id param should not be null.");
 			
 		}
 		
@@ -91,7 +92,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		if (username == null || username.length() == 0) {
 			
-			throw new DataAccessException("The username param should not be null nor empty.");
+			throw new IllegalArgumentException("The username param should not be null nor empty.");
 			
 		}
 		
@@ -132,7 +133,7 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 		if (userHistory == null) {
 			
-			throw new DataAccessException("The UserHistoryEntity object param should not be null.");
+			throw new IllegalArgumentException("The UserHistoryEntity object param should not be null.");
 			
 		}
 		
@@ -148,19 +149,22 @@ public class UserHistoryDAO extends SnapBasicDAO<UserHistoryEntity, String> impl
 		
 	}
 	
+	@Deprecated
 	@Override
-	public void updateUserHistory(final String username, final List<SnapClientTextMessage> messageList)
-			throws DataAccessException {
+	public void updateUserHistory(
+			final String username,
+			final List<SnapClientTextMessage> messageList
+	) {
 		
 		if (username == null || username.length() == 0) {
 			
-			throw new DataAccessException("The username param should not be null nor empty.");
+			throw new IllegalArgumentException("The username param should not be null nor empty.");
 			
 		}
 		
 		if (messageList == null || messageList.size() == 0) {
 			
-			throw new DataAccessException("The SnapClientTextMessage list param should not be null nor empty.");
+			throw new IllegalArgumentException("The SnapClientTextMessage list param should not be null nor empty.");
 			
 		}
 		
