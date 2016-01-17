@@ -54,6 +54,7 @@ function searchKeyPress(e)
 }
 function sendMessage()
 {
+	if(document.getElementById("inputElement").value != ""){
 	var textMessageToSent = document.getElementById("inputElement").value;
 	
 	var timeToLive = document.getElementById("message_time").value;
@@ -74,6 +75,8 @@ function sendMessage()
 	websocket.send( textMessage );
 	var clean = "";
 	document.getElementById("inputElement").value = clean;
+	}
+	
 }
 
 function searchProfile()
