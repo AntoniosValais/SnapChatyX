@@ -79,7 +79,7 @@ function registerUser()
 		
 	
 		if ( message["result"] === "success") {
-			alert("You have signed up successfully!" + "\n" + "* " + message["result"] + " *");
+			alert("You have signed up successfully!"  + "* " + message["result"] + " *");
 
 			window.location.assign("login.html");
 
@@ -103,7 +103,7 @@ function handleResponse() {
 		var responceJson = JSON.parse(responseText);
 
 		if (responceJson.result === "success") {
-			alert("You have signed up successfully!" + "\n" + "* " + responseText + " *");
+			alert("You have signed up successfully!" + "* " + responseText + " *");
 
 			window.location.assign("login.html");
 
