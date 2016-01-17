@@ -7,14 +7,24 @@ import java.util.UUID;
 import gr.teicm.toulou.SnapChatyX.dao.SnapClientDAO;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
+import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientEntityToModelTransformer;
+import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientModelToEntityTransformer;
 
 public class SnapClientService {
 	
 	private SnapClientDAO dao;
 	
+	private final SnapClientModelToEntityTransformer modelToEntityTransformer;
+	
+	private final SnapClientEntityToModelTransformer entityToModelTransformer;
+	
 	public SnapClientService() {
 		
 		dao = new SnapClientDAO();
+		
+		this.modelToEntityTransformer = new SnapClientModelToEntityTransformer();
+		
+		this.entityToModelTransformer = new SnapClientEntityToModelTransformer();
 		
 	}
 	
@@ -48,7 +58,7 @@ public class SnapClientService {
 		}
 		entity.setBlackList(blackListNames);
 		
-		dao.createSnapClientEntity(entity);
+		dao.createSnapClientEntity(modelToEntityTransformer.transform(snapClient));
 		
 	}
 	
@@ -76,8 +86,52 @@ public class SnapClientService {
 			snapClient.addToBlackList(this.getSnapClientByUsername(u));
 		}
 		
-		return snapClient;*/
+		return entityToModelTransformer.transform(entity);*/
 	}
+	
+	public boolean updateSnapClient(SnapClient snapClient)
+	{
+		String id;
+		for(SnapClientEntity sc : dao.getAllSnapClients())
+		{
+			if(snapClient.getUsername() == sc.getUsername())
+			{
+				id = sc.getId();
+			}
+		}
+		if(id != null)
+		{
+			SnapClientEntity entity = dao.getSnapClientEntityById(id);
+			return dao.updateSnapClientEntity(entity);
+		}
+		return false;
+		
+	}
+	public boolean deleteSnapClient(SnapClient snapClient)
+	{
+		if(snapClient == null)
+		{
+			throw new IllegalArgumentException("Param must not be null");
+		}
+		String id;
+		for(SnapClientEntity sc : dao.getAllSnapClients())
+		{
+			if(snapClient.getUsername() == sc.getUsername())
+			{
+				id = sc.getId();
+			}
+		}
+		
+		if(id != null)
+		{
+			SnapClientEntity entity = dao.getSnapClientEntityById(id);
+			return dao.deleteSnapClientEntity(entity);
+		}
+		return false;
+		
+	}
+	
+	
 	
 }
 

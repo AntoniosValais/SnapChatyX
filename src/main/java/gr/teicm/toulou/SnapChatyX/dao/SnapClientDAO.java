@@ -1,5 +1,9 @@
 package gr.teicm.toulou.SnapChatyX.dao;
 
+import java.util.List;
+
+import org.mongodb.morphia.query.UpdateResults;
+
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
 
 public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
@@ -31,9 +35,19 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 		
 	}
 	
-	public void updateSnapClientFriendList(SnapClientEntity entity) {
-
-		getDatastore().update(
+	public List<SnapClientEntity> getAllSnapClients() {
+		
+		return getDatastore().find(SnapClientEntity.class).asList();
+		
+	}
+	
+	public boolean updateSnapClientFriendList(SnapClientEntity entity) {
+		
+		if(null == entity){
+			throw new IllegalArgumentException("Param must not be null.");
+		}
+		
+		UpdateResults updateResults = getDatastore().update(
 				getDatastore()
 					.createQuery(SnapClientEntity.class)
 					.field("_id")
@@ -42,12 +56,27 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 					.createUpdateOperations(SnapClientEntity.class)
 					.set("friendList", entity.getFriendList())	
 					
-		);		
+		);
+		
+		if(null != updateResults) {
+			
+			if(updateResults.getUpdatedExisting()) {
+				return true;
+			}
+			
+		}
+		
+		return false;
+		
 	}
 	
-	public void updateSnapClientBlackList(SnapClientEntity entity) {
+	public boolean updateSnapClientBlackList(SnapClientEntity entity) {
 		 
-		getDatastore().update(
+		if(null == entity){
+			throw new IllegalArgumentException("Param must not be null.");
+		}
+		
+		UpdateResults updateResults = getDatastore().update(
 				getDatastore()
 					.createQuery(SnapClientEntity.class)
 					.field("_id")
@@ -56,17 +85,43 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 					.createUpdateOperations(SnapClientEntity.class)
 					.set("blackList", entity.getBlackList())
 					
-		);		
+		);
+		
+		if(null != updateResults) {
+			
+			if(updateResults.getUpdatedExisting()) {
+				return true;
+			}
+			
+		}
+		
+		return false;
+		
 	}
 	
-	public void updateSnapClientEntity(SnapClientEntity entity) {
+	public boolean updateSnapClientEntity(SnapClientEntity entity) {
+		//FIXME : den kanei update ola ta properties
+		if(updateSnapClientFriendList(entity) && updateSnapClientBlackList(entity)) {
+			
+			return true;
+			
+		} 
 		
-		updateSnapClientFriendList(entity); 
-		updateSnapClientBlackList(entity); 
+		return false;
 		
 	}
 	
-	public void deleteSnapClientEntity(SnapClientEntity entity) {
-		getDatastore().delete(getSnapClientEntityById(entity.getId()));
+	public boolean deleteSnapClientEntity(SnapClientEntity entity) {
+		SnapClientEntity scEntity = getSnapClientEntityById(entity.getId());
+		
+		if(null != scEntity) {
+			
+			getDatastore().delete(scEntity);
+			return true;
+			
+		}
+		
+		return false;
+		
 	}
 }

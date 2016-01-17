@@ -42,6 +42,16 @@ websocket.onopen = function( message )
 	websocket.send( connectMessage );
 };
 
+function searchKeyPress(e)
+{
+    e = e || window.event;
+    if (e.keyCode == 13)
+    {
+        document.getElementById('sendButton').click();
+        return false;
+    }
+    return true;
+}
 function sendMessage()
 {
 	var textMessageToSent = document.getElementById("inputElement").value;

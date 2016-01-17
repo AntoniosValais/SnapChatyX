@@ -3,7 +3,7 @@ package gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageH
 import javax.websocket.Session;
 
 import com.google.gson.Gson;
-
+import java.awt.*;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.ClientServerMessage;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.MessageHandlers.SessionFilter.SessionFilterController;
@@ -61,8 +61,9 @@ public class UserTextMessageHandler implements InterfaceMessageHandler
 		{
 			try
 			{
+				Toolkit.getDefaultToolkit().beep();
 				session.getAsyncRemote().sendText( snapTextMessage );
-				
+
 				messageDelivered = Boolean.TRUE;
 			}
 			catch( Exception e )
