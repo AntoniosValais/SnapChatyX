@@ -75,7 +75,7 @@ public class RemoveFromBlackListServletTests
 	@Test
 	public void servletReturnsProperJSONResponseWhenValidRemoveFromBlackListRequested()
 	{
-		userRequested.addToBlackList( blackListedUser );
+		userRequested.addToBlackList( blackListedUser.getUsername() );
 		
 		parameters.add( "user", userRequested.getUsername() );
 		
@@ -91,7 +91,7 @@ public class RemoveFromBlackListServletTests
 	@Test
 	public void servletReturnsProperResponseStatusWhenValidRemoveFromBlackListRequested()
 	{
-		userRequested.addToBlackList( blackListedUser );
+		userRequested.addToBlackList( blackListedUser.getUsername() );
 		
 		parameters.add( "user", userRequested.getUsername() );
 		

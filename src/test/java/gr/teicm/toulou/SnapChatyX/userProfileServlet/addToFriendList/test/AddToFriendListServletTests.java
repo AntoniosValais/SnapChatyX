@@ -76,7 +76,7 @@ public class AddToFriendListServletTests
 	{
 		parameters.add( "user", userRequested.getUsername() );
 		
-		parameters.add( "hatesUser", userOnFriendList.getUsername() );
+		parameters.add( "lovesUser", userOnFriendList.getUsername() );
 		
 		expectedResponseJSON = gson.toJson( new AddFriendResult( Boolean.TRUE ) );
 		
