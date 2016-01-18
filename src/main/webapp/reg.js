@@ -42,7 +42,7 @@ function registerUser()
 			// alert("Request failed!");
 		// }
 	// } else {
-		// alert("The data you iserted are not valid!");
+		// alert("The data you inserted are not valid!");
 	// }
 // 	
 	///////////////////////////////////	
@@ -60,40 +60,46 @@ function registerUser()
 	var email = document.getElementById("email").value;
 
 	var userValidation = new UserValidation(firstName, lastName, username, password, repeatedPassword, email);
-
-		var request = $.ajax({
-		contentType : "text/plain",
-		data : JSON.stringify({
-			"firstName" : firstName,
-			"lastName" : lastName,
-			"username" : username,
-			"password" : password.toString(),
-			"email" : email
-		}),
-		dataType : "json",
-		url : "http://localhost:8080/SnapChatyX/webapi/signup",
-		type : "POST"
-	}).done( function( message ) 
-	{
-		alert( message["result"] );
-		
 	
-		if ( message["result"] === "success") {
-			alert("You have signed up successfully!" + "\n" + "* " + message["result"] + " *");
-
-			window.location.assign("login.html");
-
-		}
+	if(userValidation.isValid()) 
+	{
+		var request = $.ajax({
+			contentType : "text/plain",
+			data : JSON.stringify({
+				"firstName" : firstName,
+				"lastName" : lastName,
+				"username" : username,
+				"password" : password.toString(),
+				"email" : email
+			}),
+			dataType : "json",
+			url : "http://localhost:8080/SnapChatyX/webapi/signup",
+			type : "POST"
+		}).done( function( message ) 
+		{
+			alert( message["result"] );
+			
 		
-	}).fail(function(xmlHttpRequest, statusText, ex) {
-		alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
-	});
+			if ( message["result"] === "success") {
+				alert("You have signed up successfully!"  + "* " + message["result"] + " *");
+
+				window.location.assign("login.html");
+
+			}
+			
+		}).fail(function(xmlHttpRequest, statusText, ex) {
+			alert("xmlHttpRequest: " + xmlHttpRequest + "\n" + "statusText: " + statusText + "\n" + "exception: " + ex);
+		});
+	}
+	else
+		alert("Not Valid Inputs!");
+		
 }
 
 /**
  * Handles the response which the server returns.
  */
-function handleResponse() {
+/*function handleResponse() {
 
 	
 	if ( request.readyState == 4 && request.status == 200 )
@@ -103,7 +109,7 @@ function handleResponse() {
 		var responceJson = JSON.parse(responseText);
 
 		if (responceJson.result === "success") {
-			alert("You have signed up successfully!" + "\n" + "* " + responseText + " *");
+			alert("You have signed up successfully!" + "* " + responseText + " *");
 
 			window.location.assign("login.html");
 
@@ -114,7 +120,7 @@ function handleResponse() {
 		alert("An error occurred while trying to sign up..." + "\n" + "* " + responseText + " *");
 	}
 	
-}
+}*/
 
 var UserValidation = function(firstName, lastName, username, password, repeatedPassword, email) {
 	this.firstName = firstName;

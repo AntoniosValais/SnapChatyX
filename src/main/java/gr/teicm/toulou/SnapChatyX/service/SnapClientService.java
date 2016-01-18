@@ -63,7 +63,7 @@ public class SnapClientService {
 	}
 	
 	public SnapClient getSnapClientByUsername(String username) {
-		List<SnapClientEntity> entityList = dao.getAllSnapClient();
+		List<SnapClientEntity> entityList = dao.getAllSnapClients();
 		for(SnapClientEntity entity : entityList) {
 			if(username == entity.getUsername()) {
 				//FIXME : Stamati!
@@ -91,7 +91,7 @@ public class SnapClientService {
 	
 	public boolean updateSnapClient(SnapClient snapClient)
 	{
-		String id;
+		String id = null;
 		for(SnapClientEntity sc : dao.getAllSnapClients())
 		{
 			if(snapClient.getUsername() == sc.getUsername())
@@ -113,7 +113,7 @@ public class SnapClientService {
 		{
 			throw new IllegalArgumentException("Param must not be null");
 		}
-		String id;
+		String id = null;
 		for(SnapClientEntity sc : dao.getAllSnapClients())
 		{
 			if(snapClient.getUsername() == sc.getUsername())

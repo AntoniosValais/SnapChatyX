@@ -56,7 +56,7 @@ public class BlackListControllerTests
 	@Test
 	public void userInBlackListSuccessfulyRemovedFromBlackList()
 	{
-		userRequested.addToBlackList( blackListedUser );
+		userRequested.addToBlackList( blackListedUser.getUsername() );
 		
 		actionResult = controller.removeFromBlackList( userRequested.getUsername(), blackListedUser.getUsername() );
 		
@@ -66,7 +66,7 @@ public class BlackListControllerTests
 	@Test
 	public void userInBlackListCanNotBeRemovedTwice()
 	{
-		userRequested.addToBlackList( blackListedUser );
+		userRequested.addToBlackList( blackListedUser.getUsername() );
 		
 		controller.removeFromBlackList(  userRequested.getUsername(), blackListedUser.getUsername() );
 	
@@ -94,7 +94,7 @@ public class BlackListControllerTests
 	@Test
 	public void userIsRemovedIfHeIsOnFriendListWhenAddedOnBlackList()
 	{
-		userRequested.addToFriendList( blackListedUser );
+		userRequested.addToFriendList( blackListedUser.getUsername() );
 		
 		controller.addToBlackList( userRequested.getUsername(), blackListedUser.getUsername() );
 		
