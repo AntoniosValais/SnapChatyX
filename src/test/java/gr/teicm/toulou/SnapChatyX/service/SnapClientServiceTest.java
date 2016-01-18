@@ -34,19 +34,23 @@ public class SnapClientServiceTest {
 		snapClient.setFirstName("Dimitrios");
 		snapClient.setLastName("Papadopoulos");
 		snapClient.setEmail("dim@pap.cm");
+		snapClient.addToFriendList("kitsos");
+		snapClient.addToBlackList("babis");
 		
 		SnapClientDAO dao = new SnapClientDAO();
-		SnapClientEntity entity = new SnapClientEntity();
-		entity.setUsername("mitsos");
-		entity.setPassword("God");
-		entity.setLongitude(3.14);
-		entity.setLatitude(45.0);
-		entity.setLocationName("Serres");
-		entity.setFirstName("Dimitrios");
-		entity.setLastName("Papadopoulos");
-		entity.setEmail("dim@pap.cm");
+//		SnapClientEntity entity = new SnapClientEntity();
+//		entity.setUsername("mitsos");
+//		entity.setPassword("God");
+//		entity.setLongitude(3.14);
+//		entity.setLatitude(45.0);
+//		entity.setLocationName("Serres");
+//		entity.setFirstName("Dimitrios");
+//		entity.setLastName("Papadopoulos");
+//		entity.setEmail("dim@pap.cm");
 		
-		dao.getDatastore().save(entity);
+		target.setDao(dao);
+		
+//		dao.getDatastore().save(entity);
 		
 		//Execution
 		target.createSnapClient(snapClient);
@@ -62,6 +66,8 @@ public class SnapClientServiceTest {
 		Assert.assertEquals(snapClient.getFirstName(), result.getFirstName());
 		Assert.assertEquals(snapClient.getLastName(), result.getLastName());
 		Assert.assertEquals(snapClient.getEmail(), result.getEmail());
+		Assert.assertEquals(snapClient.getFriendList().get(0), result.getFriendList().get(0));
+		Assert.assertEquals(snapClient.getBlackList().get(0), result.getBlackList().get(0));
 		
 		//TearDown
 		dao.getDatastore().delete(result);
@@ -69,6 +75,55 @@ public class SnapClientServiceTest {
 		
 	}
 		
+	@Test(expected = IllegalArgumentException.class)
+	public void testCreateSnapClientPramNull() {
+		
+		//SetUp
+		
+		//Execution
+		target.createSnapClient(null);
+
+		//Verification
+		
+		//TearDown
+	}
+	
+	@Test
+	public void testGetSnapClientByUsernameSuccess() throws Exception {
+		//SetUp
+		
+		//Execution
+		target.getSnapClientByUsername(username);
+		
+		//Verification
+		
+		//TearDown
+	}
+	
+	@Test
+	public void testGetSnapClientByUsernameParamNull() throws Exception  {
+		//SetUp
+		
+		//Execution
+		target.getSnapClientByUsername(null);
+		
+		//Verification
+		
+		//TearDown
+	}
+	
+	@Test
+	public void testGetSnapClientByUsernameParamEmpty() throws Exception  {
+		//SetUp
+		
+		//Execution
+		target.getSnapClientByUsername("");
+		
+		//Verification
+		
+		//TearDown
+	}
+	
 	@Test
 	public void testUpdateSnapClientSuccess()
 	{
@@ -84,13 +139,13 @@ public class SnapClientServiceTest {
 		snapClient1.setLastName("Koukos");
 		snapClient1.setEmail("asd2@gmail.com");
 		
-		SnapClient friend1 = new SnapClient();
-		friend1.setUsername("Kitsos");
-		snapClient1.addToFriendList(friend1);
+//		SnapClient friend1 = new SnapClient();
+//		friend1.setUsername("Kitsos");
+		snapClient1.addToFriendList("Kitsos");
 		
-		SnapClient black1 = new SnapClient();
-		black1.setUsername("Stefos");
-		snapClient1.addToBlackList(black1);
+//		SnapClient black1 = new SnapClient();
+//		black1.setUsername("Stefos");
+		snapClient1.addToBlackList("Stefos");
 		
 		SnapClient snapClient2 = new SnapClient();
 		snapClient2.setUsername("ketsis");
@@ -102,13 +157,13 @@ public class SnapClientServiceTest {
 		snapClient2.setLastName("Koukos");
 		snapClient2.setEmail("asd2@gmail.com");
 		
-		SnapClient friend2 = new SnapClient();
-		friend2.setUsername("Pitsos");
-		snapClient2.addToFriendList(friend2);
+//		SnapClient friend2 = new SnapClient();
+//		friend2.setUsername("Pitsos");
+		snapClient2.addToFriendList("Pitsos");
 		
-		SnapClient black2 = new SnapClient();
-		black2.setUsername("Litsos");
-		snapClient2.addToBlackList(black2);
+//		SnapClient black2 = new SnapClient();
+//		black2.setUsername("Litsos");
+		snapClient2.addToBlackList("Litsos");
 		
 		SnapClientDAO dao = new SnapClientDAO();
 		SnapClientEntity entity = new SnapClientEntity();
@@ -121,19 +176,19 @@ public class SnapClientServiceTest {
 		entity.setLastName(snapClient1.getLastName());
 		entity.setEmail(snapClient1.getEmail());
 		
-		List<String> fnList = new ArrayList<>();
-		for(SnapClient sc : snapClient1.getFriendList())
-		{
-			fnList.add(sc.getUsername());
-		}
-		entity.setFriendList(fnList);
+//		List<String> fnList = new ArrayList<>();
+//		for(SnapClient sc : snapClient1.getFriendList())
+//		{
+//			fnList.add(sc.getUsername());
+//		}
+		entity.setFriendList(snapClient1.getFriendList());
 		
-		List<String> bnList = new ArrayList<>();
-		for(SnapClient sc : snapClient1.getBlackList())
-		{
-			bnList.add(sc.getUsername());
-		}
-		entity.setBlackList(bnList);
+//		List<String> bnList = new ArrayList<>();
+//		for(SnapClient sc : snapClient1.getBlackList())
+//		{
+//			bnList.add(sc.getUsername());
+//		}
+		entity.setBlackList(snapClient1.getBlackList());
 		
 		dao.createSnapClientEntity(entity);
 		
@@ -160,8 +215,8 @@ public class SnapClientServiceTest {
 		Assert.assertEquals(snapClient2.getFirstName(), result.getFirstName());
 		Assert.assertEquals(snapClient2.getLastName(), result.getLastName());
 		Assert.assertEquals(snapClient2.getEmail(), result.getEmail());
-		Assert.assertEquals(snapClient2.getFriendList().get(0).getUsername(), result.getFriendList().get(0));
-		Assert.assertEquals(snapClient2.getBlackList().get(0).getUsername(), result.getBlackList().get(0));
+		Assert.assertEquals(snapClient2.getFriendList().get(0), result.getFriendList().get(0));
+		Assert.assertEquals(snapClient2.getBlackList().get(0), result.getBlackList().get(0));
 		
 		//TearDown
 		
@@ -183,13 +238,13 @@ public class SnapClientServiceTest {
 		snapClient1.setLastName("Koukos");
 		snapClient1.setEmail("asd2@gmail.com");
 		
-		SnapClient friend1 = new SnapClient();
-		friend1.setUsername("Kitsos");
-		snapClient1.addToFriendList(friend1);
+//		SnapClient friend1 = new SnapClient();
+//		friend1.setUsername("Kitsos");
+		snapClient1.addToFriendList("Kitsos");
 		
-		SnapClient black1 = new SnapClient();
-		black1.setUsername("Stefos");
-		snapClient1.addToBlackList(black1);
+//		SnapClient black1 = new SnapClient();
+//		black1.setUsername("Stefos");
+		snapClient1.addToBlackList("Stefos");
 		
 		//Execution
 		boolean successUpdate = target.updateSnapClient(snapClient1);
@@ -226,13 +281,13 @@ public class SnapClientServiceTest {
 		snapClient1.setLastName("Koukos");
 		snapClient1.setEmail("asd2@gmail.com");
 		
-		SnapClient friend1 = new SnapClient();
-		friend1.setUsername("Kitsos");
-		snapClient1.addToFriendList(friend1);
+//		SnapClient friend1 = new SnapClient();
+//		friend1.setUsername("Kitsos");
+		snapClient1.addToFriendList("Kitsos");
 		
-		SnapClient black1 = new SnapClient();
-		black1.setUsername("Stefos");
-		snapClient1.addToBlackList(black1);
+//		SnapClient black1 = new SnapClient();
+//		black1.setUsername("Stefos");
+		snapClient1.addToBlackList("Stefos");
 		
 		SnapClientDAO dao = new SnapClientDAO();
 		SnapClientEntity entity = new SnapClientEntity();
@@ -246,19 +301,19 @@ public class SnapClientServiceTest {
 		entity.setLastName(snapClient1.getLastName());
 		entity.setEmail(snapClient1.getEmail());
 		
-		List<String> fnList = new ArrayList<>();
-		for(SnapClient sc : snapClient1.getFriendList())
-		{
-			fnList.add(sc.getUsername());
-		}
-		entity.setFriendList(fnList);
+//		List<String> fnList = new ArrayList<>();
+//		for(SnapClient sc : snapClient1.getFriendList())
+//		{
+//			fnList.add(sc.getUsername());
+//		}
+		entity.setFriendList(snapClient1.getFriendList());
 		
-		List<String> bnList = new ArrayList<>();
-		for(SnapClient sc : snapClient1.getBlackList())
-		{
-			bnList.add(sc.getUsername());
-		}
-		entity.setBlackList(bnList);
+//		List<String> bnList = new ArrayList<>();
+//		for(SnapClient sc : snapClient1.getBlackList())
+//		{
+//			bnList.add(sc.getUsername());
+//		}
+		entity.setBlackList(snapClient1.getBlackList());
 		
 		dao.createSnapClientEntity(entity);
 		
@@ -284,13 +339,13 @@ public class SnapClientServiceTest {
 		snapClient1.setLastName("Koukos");
 		snapClient1.setEmail("asd2@gmail.com");
 		
-		SnapClient friend1 = new SnapClient();
-		friend1.setUsername("Kitsos");
-		snapClient1.addToFriendList(friend1);
+//		SnapClient friend1 = new SnapClient();
+//		friend1.setUsername("Kitsos");
+		snapClient1.addToFriendList("Kitsos");
 		
-		SnapClient black1 = new SnapClient();
-		black1.setUsername("Stefos");
-		snapClient1.addToBlackList(black1);
+//		SnapClient black1 = new SnapClient();
+//		black1.setUsername("Stefos");
+		snapClient1.addToBlackList("Stefos");
 		
 		//Execution
 		boolean successDelete = target.deleteSnapClient(snapClient1);
