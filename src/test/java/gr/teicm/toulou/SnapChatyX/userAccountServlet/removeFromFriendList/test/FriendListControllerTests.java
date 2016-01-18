@@ -54,7 +54,7 @@ public class FriendListControllerTests
 	@Test
 	public void userInFriendListIsSuccessfullyRemoved()
 	{
-		userRequested.addToFriendList( friendListedUser );
+		userRequested.addToFriendList( friendListedUser.getUsername() );
 		
 		actionResult = controller.removeFromFriendList( userRequested.getUsername(), friendListedUser.getUsername() );
 		
@@ -72,7 +72,7 @@ public class FriendListControllerTests
 	@Test
 	public void removeUserFromFriendListTwice()
 	{
-		userRequested.addToFriendList( friendListedUser );
+		userRequested.addToFriendList( friendListedUser.getUsername() );
 		
 		controller.removeFromFriendList( userRequested.getUsername(), friendListedUser.getUsername() );
 		
@@ -92,7 +92,7 @@ public class FriendListControllerTests
 	@Test
 	public void userIsRemovedFromBlackListIfHeIsAddedOnFriendList()
 	{
-		userRequested.addToBlackList( friendListedUser );
+		userRequested.addToBlackList( friendListedUser.getUsername() );
 		
 		controller.addToFriendList( userRequested.getUsername(), friendListedUser.getUsername() );
 		

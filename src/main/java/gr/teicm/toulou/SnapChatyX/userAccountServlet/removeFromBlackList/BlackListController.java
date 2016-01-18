@@ -26,9 +26,7 @@ public class BlackListController implements InterfaceBlackListController
 		{
 			SnapClient user = dataAccessObject.getRegisteredSnapClientWithUsername( userRequested );
 			
-			SnapClient blackListed = dataAccessObject.getRegisteredSnapClientWithUsername( userToRemoveFromBlackList );
-			
-			return user.removeFromBlackList( blackListed );
+			return user.removeFromBlackList( userToRemoveFromBlackList );
 		}
 		catch( Exception e )
 		{
@@ -43,13 +41,11 @@ public class BlackListController implements InterfaceBlackListController
 		{
 			SnapClient user = dataAccessObject.getRegisteredSnapClientWithUsername( userRequested );
 			
-			SnapClient bannedUser = dataAccessObject.getRegisteredSnapClientWithUsername( userToAddOnBlackList );
+			user.removeFromFriendList( userToAddOnBlackList );
 			
-			user.removeFromFriendList( bannedUser );
-			
-			if( user.getBlackList().contains( bannedUser ) == false )
+			if( user.getBlackList().contains( userToAddOnBlackList ) == false )
 			{
-				return user.addToBlackList( bannedUser );
+				return user.addToBlackList( userToAddOnBlackList );
 			}
 			else
 			{

@@ -73,7 +73,7 @@ public class RemoveFromFriendListServletTests
 	@Test
 	public void servletReturnsProperJSONResponseWhenValidRemoveFromFriendListRequested()
 	{
-		userRequested.addToFriendList( friendListedUser );
+		userRequested.addToFriendList( friendListedUser.getUsername() );
 		
 		parameters.add( "user", userRequested.getUsername() );
 		
@@ -89,7 +89,7 @@ public class RemoveFromFriendListServletTests
 	@Test
 	public void servletReturnsProperResponseStatusWhenValidRemoveFromFriendListRequested()
 	{
-		userRequested.addToFriendList( friendListedUser );
+		userRequested.addToFriendList( friendListedUser.getUsername() );
 		
 		parameters.add( "user", userRequested.getUsername() );
 		

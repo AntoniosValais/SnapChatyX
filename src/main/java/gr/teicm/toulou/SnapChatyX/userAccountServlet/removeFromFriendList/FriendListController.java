@@ -26,9 +26,7 @@ public class FriendListController implements InterfaceFriendListController
 		{
 			SnapClient user = dataAccessObject.getRegisteredSnapClientWithUsername( userRequested );
 			
-			SnapClient friend = dataAccessObject.getRegisteredSnapClientWithUsername( userToRemoveFromFriend );
-			
-			return user.removeFromFriendList( friend );
+			return user.removeFromFriendList( userToRemoveFromFriend );
 		}
 		catch( Exception e )
 		{
@@ -43,11 +41,16 @@ public class FriendListController implements InterfaceFriendListController
 		{
 			SnapClient user = dataAccessObject.getRegisteredSnapClientWithUsername( userRequested );
 			
-			SnapClient friend = dataAccessObject.getRegisteredSnapClientWithUsername( userToAddFriend );
+			user.removeFromBlackList( userToAddFriend );
 			
-			user.removeFromBlackList( friend );
-			
-			return user.addToFriendList( friend );
+			if( user.getFriendList().contains( userToAddFriend ) == false )
+			{
+				return user.addToFriendList( userToAddFriend );
+			}
+			else
+			{
+				return Boolean.TRUE;
+			}
 		}
 		catch( Exception e )
 		{
