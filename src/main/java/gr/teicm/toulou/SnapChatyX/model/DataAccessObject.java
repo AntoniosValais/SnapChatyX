@@ -34,6 +34,10 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 	
 	private final List<IUserHistory> userHistoryList;
 	
+	private List<String> banList;
+	
+	private List<String> administrators;
+	
 	private DataAccessObject()
 	{
 		this.initializeDeleterTimer();
@@ -49,6 +53,10 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		snapClientTextMessageMap = new HashMap< SnapClient, List< SnapClientTextMessage > >();
 		
 		userHistoryList = new ArrayList<>();
+		
+		banList = new ArrayList<>();
+		
+		administrators = new ArrayList<>();
 	}
 	
 	@Override
@@ -560,5 +568,15 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		
 		return userHistoryList;
 		
+	}	
+	
+	@Override
+	public List<String> getBanList(){
+		return banList;
+	}
+	
+	@Override
+	public List<String> getAdminList(){
+		return administrators;
 	}
 }
