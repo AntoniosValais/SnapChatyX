@@ -12,9 +12,9 @@ public class SnapClientService {
 	
 	private SnapClientDAO dao;
 	
-	private final SnapClientModelToEntityTransformer modelToEntityTransformer;
+	private SnapClientModelToEntityTransformer modelToEntityTransformer;
 	
-	private final SnapClientEntityToModelTransformer entityToModelTransformer;
+	private SnapClientEntityToModelTransformer entityToModelTransformer;
 	
 	public SnapClientService() {
 		
@@ -27,14 +27,29 @@ public class SnapClientService {
 	}
 	
 	public SnapClientDAO getDao() {
-		
 		return dao;
 	}
-	public void setDao(SnapClientDAO dao) {
+	public void setDao(final SnapClientDAO dao) {
 		this.dao = dao;
 	}
 	
-	public void createSnapClient(SnapClient snapClient) {
+	public SnapClientModelToEntityTransformer getModelToEntityTransformer() {
+		return modelToEntityTransformer;
+	}
+
+	public void setModelToEntityTransformer(final SnapClientModelToEntityTransformer modelToEntityTransformer) {
+		this.modelToEntityTransformer = modelToEntityTransformer;
+	}
+
+	public SnapClientEntityToModelTransformer getEntityToModelTransformer() {
+		return entityToModelTransformer;
+	}
+
+	public void setEntityToModelTransformer(final SnapClientEntityToModelTransformer entityToModelTransformer) {
+		this.entityToModelTransformer = entityToModelTransformer;
+	}
+
+	public boolean createSnapClient(final SnapClient snapClient) {
 		
 		if(snapClient == null) {
 			throw new IllegalArgumentException("Param must not be null!");
@@ -59,7 +74,7 @@ public class SnapClientService {
 //		}
 //		entity.setBlackList(snapClient.getBlackList());
 //		
-		dao.createSnapClientEntity(modelToEntityTransformer.transform(snapClient));
+		return dao.createSnapClientEntity(modelToEntityTransformer.transform(snapClient));
 		
 	}
 	
