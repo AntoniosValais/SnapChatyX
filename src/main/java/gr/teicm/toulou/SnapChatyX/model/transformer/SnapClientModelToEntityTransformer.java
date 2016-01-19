@@ -24,8 +24,8 @@ public class SnapClientModelToEntityTransformer {
 		entity.setLongitude(model.getLongitude());
 		entity.setEmail(model.getEmail());
 		entity.setLocationName(model.getLocationName());
-		//entity.setFriendList(model.getFriendList());
-		//entity.setBlackList(model.getBlackList());
+		entity.setFriendList(model.getFriendList());
+		entity.setBlackList(model.getBlackList());
 		
 		return entity;
 	}
