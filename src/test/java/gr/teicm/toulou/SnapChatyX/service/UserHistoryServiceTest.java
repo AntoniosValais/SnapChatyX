@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -15,6 +14,11 @@ import gr.teicm.toulou.SnapChatyX.dao.IUserHistoryDAO;
 import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
 import gr.teicm.toulou.SnapChatyX.model.entity.UserHistoryEntity;
 
+/**
+ * 
+ * 
+ * @author Stamatios Tsalikis
+ */
 public class UserHistoryServiceTest {
 	
 	private static IUserHistoryService target;
@@ -30,6 +34,7 @@ public class UserHistoryServiceTest {
 	public void testGetUserHistoryByUsernameSuccess() throws Exception {
 		
 		// SetUp
+		final String id = "1";
 		final String username = "mitsos";
 		
 		final SnapClientTextMessage message = new SnapClientTextMessage();
@@ -40,7 +45,7 @@ public class UserHistoryServiceTest {
 		messages.add(message);
 		
 		final UserHistoryEntity entityFixture =
-				new UserHistoryEntity(UUID.randomUUID().toString(), username, messages);
+				new UserHistoryEntity(id, username, messages);
 		
 		final IUserHistoryDAO mockDao = mock(IUserHistoryDAO.class);
 		target.setUserHistoryDAO(mockDao);
@@ -55,7 +60,8 @@ public class UserHistoryServiceTest {
 		verify(mockDao).findUserHistoryByUsername(username);
 		
 		assertNotNull(modelResult);
-		assertEquals("The usernames must be equal.",
+		assertEquals(
+				"The usernames must be equal.",
 				entityFixture.getUsername(),
 				modelResult.getUsername()
 		);

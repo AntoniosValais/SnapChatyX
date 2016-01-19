@@ -2,17 +2,17 @@ package gr.teicm.toulou.SnapChatyX.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-import gr.teicm.toulou.SnapChatyX.dao.SnapClientDAO;
+import gr.teicm.toulou.SnapChatyX.dao.ISnapClientEntityDAO;
+import gr.teicm.toulou.SnapChatyX.dao.SnapClientEntityDAO;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
-import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientEntityToModelTransformer;
+import gr.teicm.toulou.SnapChatyX.model.transformer.ISnapClientEntityToModelTransformer;
 import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientModelToEntityTransformer;
 
 /**
@@ -20,11 +20,10 @@ import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientModelToEntityTrans
  * 
  * @author Eutixia Bibo
  * @author Petros Ketsentsidis
- * @author Stamatios Tsalikis
  */
 public class SnapClientServiceTest {
 
-	private SnapClientService target;
+	private ISnapClientService target;
 	
 	@Before
 	public void setUp() {
@@ -44,7 +43,7 @@ public class SnapClientServiceTest {
 		target.setModelToEntityTransformer(mockTransformer);
 		Mockito.when(mockTransformer.transform(snapClient)).thenReturn(entityFixture);
 		
-		final SnapClientDAO mockDao = Mockito.mock(SnapClientDAO.class);
+		final SnapClientEntityDAO mockDao = Mockito.mock(SnapClientEntityDAO.class);
 		target.setDao(mockDao);
 		Mockito.when(mockDao.createSnapClientEntity(entityFixture))
 		.thenReturn(true);
@@ -65,215 +64,161 @@ public class SnapClientServiceTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testCreateSnapClientPramNull() {
 		
-		//SetUp
+		// SetUp
 		
-		//Execution
+		// Execution
 		target.createSnapClient(null);
 
-		//Verification
+		// Verification
 		
-		//TearDown
+		// TearDown
 	}
 	
 	@Test
-	public void testGetSnapClientByUsernameSuccess() throws Exception {
+	public void testGetSnapClientByUsernameSuccess() {
 		
-		//SetUp
-		String username = "Efi";
-		String id = "1";
-		SnapClientEntity entity = new SnapClientEntity();
-		entity.setUsername(username);
-		entity.setId(id);
+		// SetUp
+		final String username = "Efi";
+		final String id = "1";
 		
-		List<SnapClientEntity> entityList = new ArrayList<>();
-		entityList.add(entity);
+		final SnapClientEntity entityFixture = new SnapClientEntity();
+		entityFixture.setUsername(username);
+		entityFixture.setId(id);
 		
-		SnapClientDAO mockDao = Mockito.mock(SnapClientDAO.class);
+		final List<SnapClientEntity> entityList = new ArrayList<>();
+		entityList.add(entityFixture);
+		
+		final ISnapClientEntityDAO mockDao = Mockito.mock(ISnapClientEntityDAO.class);
 		target.setDao(mockDao);
 		Mockito.when(mockDao.getAllSnapClients()).thenReturn(entityList);
-		Mockito.when(mockDao.getSnapClientEntityById(id)).thenReturn(entity);
+		Mockito.when(mockDao.getSnapClientEntityById(id)).thenReturn(entityFixture);
 		
-		SnapClient model =new SnapClient();
-		model.setUsername(entity.getUsername());
+		final SnapClient modelFixture = new SnapClient();
+		modelFixture.setUsername(entityFixture.getUsername());
 		
-		SnapClientEntityToModelTransformer mockTransformer =
-				Mockito.mock(SnapClientEntityToModelTransformer.class);
+		final ISnapClientEntityToModelTransformer mockTransformer =
+				Mockito.mock(ISnapClientEntityToModelTransformer.class);
 		target.setEntityToModelTransformer(mockTransformer);
-		Mockito.when(mockTransformer.transform(entity)).thenReturn(model);
+		Mockito.when(mockTransformer.transform(entityFixture)).thenReturn(modelFixture);
 		
 		
-		//Execution
-		SnapClient result = target.getSnapClientByUsername(username);
+		// Execution
+		final SnapClient result = target.getSnapClientByUsername(username);
 		
-		//Verification
+		// Verification
 		Mockito.verify(mockDao).getAllSnapClients();
-		Mockito.verify(mockDao).getSnapClientEntityById(entity.getId());
-		Mockito.verify(mockTransformer).transform(entity);
+		Mockito.verify(mockDao).getSnapClientEntityById(entityFixture.getId());
+		Mockito.verify(mockTransformer).transform(entityFixture);
 		
 		Assert.assertNotNull(result);
-		Assert.assertEquals(result.getUsername(), entity.getUsername());
+		Assert.assertEquals(result.getUsername(), entityFixture.getUsername());
 		
-		//TearDown
+		// TearDown
 		
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetSnapClientByUsernameParamNull() throws Exception  {
-		//SetUp
+		// SetUp
 		
-		//Execution
+		// Execution
 		target.getSnapClientByUsername(null);
 		
-		//Verification
+		// Verification
 		
-		//TearDown
+		// TearDown
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testGetSnapClientByUsernameParamEmpty() throws Exception  {
-		//SetUp
+	public void testGetSnapClientByUsernameParamEmpty() throws Exception {
 		
-		//Execution
+		// SetUp
+		
+		// Execution
 		target.getSnapClientByUsername("");
 		
-		//Verification
+		// Verification
 		
-		//TearDown
+		// TearDown
+		
 	}
 	
 	@Test
 	public void testUpdateSnapClientSuccess() {
-		// FIXME: update this test with Mockito
 		
-		//SetUp
+		// SetUp
+		final String id = "1";
+		final String username = "mitsos";
 		
-		SnapClient snapClient1 = new SnapClient();
-		snapClient1.setUsername("ketsis");
-		snapClient1.setPassword("123");
-		snapClient1.setLongitude(53.3425);
-		snapClient1.setLatitude(36.3453);
-		snapClient1.setLocationName("Kriti");
-		snapClient1.setFirstName("Swthrhs");
-		snapClient1.setLastName("Koukos");
-		snapClient1.setEmail("asd2@gmail.com");
+		final SnapClientEntity entityFixture = new SnapClientEntity();
+		entityFixture.setId(id);
+		entityFixture.setUsername(username);
 		
-//		SnapClient friend1 = new SnapClient();
-//		friend1.setUsername("Kitsos");
-		snapClient1.addToFriendList("Kitsos");
+		final ISnapClientEntityDAO mockDao = Mockito.mock(ISnapClientEntityDAO.class);
+		target.setDao(mockDao);
 		
-//		SnapClient black1 = new SnapClient();
-//		black1.setUsername("Stefos");
-		snapClient1.addToBlackList("Stefos");
+		final List<SnapClientEntity> entityListFixture = new ArrayList<>();
+		entityListFixture.add(entityFixture);
 		
-		SnapClient snapClient2 = new SnapClient();
-		snapClient2.setUsername("ketsis");
-		snapClient2.setPassword("123");
-		snapClient2.setLongitude(53.3425);
-		snapClient2.setLatitude(36.3453);
-		snapClient2.setLocationName("Kriti");
-		snapClient2.setFirstName("Swthrhs");
-		snapClient2.setLastName("Koukos");
-		snapClient2.setEmail("asd2@gmail.com");
+		Mockito.when(mockDao.getAllSnapClients()).thenReturn(entityListFixture);
+		Mockito.when(mockDao.getSnapClientEntityById(id)).thenReturn(entityFixture);
+		Mockito.when(mockDao.updateSnapClientEntity(entityFixture)).thenReturn(true);
 		
-//		SnapClient friend2 = new SnapClient();
-//		friend2.setUsername("Pitsos");
-		snapClient2.addToFriendList("Pitsos");
+		final SnapClient modelFixture = new SnapClient();
+		modelFixture.setUsername(entityFixture.getUsername());
 		
-//		SnapClient black2 = new SnapClient();
-//		black2.setUsername("Litsos");
-		snapClient2.addToBlackList("Litsos");
+		// Execution
+		final boolean successUpdate = target.updateSnapClient(modelFixture);
 		
-		SnapClientDAO dao = new SnapClientDAO();
-		SnapClientEntity entity = new SnapClientEntity();
-		entity.setUsername(snapClient1.getUsername());
-		entity.setPassword(snapClient1.getPassword());
-		entity.setLongitude(snapClient1.getLongitude());
-		entity.setLatitude(snapClient1.getLatitude());
-		entity.setLocationName(snapClient1.getLocationName());
-		entity.setFirstName(snapClient1.getFirstName());
-		entity.setLastName(snapClient1.getLastName());
-		entity.setEmail(snapClient1.getEmail());
+		// Verification
+		Mockito.verify(mockDao).getAllSnapClients();
+		Mockito.verify(mockDao).getSnapClientEntityById(id);
+		Mockito.verify(mockDao).updateSnapClientEntity(entityFixture);
 		
-//		List<String> fnList = new ArrayList<>();
-//		for(SnapClient sc : snapClient1.getFriendList())
-//		{
-//			fnList.add(sc.getUsername());
-//		}
-		entity.setFriendList(snapClient1.getFriendList());
-		
-//		List<String> bnList = new ArrayList<>();
-//		for(SnapClient sc : snapClient1.getBlackList())
-//		{
-//			bnList.add(sc.getUsername());
-//		}
-		entity.setBlackList(snapClient1.getBlackList());
-		
-		dao.createSnapClientEntity(entity);
-		
-		//Execution
-		boolean successUpdate = target.updateSnapClient(snapClient2);
-		
-		//Verification
 		Assert.assertTrue(successUpdate);
-		String id = null;
-		for(SnapClientEntity sc : dao.getAllSnapClients())
-		{
-			if(snapClient2.getUsername() == sc.getUsername())
-			{
-				id = sc.getId();
-			}
-		}
-		SnapClientEntity result = dao.getSnapClientEntityById(id);
-		Assert.assertNotNull(result);
-		Assert.assertEquals(snapClient2.getUsername(), result.getUsername());
-		Assert.assertEquals(snapClient2.getPassword(), result.getPassword());
-		Assert.assertEquals(snapClient2.getLongitude(), result.getLongitude());
-		Assert.assertEquals(snapClient2.getLatitude(), result.getLatitude());
-		Assert.assertEquals(snapClient2.getLocationName(), result.getLocationName());
-		Assert.assertEquals(snapClient2.getFirstName(), result.getFirstName());
-		Assert.assertEquals(snapClient2.getLastName(), result.getLastName());
-		Assert.assertEquals(snapClient2.getEmail(), result.getEmail());
-		Assert.assertEquals(snapClient2.getFriendList().get(0), result.getFriendList().get(0));
-		Assert.assertEquals(snapClient2.getBlackList().get(0), result.getBlackList().get(0));
 		
-		//TearDown
+		// TearDown
 		
-		dao.deleteSnapClientEntity(result);
-		Assert.assertNull(dao.getDatastore().exists(result));
 	}
 	
 	@Test
 	public void testUpdateSnapClientParamNoEntry() {
-		//SetUp
+		
+		// SetUp
 		final String username = "mitsos";
 		
-		SnapClient modelFixture = new SnapClient();
+		final SnapClient modelFixture = new SnapClient();
 		modelFixture.setUsername(username);
 		
-		List<SnapClientEntity> entityListFixture = new ArrayList<>();
+		final List<SnapClientEntity> entityListFixture = new ArrayList<>();
 		
-		SnapClientDAO mockDao = Mockito.mock(SnapClientDAO.class);
+		final ISnapClientEntityDAO mockDao = Mockito.mock(ISnapClientEntityDAO.class);
 		target.setDao(mockDao);
 		Mockito.when(mockDao.getAllSnapClients()).thenReturn(entityListFixture);
 		
-		//Execution
-		boolean successUpdate = target.updateSnapClient(modelFixture);
+		// Execution
+		final boolean successUpdate = target.updateSnapClient(modelFixture);
 		
-		//Verification
+		// Verification
 		Mockito.verify(mockDao).getAllSnapClients();
 		
 		Assert.assertFalse(successUpdate);
+		
+		// TearDown
 
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testUpdateSnapClientParamNull() {
-		//SetUp
 		
-		//Execution
+		// SetUp
+		
+		// Execution
 		target.updateSnapClient(null);
 		
-		//Verification
+		// Verification
+		
+		// TearDown
 		
 	}
 	
@@ -288,19 +233,19 @@ public class SnapClientServiceTest {
 		entityFixture.setId(id);
 		entityFixture.setUsername(username);
 		
-		List<SnapClientEntity> entityListFixture = new ArrayList<>();
+		final List<SnapClientEntity> entityListFixture = new ArrayList<>();
 		entityListFixture.add(entityFixture);
 		
-		SnapClientDAO mockDao = Mockito.mock(SnapClientDAO.class);
+		final ISnapClientEntityDAO mockDao = Mockito.mock(ISnapClientEntityDAO.class);
 		target.setDao(mockDao);
 		Mockito.when(mockDao.getAllSnapClients()).thenReturn(entityListFixture);
 		Mockito.when(mockDao.getSnapClientEntityById(id)).thenReturn(entityFixture);
 		Mockito.when(mockDao.deleteSnapClientEntity(entityFixture)).thenReturn(true);
 		
-		//Execution
-		boolean successDelete = target.deleteSnapClientByUsername(username);
+		// Execution
+		final boolean successDelete = target.deleteSnapClientByUsername(username);
 		
-		//Verification
+		// Verification
 		Mockito.verify(mockDao).getAllSnapClients();
 		Mockito.verify(mockDao).getSnapClientEntityById(id);
 		Mockito.verify(mockDao).deleteSnapClientEntity(entityFixture);
@@ -311,33 +256,23 @@ public class SnapClientServiceTest {
 	
 	@Test
 	public void testDeleteSnapClientParamNoEntry() {
-		// FIXME: update this test with Mockito
 		
-		//SetUp
+		// SetUp
 		final String username = "mitsos";
 		
-		SnapClient snapClient1 = new SnapClient();
-		snapClient1.setUsername("ketsis");
-		snapClient1.setPassword("123");
-		snapClient1.setLongitude(53.3425);
-		snapClient1.setLatitude(36.3453);
-		snapClient1.setLocationName("Kriti");
-		snapClient1.setFirstName("Swthrhs");
-		snapClient1.setLastName("Koukos");
-		snapClient1.setEmail("asd2@gmail.com");
+		final ISnapClientEntityDAO mockDao = Mockito.mock(ISnapClientEntityDAO.class);
+		target.setDao(mockDao);
 		
-//		SnapClient friend1 = new SnapClient();
-//		friend1.setUsername("Kitsos");
-		snapClient1.addToFriendList("Kitsos");
+		final List<SnapClientEntity> entityListFixture = new ArrayList<>();
 		
-//		SnapClient black1 = new SnapClient();
-//		black1.setUsername("Stefos");
-		snapClient1.addToBlackList("Stefos");
+		Mockito.when(mockDao.getAllSnapClients()).thenReturn(entityListFixture);
 		
-		//Execution
-		boolean successDelete = target.deleteSnapClientByUsername(username);
+		// Execution
+		final boolean successDelete = target.deleteSnapClientByUsername(username);
 		
-		//Verification
+		// Verification
+		Mockito.verify(mockDao).getAllSnapClients();
+		
 		Assert.assertFalse(successDelete);
 
 	}
@@ -345,12 +280,14 @@ public class SnapClientServiceTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testDeleteSnapClientParamNull()
 	{
-		//SetUp
+		// SetUp
 				
-		//Execution
+		// Execution
 		target.deleteSnapClientByUsername(null);
 		
-		//Verification
+		// Verification
+		
+		// TearDown
 		
 	}
 	

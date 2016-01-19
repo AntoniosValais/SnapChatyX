@@ -7,9 +7,14 @@ import org.junit.Test;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
 
+/**
+ * 
+ * 
+ * @author Stefanos Douliakas
+ */
 public class SnapClientModelToEntityTransformerTest {
 
-	private SnapClientModelToEntityTransformer target;
+	private ISnapClientModelToEntityTransformer target;
 	
 	@Before
 	public void setUp() {

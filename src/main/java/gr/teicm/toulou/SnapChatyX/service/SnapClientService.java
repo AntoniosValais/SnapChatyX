@@ -2,9 +2,12 @@ package gr.teicm.toulou.SnapChatyX.service;
 
 import java.util.List;
 
-import gr.teicm.toulou.SnapChatyX.dao.SnapClientDAO;
+import gr.teicm.toulou.SnapChatyX.dao.ISnapClientEntityDAO;
+import gr.teicm.toulou.SnapChatyX.dao.SnapClientEntityDAO;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
+import gr.teicm.toulou.SnapChatyX.model.transformer.ISnapClientEntityToModelTransformer;
+import gr.teicm.toulou.SnapChatyX.model.transformer.ISnapClientModelToEntityTransformer;
 import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientEntityToModelTransformer;
 import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientModelToEntityTransformer;
 
@@ -13,19 +16,18 @@ import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientModelToEntityTrans
  * 
  * @author Eutixia Bibo
  * @author Petros Ketsentsidis
- * @author Stamatios Tsalikis
  */
-public class SnapClientService {
+public class SnapClientService implements ISnapClientService {
 	
-	private SnapClientDAO dao;
+	private ISnapClientEntityDAO dao;
 	
-	private SnapClientModelToEntityTransformer modelToEntityTransformer;
+	private ISnapClientModelToEntityTransformer modelToEntityTransformer;
 	
-	private SnapClientEntityToModelTransformer entityToModelTransformer;
+	private ISnapClientEntityToModelTransformer entityToModelTransformer;
 	
 	public SnapClientService() {
 		
-		this.dao = new SnapClientDAO();
+		this.dao = new SnapClientEntityDAO();
 		
 		this.modelToEntityTransformer = new SnapClientModelToEntityTransformer();
 		
@@ -33,29 +35,37 @@ public class SnapClientService {
 		
 	}
 	
-	public SnapClientDAO getDao() {
+	@Override
+	public ISnapClientEntityDAO getDao() {
 		return dao;
 	}
-	public void setDao(final SnapClientDAO dao) {
+	
+	@Override
+	public void setDao(final ISnapClientEntityDAO dao) {
 		this.dao = dao;
 	}
 	
-	public SnapClientModelToEntityTransformer getModelToEntityTransformer() {
+	@Override
+	public ISnapClientModelToEntityTransformer getModelToEntityTransformer() {
 		return modelToEntityTransformer;
 	}
-
-	public void setModelToEntityTransformer(final SnapClientModelToEntityTransformer modelToEntityTransformer) {
+	
+	@Override
+	public void setModelToEntityTransformer(final ISnapClientModelToEntityTransformer modelToEntityTransformer) {
 		this.modelToEntityTransformer = modelToEntityTransformer;
 	}
-
-	public SnapClientEntityToModelTransformer getEntityToModelTransformer() {
+	
+	@Override
+	public ISnapClientEntityToModelTransformer getEntityToModelTransformer() {
 		return entityToModelTransformer;
 	}
-
-	public void setEntityToModelTransformer(final SnapClientEntityToModelTransformer entityToModelTransformer) {
+	
+	@Override
+	public void setEntityToModelTransformer(final ISnapClientEntityToModelTransformer entityToModelTransformer) {
 		this.entityToModelTransformer = entityToModelTransformer;
 	}
-
+	
+	@Override
 	public boolean createSnapClient(final SnapClient snapClient) {
 		
 		if(snapClient == null) {
@@ -66,9 +76,10 @@ public class SnapClientService {
 		
 	}
 	
-	public SnapClient getSnapClientByUsername(final String username) throws ServiceException {
+	@Override
+	public SnapClient getSnapClientByUsername(final String username) {
 		
-		if (username == null || username == "") {
+		if (username == null || username.length() == 0) {
 			throw new IllegalArgumentException("Param must not be null nor empty");
 		}
 		
@@ -86,7 +97,7 @@ public class SnapClientService {
 			try {
 				final SnapClientEntity entity = dao.getSnapClientEntityById(id);
 				return entityToModelTransformer.transform(entity);
-			} catch (Exception ex) {
+			} catch (final Exception ex) {
 				return null;
 			}
 		}
@@ -94,6 +105,7 @@ public class SnapClientService {
 		return null;
 	}
 	
+	@Override
 	public boolean updateSnapClient(final SnapClient snapClient) {
 		
 		if (snapClient == null) {
@@ -110,6 +122,9 @@ public class SnapClientService {
 			
 			if(id != null) {
 				final SnapClientEntity entity = dao.getSnapClientEntityById(id);
+				entity.setFriendList(snapClient.getFriendList());
+				entity.setBlackList(snapClient.getBlackList());
+				
 				return dao.updateSnapClientEntity(entity);
 			}
 		}
@@ -118,6 +133,7 @@ public class SnapClientService {
 		
 	}
 	
+	@Override
 	public boolean deleteSnapClientByUsername(final String username) {
 		
 		if(username == null || username.length() == 0) {

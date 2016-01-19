@@ -21,8 +21,6 @@ import gr.teicm.toulou.SnapChatyX.service.UserHistoryService;
 /**
  * 
  * 
- * @since Dec 3, 2015
- * 
  * @author Stamatios Tsalikis
  */
 @Path("histories/user-histories")

@@ -13,11 +13,11 @@ import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
 
 public class SnapClientDAOTest {
 
-	private SnapClientDAO target;
+	private SnapClientEntityDAO target;
 	
 	@Before
 	public void setUp() {
-		target = new SnapClientDAO();
+		target = new SnapClientEntityDAO();
 	}
 	
 	@Test

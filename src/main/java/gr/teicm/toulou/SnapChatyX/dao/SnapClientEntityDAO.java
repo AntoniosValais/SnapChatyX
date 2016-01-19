@@ -6,15 +6,20 @@ import org.mongodb.morphia.query.UpdateResults;
 
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
 
-public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
+/**
+ * 
+ * @author Orestis Zagkoumidis
+ */
+public class SnapClientEntityDAO extends SnapBasicDAO<SnapClientEntity, String> implements ISnapClientEntityDAO {
 
-	public SnapClientDAO() {
+	public SnapClientEntityDAO() {
 		
 		super(SnapClientEntity.class);
 		
 	}
 	
-	public boolean createSnapClientEntity(SnapClientEntity entity) {
+	@Override
+	public boolean createSnapClientEntity(final SnapClientEntity entity) {
 		
 		if(null == entity) {
 			throw new IllegalArgumentException("Param must not be null.");
@@ -29,25 +34,28 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 		
 	}
 	
-	public SnapClientEntity getSnapClientEntityById(String id) {
+	@Override
+	public SnapClientEntity getSnapClientEntityById(final String id) {
 		
-		return getDatastore().get(SnapClientEntity.class, id );
+		return getDatastore().get(SnapClientEntity.class, id);
 		
 	}
 	
+	@Override
 	public List<SnapClientEntity> getAllSnapClients() {
 		
 		return getDatastore().find(SnapClientEntity.class).asList();
 		
 	}
 	
-	public boolean updateSnapClientFriendList(SnapClientEntity entity) {
+	@Override
+	public boolean updateSnapClientFriendList(final SnapClientEntity entity) {
 		
 		if(null == entity){
 			throw new IllegalArgumentException("Param must not be null.");
 		}
 		
-		UpdateResults updateResults = getDatastore().update(
+		final UpdateResults updateResults = getDatastore().update(
 				getDatastore()
 					.createQuery(SnapClientEntity.class)
 					.field("_id")
@@ -70,13 +78,14 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 		
 	}
 	
-	public boolean updateSnapClientBlackList(SnapClientEntity entity) {
+	@Override
+	public boolean updateSnapClientBlackList(final SnapClientEntity entity) {
 		 
 		if(null == entity){
 			throw new IllegalArgumentException("Param must not be null.");
 		}
 		
-		UpdateResults updateResults = getDatastore().update(
+		final UpdateResults updateResults = getDatastore().update(
 				getDatastore()
 					.createQuery(SnapClientEntity.class)
 					.field("_id")
@@ -99,7 +108,8 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 		
 	}
 	
-	public boolean updateSnapClientEntity(SnapClientEntity entity) {
+	@Override
+	public boolean updateSnapClientEntity(final SnapClientEntity entity) {
 		//FIXME : den kanei update ola ta properties
 		if(updateSnapClientFriendList(entity) && updateSnapClientBlackList(entity)) {
 			
@@ -111,8 +121,9 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 		
 	}
 	
-	public boolean deleteSnapClientEntity(SnapClientEntity entity) {
-		SnapClientEntity scEntity = getSnapClientEntityById(entity.getId());
+	@Override
+	public boolean deleteSnapClientEntity(final SnapClientEntity entity) {
+		final SnapClientEntity scEntity = getSnapClientEntityById(entity.getId());
 		
 		if(null != scEntity) {
 			
@@ -122,6 +133,6 @@ public class SnapClientDAO extends SnapBasicDAO<SnapClientEntity, String> {
 		}
 		
 		return false;
-		
 	}
+	
 }

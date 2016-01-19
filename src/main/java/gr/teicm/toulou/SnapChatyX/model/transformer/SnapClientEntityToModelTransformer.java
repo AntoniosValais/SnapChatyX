@@ -3,8 +3,14 @@ package gr.teicm.toulou.SnapChatyX.model.transformer;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
 
-public class SnapClientEntityToModelTransformer {
+/**
+ * 
+ * 
+ * @author Stamatios Tsalikis
+ */
+public class SnapClientEntityToModelTransformer implements ISnapClientEntityToModelTransformer {
 	
+	@Override
 	public SnapClient transform(SnapClientEntity entity) 
 	{
 		if(entity == null)
@@ -27,9 +33,6 @@ public class SnapClientEntityToModelTransformer {
 		for(String black : entity.getBlackList()) {
 			model.addToBlackList(black);
 		}
-		
-//		model.setFriendList(entity.getFriendList());
-//		model.setBlackList(entity.getBlackList());
 		
 		return model;
 	}

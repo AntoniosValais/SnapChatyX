@@ -5,8 +5,14 @@ import java.util.UUID;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
 
-public class SnapClientModelToEntityTransformer {
+/**
+ * 
+ * 
+ * @author Stefanos Douliakas
+ */
+public class SnapClientModelToEntityTransformer implements ISnapClientModelToEntityTransformer {
 	
+	@Override
 	public SnapClientEntity transform(SnapClient model) 
 	{
 		if(model == null)

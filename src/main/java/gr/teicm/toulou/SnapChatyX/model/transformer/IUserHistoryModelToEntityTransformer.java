@@ -3,6 +3,10 @@ package gr.teicm.toulou.SnapChatyX.model.transformer;
 import gr.teicm.toulou.SnapChatyX.model.IUserHistory;
 import gr.teicm.toulou.SnapChatyX.model.entity.UserHistoryEntity;
 
-public interface IUserHistoryModelToEntityTransformer extends ITransformer<UserHistoryEntity, IUserHistory> {
-
-}
+/**
+ * 
+ * 
+ * @author Stamatios Tsalikis
+ */
+public interface IUserHistoryModelToEntityTransformer
+extends ITransformer<UserHistoryEntity, IUserHistory> {}
