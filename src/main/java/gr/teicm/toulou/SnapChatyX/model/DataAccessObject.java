@@ -57,6 +57,8 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		banList = new ArrayList<>();
 		
 		administrators = new ArrayList<>();
+		
+		administrators.add("Eftixia");
 	}
 	
 	@Override
