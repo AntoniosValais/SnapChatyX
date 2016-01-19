@@ -8,6 +8,13 @@ import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
 import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientEntityToModelTransformer;
 import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientModelToEntityTransformer;
 
+/**
+ *
+ * 
+ * @author Eutixia Bibo
+ * @author Petros Ketsentsidis
+ * @author Stamatios Tsalikis
+ */
 public class SnapClientService {
 	
 	private SnapClientDAO dao;
@@ -18,7 +25,7 @@ public class SnapClientService {
 	
 	public SnapClientService() {
 		
-		dao = new SnapClientDAO();
+		this.dao = new SnapClientDAO();
 		
 		this.modelToEntityTransformer = new SnapClientModelToEntityTransformer();
 		
@@ -54,114 +61,83 @@ public class SnapClientService {
 		if(snapClient == null) {
 			throw new IllegalArgumentException("Param must not be null!");
 		}
-//		SnapClientEntity entity = new SnapClientEntity();
-//		entity.setId(UUID.randomUUID().toString());
-//		entity.setUsername(snapClient.getUsername());
-//		entity.setPassword(snapClient.getPassword());
-//		entity.setFirstName(snapClient.getFirstName());
-//		entity.setLastName(snapClient.getLastName());
-//		entity.setEmail(snapClient.getEmail());
-//		
-//		List<String> friendListNames = new ArrayList<>();
-//		for(SnapClient sc : snapClient.getFriendList() ) {
-//			friendListNames.add(sc.getUsername());
-//		}
-//		entity.setFriendList(snapClient.getFriendList());
-//		
-//		List<String> blackListNames = new ArrayList<>();
-//		for(SnapClient sc : snapClient.getBlackList() ) {
-//			blackListNames.add(sc.getUsername());
-//		}
-//		entity.setBlackList(snapClient.getBlackList());
-//		
+		
 		return dao.createSnapClientEntity(modelToEntityTransformer.transform(snapClient));
 		
 	}
 	
-	public SnapClient getSnapClientByUsername(String username) throws ServiceException {
+	public SnapClient getSnapClientByUsername(final String username) throws ServiceException {
+		
 		if (username == null || username == "") {
 			throw new IllegalArgumentException("Param must not be null nor empty");
-			
 		}
-		List<SnapClientEntity> entityList = dao.getAllSnapClients();
+		
+		final List<SnapClientEntity> entityList = dao.getAllSnapClients();
 		String id = null;
-		for(SnapClientEntity entity : entityList) {
+		for(final SnapClientEntity entity : entityList) {
 			if(username == entity.getUsername()) {
 				id = entity.getId();
 				break;
 			}
 			
 		}
-		final SnapClientEntity entity = dao.getSnapClientEntityById(id); 
 		
-		
-//			SnapClient snapClient =new SnapClient();
-//			snapClient.setUsername(entity.getUsername());
-//			snapClient.setPassword(entity.getPassword());
-//			snapClient.setFirstName(entity.getFirstName());
-//			snapClient.setLastName(entity.getLastName());
-//			snapClient.setEmail(entity.getEmail());
-//			
-//			for(String u : entity.getFriendList() ) {
-//				snapClient.addToFriendList(u);
-//				
-//			}
-//		
-//			for(String u : entity.getBlackList() ) {
-//				snapClient.addToBlackList(u);
-//			}
-			
-		return entityToModelTransformer.transform(entity);
-		
-		
-		
-		
-	}
-	
-	public boolean updateSnapClient(SnapClient snapClient)
-	{
-		String id = null;
-		for(SnapClientEntity sc : dao.getAllSnapClients())
-		{
-			if(snapClient.getUsername() == sc.getUsername())
-			{
-				id = sc.getId();
+		if (id != null) {
+			try {
+				final SnapClientEntity entity = dao.getSnapClientEntityById(id);
+				return entityToModelTransformer.transform(entity);
+			} catch (Exception ex) {
+				return null;
 			}
 		}
-		if(id != null)
-		{
-			SnapClientEntity entity = dao.getSnapClientEntityById(id);
-			return dao.updateSnapClientEntity(entity);
+		
+		return null;
+	}
+	
+	public boolean updateSnapClient(final SnapClient snapClient) {
+		
+		if (snapClient == null) {
+			throw new IllegalArgumentException("Param must not be null.");
 		}
+		
+		if (null != snapClient.getUsername()) {		
+			String id = null;
+			for(final SnapClientEntity entity : dao.getAllSnapClients()) {
+				if(entity.getUsername().equals(snapClient.getUsername())) {
+					id = entity.getId();
+				}
+			}
+			
+			if(id != null) {
+				final SnapClientEntity entity = dao.getSnapClientEntityById(id);
+				return dao.updateSnapClientEntity(entity);
+			}
+		}
+		
 		return false;
 		
 	}
-	public boolean deleteSnapClient(SnapClient snapClient)
-	{
-		if(snapClient == null)
-		{
-			throw new IllegalArgumentException("Param must not be null");
+	
+	public boolean deleteSnapClientByUsername(final String username) {
+		
+		if(username == null || username.length() == 0) {
+			throw new IllegalArgumentException("Param must not be null nor empty.");
 		}
+		
 		String id = null;
-		for(SnapClientEntity sc : dao.getAllSnapClients())
-		{
-			if(snapClient.getUsername() == sc.getUsername())
-			{
-				id = sc.getId();
+		for(SnapClientEntity entity : dao.getAllSnapClients()) {
+			if(username.equals(entity.getUsername())) {
+				id = entity.getId();
 			}
 		}
 		
-		if(id != null)
-		{
+		if(id != null) {
 			SnapClientEntity entity = dao.getSnapClientEntityById(id);
 			return dao.deleteSnapClientEntity(entity);
 		}
+		
 		return false;
 		
 	}
 	
-	
-	
 }
-
-
