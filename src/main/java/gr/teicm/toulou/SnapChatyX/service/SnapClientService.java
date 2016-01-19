@@ -84,15 +84,17 @@ public class SnapClientService {
 			
 		}
 		List<SnapClientEntity> entityList = dao.getAllSnapClients();
-		SnapClientEntity entity = null;
-		for(SnapClientEntity e : entityList) {
-			if(username == e.getUsername()) {
-				entity = e;
+		String id = null;
+		for(SnapClientEntity entity : entityList) {
+			if(username == entity.getUsername()) {
+				id = entity.getId();
 				break;
 			}
 			
 		}
-		try { 
+		final SnapClientEntity entity = dao.getSnapClientEntityById(id); 
+		
+		
 //			SnapClient snapClient =new SnapClient();
 //			snapClient.setUsername(entity.getUsername());
 //			snapClient.setPassword(entity.getPassword());
@@ -109,11 +111,8 @@ public class SnapClientService {
 //				snapClient.addToBlackList(u);
 //			}
 			
-			return entityToModelTransformer.transform(entity);
-		}
-		catch (NullPointerException ex) {
-			throw new ServiceException("Entity not found", ex);
-		}
+		return entityToModelTransformer.transform(entity);
+		
 		
 		
 		

@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import gr.teicm.toulou.SnapChatyX.dao.SnapClientDAO;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.model.entity.SnapClientEntity;
+import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientEntityToModelTransformer;
 import gr.teicm.toulou.SnapChatyX.model.transformer.SnapClientModelToEntityTransformer;
 
 public class SnapClientServiceTest {
@@ -69,14 +70,44 @@ public class SnapClientServiceTest {
 	
 	@Test
 	public void testGetSnapClientByUsernameSuccess() throws Exception {
+		
 		//SetUp
+		String username = "Efi";
+		String id = "1";
+		SnapClientEntity entity = new SnapClientEntity();
+		entity.setUsername(username);
+		entity.setId(id);
+		
+		List<SnapClientEntity> entityList = new ArrayList<>();
+		entityList.add(entity);
+		
+		SnapClientDAO mockDao = Mockito.mock(SnapClientDAO.class);
+		target.setDao(mockDao);
+		Mockito.when(mockDao.getAllSnapClients()).thenReturn(entityList);
+		Mockito.when(mockDao.getSnapClientEntityById(id)).thenReturn(entity);
+		
+		SnapClient model =new SnapClient();
+		model.setUsername(entity.getUsername());
+		
+		SnapClientEntityToModelTransformer mockTransformer =
+				Mockito.mock(SnapClientEntityToModelTransformer.class);
+		target.setEntityToModelTransformer(mockTransformer);
+		Mockito.when(mockTransformer.transform(entity)).thenReturn(model);
+		
 		
 		//Execution
-		target.getSnapClientByUsername(username);
+		SnapClient result = target.getSnapClientByUsername(username);
 		
 		//Verification
+		Mockito.verify(mockDao).getAllSnapClients();
+		Mockito.verify(mockDao).getSnapClientEntityById(entity.getId());
+		Mockito.verify(mockTransformer).transform(entity);
+		
+		Assert.assertNotNull(result);
+		Assert.assertEquals(result.getUsername(), entity.getUsername());
 		
 		//TearDown
+		
 	}
 	
 	@Test
