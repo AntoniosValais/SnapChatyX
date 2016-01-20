@@ -28,7 +28,7 @@ function adminLogIn()
 					
 					window.location.assign("index.html");
 		        }
-		        else if (xmlHttp.readyState == 4 && xmlHttp.status == 401) {
+		        else if (xmlHttp.readyState == 4 && ( xmlHttp.status == 401 || xmlHttp.status == 400 ) ) {
 		        	
 		        	var response = JSON.parse( xmlHttp.responseText );
 		    		

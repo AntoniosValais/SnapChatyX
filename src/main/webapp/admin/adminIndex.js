@@ -4,9 +4,9 @@
  * @Author iKetsi
  * 
  */
-var user = localStorage.getItem("username");
-var banUnbanUser = document.getElementById("ban_unban_user_input");
-var addRemoveAdmin = document.getElementById("add_remove_admin_input"); 
+var user = localStorage.getItem("adminName").value;
+
+
 
 
 function banList()
@@ -102,6 +102,8 @@ function adminList()
 
 function banUser()
 {
+	var banUnbanUser = document.getElementById("ban_unban_user_input").value;
+	
 	if(window.XMLHttpRequest){
 		var req = new XMLHttpRequest();
 		}
@@ -128,7 +130,16 @@ function banUser()
 	        {
 	        	var response = JSON.parse( req.responseText );
 				alert( response.result + " " + response.message );
+				
+				location.reload(); 
 	        }
+	        else if ( req.readyState == 3 && req.status == 400 ) {
+	        	
+	        	var response = JSON.parse( req.responseText );
+	    		
+				alert( response.result + " "+ response.message );
+	        }
+	 
 	 
 	    };
 	    
@@ -145,6 +156,8 @@ function banUser()
 
 function unbanUser()
 {
+	var banUnbanUser = document.getElementById("ban_unban_user_input").value;
+	
 	if(window.XMLHttpRequest){
 		var req = new XMLHttpRequest();
 		}
@@ -171,6 +184,15 @@ function unbanUser()
 	        {
 	        	var response = JSON.parse( req.responseText );
 				alert( response.result + " " + response.message );
+				
+				location.reload();
+	        }
+	        
+	        else if ( req.readyState == 3 && req.status == 400 ) {
+	        	
+	        	var response = JSON.parse( req.responseText );
+	    		
+				alert( response.result + " "+ response.message );
 	        }
 	 
 	    };
@@ -188,6 +210,8 @@ function unbanUser()
 
 function addAdmin()
 {
+	var addRemoveAdmin = document.getElementById("add_remove_admin_input").value; 
+	
 	if(window.XMLHttpRequest){
 		var req = new XMLHttpRequest();
 		}
@@ -214,6 +238,14 @@ function addAdmin()
 	        {
 	        	var response = JSON.parse( req.responseText );
 				alert( response.result + " " + response.message );
+				location.reload();
+	        }
+	        
+	        else if ( req.readyState == 3 && req.status == 400 ) {
+	        	
+	        	var response = JSON.parse( req.responseText );
+	    		
+				alert( response.result + " "+ response.message );
 	        }
 	 
 	    };
@@ -231,6 +263,8 @@ function addAdmin()
 
 function removeAdmin()
 {
+	var addRemoveAdmin = document.getElementById("add_remove_admin_input").value; 
+	
 	if(window.XMLHttpRequest){
 		var req = new XMLHttpRequest();
 		}
@@ -257,6 +291,13 @@ function removeAdmin()
 	        {
 	        	var response = JSON.parse( req.responseText );
 				alert( response.result + " " + response.message );
+				location.reload();
+	        }
+	        else if ( req.readyState == 3 && req.status == 400 ) {
+	        	
+	        	var response = JSON.parse( req.responseText );
+	    		
+				alert( response.result + " "+ response.message );
 	        }
 	 
 	    };

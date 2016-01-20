@@ -45,4 +45,22 @@ public interface InterfaceDataAccessObject
 
 	List<String> getAdminList();
 
+	Boolean addUserToBanList(String username);
+
+	Boolean removeUserFromAdminList(String username);
+
+	Boolean addUserToAdminList(String username);
+
+	Boolean removeUserFromBanList(String username);
+
+	Boolean registerSnapClient(SnapClient snapClient);
+
+	Boolean signInSnapClient(SnapClient snapClient);
+
+	Set<SnapClient> getRegisteredSnapClients();
+
+	Boolean unregisterSnapClient(SnapClient snapClient);
+
+	Boolean singOutSnapClient(SnapClient snapClient);
+
 }

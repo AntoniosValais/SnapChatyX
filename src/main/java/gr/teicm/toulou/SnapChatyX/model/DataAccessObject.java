@@ -142,14 +142,40 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 
 	}
 	
+	@Override
 	public Boolean registerSnapClient( SnapClient snapClient )
 	{
 		return registeredSnapClients.add( snapClient );
 	}
 	
+	@Override 
+	public Boolean unregisterSnapClient( SnapClient snapClient )
+	{
+		return registeredSnapClients.remove(snapClient);
+	}
+	
+	@Override
 	public Boolean signInSnapClient( SnapClient snapClient )
 	{
 		return onlineSnapClients.add( snapClient );
+	}
+	
+	@Override
+	public Boolean singOutSnapClient( SnapClient snapClient )
+	{
+		return onlineSnapClients.remove(snapClient);
+	}
+	
+	@Override
+	public Set< SnapClient > getRegisteredSnapClients()
+	{
+		return registeredSnapClients;
+	}
+	
+	@Override
+	public Set< SnapClient > getOnlineSnapClients()
+	{
+		return onlineSnapClients;
 	}
 
 	// username,password
@@ -378,11 +404,6 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		return null;
 	}
 
-	@Override
-	public Set< SnapClient > getOnlineSnapClients()
-	{
-		return onlineSnapClients;
-	}
 	
 	@Override
 	public HashMap< SnapClient, Session > getSnapClientSessionMap()
@@ -580,5 +601,65 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 	@Override
 	public List<String> getAdminList(){
 		return administrators;
+	}
+	
+	@Override
+	public Boolean addUserToBanList( String username )
+	{
+		try
+		{
+			return banList.add(username);
+		}
+		catch(Exception e){
+			
+			return Boolean.FALSE;
+			
+		}
+		
+	}
+	
+	@Override
+	public Boolean removeUserFromBanList( String username )
+	{
+		try
+		{
+			return banList.remove(username);
+		}
+		catch(Exception e){
+			
+			return Boolean.FALSE;
+			
+		}
+		
+	}
+	
+	@Override
+	public Boolean addUserToAdminList( String username )
+	{
+		try
+		{
+			return administrators.add(username);
+		}
+		catch(Exception e){
+			
+			return Boolean.FALSE;
+			
+		}
+		
+	}
+	
+	@Override
+	public Boolean removeUserFromAdminList( String username )
+	{
+		try
+		{
+			return administrators.remove(username);
+		}
+		catch(Exception e){
+			
+			return Boolean.FALSE;
+			
+		}
+		
 	}
 }

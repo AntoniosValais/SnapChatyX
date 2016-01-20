@@ -12,4 +12,8 @@ public interface InterfaceBanListController {
 
 	List<String> getBanList();
 
+	Boolean unbanUser(String username);
+
+	Boolean banUser(String username);
+
 }
