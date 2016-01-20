@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userProfileServlet.InterfaceUserProfile;
 import gr.teicm.toulou.SnapChatyX.userProfileServlet.UserProfile;
@@ -28,6 +29,8 @@ public class UserProfileControllerTests
 	
 	private InterfaceUserProfile actualUserProfile;
 	
+	private InterfaceDataAccessObject dataAccessObject;
+	
 	@Before
 	public void setUp()
 	{
@@ -35,7 +38,9 @@ public class UserProfileControllerTests
 		
 		user.setUsername( "Antonios" );
 		
-		DataAccessObject.DAO.registerSnapClient( user );
+		dataAccessObject = DataAccessObject.DAO;
+		
+		dataAccessObject.registerSnapClient( user );
 		
 		controller = new UserProfileController();
 	}
@@ -43,7 +48,7 @@ public class UserProfileControllerTests
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( user );
+		dataAccessObject.unregisterSnapClient( user );
 	}
 	
 	@Test

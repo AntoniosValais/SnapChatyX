@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.removeFromFriendList.FriendListController;
 
@@ -25,6 +26,8 @@ public class FriendListControllerTests
 	
 	private Boolean actionResult;
 	
+	private InterfaceDataAccessObject dataAccessObject;
+	
 	@Before
 	public void setUp()
 	{
@@ -35,10 +38,12 @@ public class FriendListControllerTests
 		friendListedUser = new SnapClient();
 		
 		friendListedUser.setUsername( "Valais" );
+		
+		dataAccessObject = DataAccessObject.DAO;
 
-		DataAccessObject.DAO.registerSnapClient( userRequested );
+		dataAccessObject.registerSnapClient( userRequested );
 
-		DataAccessObject.DAO.registerSnapClient( friendListedUser );
+		dataAccessObject.registerSnapClient( friendListedUser );
 		
 		controller = new FriendListController();
 	}
@@ -46,9 +51,9 @@ public class FriendListControllerTests
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( userRequested );
+		dataAccessObject.unregisterSnapClient( userRequested );
 
-		DataAccessObject.DAO.registeredSnapClients.remove( friendListedUser );
+		dataAccessObject.unregisterSnapClient( friendListedUser );
 	}
 	
 	@Test

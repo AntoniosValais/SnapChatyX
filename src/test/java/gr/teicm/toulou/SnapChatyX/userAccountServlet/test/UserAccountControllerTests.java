@@ -7,6 +7,7 @@ import static org.junit.Assert.*;
 import org.junit.After;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.InterfaceUserAccount;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.UserAccount;
@@ -26,18 +27,22 @@ public class UserAccountControllerTests
 	
 	private UserAccountController controller;
 	
+	private InterfaceDataAccessObject dataAccessObject;
+	
 	@Before
 	public void setUp()
 	{
 		snapClient = new SnapClient();
 		
 		controller = new UserAccountController();
+		
+		dataAccessObject = DataAccessObject.DAO;
 	}
 	
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( snapClient );		
+		dataAccessObject.unregisterSnapClient( snapClient );		
 	}
 	
 	@Test
@@ -47,7 +52,7 @@ public class UserAccountControllerTests
 		
 		expectedUserAccount = new UserAccount( snapClient );
 		
-		DataAccessObject.DAO.registerSnapClient( snapClient );
+		dataAccessObject.registerSnapClient( snapClient );
 		
 		InterfaceUserAccount returnedUserAccount = controller.getUserAccount( "Antonios" );
 		
@@ -59,7 +64,7 @@ public class UserAccountControllerTests
 	{
 		snapClient.setUsername( "Antonios" );
 		
-		DataAccessObject.DAO.registerSnapClient( snapClient );
+		dataAccessObject.registerSnapClient( snapClient );
 		
 		InterfaceUserAccount returnedUserAccount = controller.getUserAccount( "Valais" );
 		

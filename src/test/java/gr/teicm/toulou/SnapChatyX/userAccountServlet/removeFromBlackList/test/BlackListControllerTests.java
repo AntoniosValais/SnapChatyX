@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.removeFromBlackList.BlackListController;
 
@@ -27,6 +28,8 @@ public class BlackListControllerTests
 	
 	private Boolean actionResult;
 	
+	private InterfaceDataAccessObject dataAccessObject;
+	
 	@Before
 	public void setUp()
 	{
@@ -38,9 +41,11 @@ public class BlackListControllerTests
 		
 		blackListedUser.setUsername( "Valais" );
 		
-		DataAccessObject.DAO.registerSnapClient( userRequested );
+		dataAccessObject = DataAccessObject.DAO;
 		
-		DataAccessObject.DAO.registerSnapClient( blackListedUser );
+		dataAccessObject.registerSnapClient( userRequested );
+		
+		dataAccessObject.registerSnapClient( blackListedUser );
 		
 		controller = new BlackListController();
 	}
@@ -48,9 +53,9 @@ public class BlackListControllerTests
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( userRequested );
+		dataAccessObject.unregisterSnapClient( userRequested );
 		
-		DataAccessObject.DAO.registeredSnapClients.remove( blackListedUser );
+		dataAccessObject.unregisterSnapClient( blackListedUser );
 	}
 	
 	@Test

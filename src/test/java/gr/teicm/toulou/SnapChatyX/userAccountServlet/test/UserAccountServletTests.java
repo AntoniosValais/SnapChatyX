@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.UserAccountServlet;
 
@@ -33,6 +34,8 @@ public class UserAccountServletTests
 	
 	private Gson gson;
 	
+	private InterfaceDataAccessObject dataAccessObject;
+	
 	@Before
 	public void setUp()
 	{
@@ -41,12 +44,14 @@ public class UserAccountServletTests
 		gson = new Gson();
 		
 		servlet = new UserAccountServlet();
+		
+		dataAccessObject = DataAccessObject.DAO;
 	}
 	
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( user );	
+		dataAccessObject.unregisterSnapClient( user );	
 	}
 	
 	@Test
@@ -54,7 +59,7 @@ public class UserAccountServletTests
 	{
 		user.setUsername( "Antonios" );
 		
-		DataAccessObject.DAO.registerSnapClient( user );
+		dataAccessObject.registerSnapClient( user );
 		
 		responseJSON = gson.toJson( user );
 		
@@ -76,7 +81,7 @@ public class UserAccountServletTests
 	{
 		user.setUsername( "Antonios" );
 		
-		DataAccessObject.DAO.registerSnapClient( user );
+		dataAccessObject.registerSnapClient( user );
 		
 		responseJSON = gson.toJson( user );
 		
