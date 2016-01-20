@@ -102,5 +102,22 @@ public class UserHistoryService implements IUserHistoryService {
 		return userHistoryList;
 		
 	}
+
+	@Override
+	public void updateUserHistory( IUserHistory userHistory ) throws ServiceException
+	{
+		try
+		{
+			UserHistoryEntity entity = dao.findUserHistoryByUsername( userHistory.getUsername() );
+			
+			entity.setMessageList( userHistory.getMessageList() );
+			
+			dao.updateUserHistory( entity );
+		}
+		catch( Exception e )
+		{
+			throw new ServiceException( e );
+		}
+	}
 	
 }

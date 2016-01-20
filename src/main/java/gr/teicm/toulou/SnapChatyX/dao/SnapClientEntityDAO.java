@@ -134,5 +134,4 @@ public class SnapClientEntityDAO extends SnapBasicDAO<SnapClientEntity, String> 
 		
 		return false;
 	}
-	
 }

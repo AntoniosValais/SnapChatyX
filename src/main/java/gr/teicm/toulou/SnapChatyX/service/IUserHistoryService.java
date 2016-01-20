@@ -21,5 +21,7 @@ public interface IUserHistoryService {
 	IUserHistory getUserHistoryByUsername(final String username) throws ServiceException;
 	
 	List<IUserHistory> getUserHistoriesAsList() throws ServiceException;
+
+	void updateUserHistory( IUserHistory userHistory ) throws ServiceException;
 	
 }
