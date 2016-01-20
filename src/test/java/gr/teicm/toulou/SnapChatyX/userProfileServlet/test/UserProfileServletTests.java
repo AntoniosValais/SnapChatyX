@@ -12,6 +12,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userProfileServlet.InterfaceUserProfile;
 import gr.teicm.toulou.SnapChatyX.userProfileServlet.UserProfile;
@@ -38,6 +39,8 @@ public class UserProfileServletTests
 	
 	private SnapClient user;
 	
+	private InterfaceDataAccessObject dataAccessObject;
+	
 	@Before
 	public void setUp()
 	{
@@ -49,13 +52,15 @@ public class UserProfileServletTests
 		
 		user.setUsername( "Antonios" );
 		
-		DataAccessObject.DAO.registerSnapClient( user );
+		dataAccessObject = DataAccessObject.DAO;
+		
+		dataAccessObject.registerSnapClient( user );
 	}
 	
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( user );
+		dataAccessObject.unregisterSnapClient( user );
 	}
 	
 	@Test

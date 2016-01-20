@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.removeFromFriendList.RemoveFriendResult;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.removeFromFriendList.RemoveFromFriendListServlet;
@@ -40,6 +41,8 @@ public class RemoveFromFriendListServletTests
 	
 	private SnapClient friendListedUser;
 	
+	private InterfaceDataAccessObject dataAccessObject;
+	
 	@Before
 	public void setUp()
 	{
@@ -57,17 +60,19 @@ public class RemoveFromFriendListServletTests
 		
 		friendListedUser.setUsername( "Valais" );
 		
-		DataAccessObject.DAO.registerSnapClient( userRequested );
+		dataAccessObject = DataAccessObject.DAO;
 		
-		DataAccessObject.DAO.registerSnapClient( friendListedUser );
+		dataAccessObject.registerSnapClient( userRequested );
+		
+		dataAccessObject.registerSnapClient( friendListedUser );
 	}
 	
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( userRequested );
+		dataAccessObject.unregisterSnapClient( userRequested );
 		
-		DataAccessObject.DAO.registeredSnapClients.remove( friendListedUser );		
+		dataAccessObject.unregisterSnapClient( friendListedUser );		
 	}
 	
 	@Test
@@ -102,7 +107,7 @@ public class RemoveFromFriendListServletTests
 	
 	@Test
 	public void servletResponseIsBadRequestWhenUserIsNotInFriendList()
-	{
+	{	
 		parameters.add( "user", userRequested.getUsername() );
 		
 		parameters.add( "removeUser", friendListedUser.getUsername() );

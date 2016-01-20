@@ -14,6 +14,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.InterfaceServletResult;
 import gr.teicm.toulou.SnapChatyX.userProfileServlet.addToBlackList.AddBlackListResult;
@@ -41,6 +42,8 @@ public class AddToBlackListServletTests
 	
 	private Gson gson;
 	
+	private InterfaceDataAccessObject dataAccessObject;
+	
 	
 	@Before
 	public void setUp()
@@ -55,9 +58,11 @@ public class AddToBlackListServletTests
 		
 		userOnBlackList.setUsername( "Valais" );
 		
-		DataAccessObject.DAO.registerSnapClient( userRequested );
+		dataAccessObject = DataAccessObject.DAO;
 		
-		DataAccessObject.DAO.registerSnapClient( userOnBlackList );
+		dataAccessObject.registerSnapClient( userRequested );
+		
+		dataAccessObject.registerSnapClient( userOnBlackList );
 		
 		parameters = new MultivaluedHashMap<String, String>();
 		
@@ -67,9 +72,9 @@ public class AddToBlackListServletTests
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( userRequested );
+		dataAccessObject.unregisterSnapClient( userRequested );
 		
-		DataAccessObject.DAO.registeredSnapClients.remove( userOnBlackList );
+		dataAccessObject.unregisterSnapClient( userOnBlackList );
 	}
 	
 	@Test
