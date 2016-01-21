@@ -17,6 +17,10 @@ function search()
     { 
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
         {
+        	      
+			document.getElementById( "noProfile" ).style.visibility = 'hidden'; 
+			document.getElementById( "info" ).style.visibility = 'visible'; 
+			
         	var response = JSON.parse( xmlHttp.responseText );
         	
     		document.getElementById("userName").innerHTML = "Username : " + response.userName;
@@ -24,6 +28,11 @@ function search()
     		document.getElementById("email").innerHTML = "Email : " + response.email;
     		 		
     		document.getElementById("location").innerHTML = "Current Location : " + response.location;
+        }
+        else
+        {
+        	document.getElementById( "info" ).style.visibility = 'hidden';      
+			document.getElementById( "noProfile" ).style.visibility = 'visible';     
         }
  
     };
