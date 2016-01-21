@@ -1,7 +1,4 @@
-package gr.teicm.toulou.SnapChatyX.adminLogIn;
-
-
-
+package gr.teicm.toulou.SnapChatyX.addToBanListServletTest;
 
 import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.MultivaluedMap;
@@ -15,6 +12,8 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 
+import gr.teicm.toulou.SnapChatyX.adminBanUserServlet.BanUserResult;
+import gr.teicm.toulou.SnapChatyX.adminBanUserServlet.BanUserServlet;
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
@@ -25,12 +24,13 @@ import gr.teicm.toulou.SnapChatyX.model.SnapClient;
  * @Author Eftiqia Bibo
  * 
  * 
+ * 
  */
 
-public class AdminLogInServletTests {
+public class AddToBanListServletTest {
 
-	private SnapClient admin;
-	private AdminLogInServlet servlet;
+	private SnapClient user;
+	private BanUserServlet servlet;
 	private MultivaluedMap<String , String> parameters;
 	private Response result;	
 	private Gson gson;	
@@ -40,9 +40,9 @@ public class AdminLogInServletTests {
 	@Before
 	public void SetUp(){
 		
-		admin = new SnapClient();
+		user = new SnapClient();
 		
-		servlet = new AdminLogInServlet();
+		servlet = new BanUserServlet();
 		
 		parameters = new MultivaluedHashMap<String , String >();
 		
@@ -55,46 +55,40 @@ public class AdminLogInServletTests {
 	@After
 	public void CleanUp() {
 		
-		dataAccessObject.unregisterSnapClient( admin );
+		dataAccessObject.unregisterSnapClient( user );
+		
+		dataAccessObject.removeUserFromBanList(user.getUsername() );
 	}
 	
 	@Test
-	public void testAdminLogInSuccess(){
+	public void banExistedUserWithValidParametersOnPost(){
 		
 		//SetUp
-		admin.setUsername("Eftixia");
-		admin.setPassword("a");
+		user.setUsername("Efi");
 		
-		dataAccessObject.registerSnapClient( admin );
+		dataAccessObject.registerSnapClient(  user );
 		
-		parameters.add("adminName", "Eftixia");
-		parameters.add("password", "a");
+		parameters.add("user", "Efi");
 		
 		//Execution
-		result = servlet.verifyAdminLogIn(parameters);
+		result = servlet.banUser( parameters );
 		
-		expectedResult = gson.toJson( new AdminLogInResult( Boolean.TRUE ));
+		expectedResult = gson.toJson( new BanUserResult( Boolean.TRUE ));
 		
 		//Verification		
 		Assert.assertEquals( expectedResult, result.getEntity() );
 	}
 	
 	@Test
-	public void testAdminLogInInvalidAdminAndPassword() {
+	public void testToBanUnexistedUser() {
 		
 		//SetUp
-		admin.setUsername("Eftixia");
-		admin.setPassword("a");
-		
-		dataAccessObject.registerSnapClient( admin );
-		
-		parameters.add("adminName", "Bibo");
-		parameters.add("password", "o");
+		parameters.add("user", "anna");
 		
 		//Execution
-		result = servlet.verifyAdminLogIn(parameters);
+		result = servlet.banUser(parameters);
 		
-		expectedResult = gson.toJson( new AdminLogInResult( Boolean.FALSE ));
+		expectedResult = gson.toJson( new BanUserResult( Boolean.FALSE ));
 		
 		//Verification
 		Assert.assertEquals( expectedResult, result.getEntity() );
@@ -102,13 +96,28 @@ public class AdminLogInServletTests {
 	}
 	
 	@Test
-	public void testAdminlogInNullParam() {
+	public void testBanUserServletWithNullParameter() {
 		
 		//Execution		
-		result = servlet.verifyAdminLogIn(null);
+		result = servlet.banUser(null);
 		
 		//Verification
 		Assert.assertEquals( Status.BAD_REQUEST.getStatusCode(), result.getStatus());
 	}
+	
+	@Test
+	public void testPassingEmptyUsernameToBan() {
 		
+		//SetUp
+		parameters.add("user", "");
+		
+		//Execution
+		result = servlet.banUser(parameters);
+		
+		expectedResult = gson.toJson( new BanUserResult( Boolean.FALSE ));
+		
+		//Verification
+		Assert.assertEquals( expectedResult, result.getEntity() );
+		
+	}
 }

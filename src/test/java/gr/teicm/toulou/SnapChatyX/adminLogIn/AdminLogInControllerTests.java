@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 
 /**
@@ -23,6 +24,7 @@ public class AdminLogInControllerTests {
 	private String adminName;
 	private String password;
 	private Boolean result;
+	private InterfaceDataAccessObject dataAccessObject;
 	
 	@Before
 	public void SetUp() {
@@ -35,14 +37,16 @@ public class AdminLogInControllerTests {
 		
 		adminLogInController = new AdminLogInController();
 		
-		DataAccessObject.DAO.registeredSnapClients.add(admin);
+		dataAccessObject = DataAccessObject.DAO;
+		
+		dataAccessObject.registerSnapClient( admin);
 		
 	}
 	
 	@After
 	public void CleanUp() {
 		
-		DataAccessObject.DAO.registeredSnapClients.remove(admin);
+		dataAccessObject.unregisterSnapClient( admin);
 		
 	}
 	
