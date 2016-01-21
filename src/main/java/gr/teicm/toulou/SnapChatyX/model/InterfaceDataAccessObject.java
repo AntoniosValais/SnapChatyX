@@ -1,6 +1,7 @@
 package gr.teicm.toulou.SnapChatyX.model;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 import javax.websocket.Session;
@@ -39,5 +40,27 @@ public interface InterfaceDataAccessObject
 	SnapClient getOnlineSnapClientWithUsername( String username );
 	
 	SnapClient getRegisteredSnapClientWithUsername( String username );
+
+	List<String> getBanList();
+
+	List<String> getAdminList();
+
+	Boolean addUserToBanList(String username);
+
+	Boolean removeUserFromAdminList(String username);
+
+	Boolean addUserToAdminList(String username);
+
+	Boolean removeUserFromBanList(String username);
+
+	Boolean registerSnapClient(SnapClient snapClient);
+
+	Boolean signInSnapClient(SnapClient snapClient);
+
+	Set<SnapClient> getRegisteredSnapClients();
+
+	Boolean unregisterSnapClient(SnapClient snapClient);
+
+	Boolean singOutSnapClient(SnapClient snapClient);
 
 }

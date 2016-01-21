@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Admin Management</title>
+		<link rel="stylesheet" type="text/css" href="admin_style.css" />
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script type="text/javascript" src="adminIndex.js"></script>
+
+	</head>
+	<body onload = "banList(); adminList();">
+
+	<div id = "main_wrapper" >
+	
+		<div id = "banList_wrapper" >
+		
+			<div id = "banListTitle" > Banned Users </div>
+			<div id = "bannedUserList" > </div>
+			<div id = "banListMenu" >
+				<input type = "button" id = "banUserBtn" value = "Ban User" onclick = "banUser()"/>
+				<input type = "button" id = "unbanUserBtn" value = "Unban User" onclick = "unbanUser()"/>
+				<input type = "text" id = "ban_unban_user_input" />
+			</div>
+		</div>
+		
+		
+		<div id = "adminList_wrapper" >
+		
+			<div id = "adminListTitle" > Administrators </div>
+			<div id = "adminList" > </div>
+			<div id = "adminListMenu">
+				<input type = "button" id = "addAdminBtn" value = "Add Admin" onclick = "addAdmin()"/>
+				<input type = "button" id = "removeAdminBtn" value = "Remove Admin" onclick = "removeAdmin()"/>
+				<input type = "text" id = "add_remove_admin_input" />
+			</div>
+		</div>
+		
+	</div>
+	
+	</body>
+</html>

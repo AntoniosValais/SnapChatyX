@@ -43,14 +43,14 @@ public class UserAccount implements InterfaceUserAccount
 		
 		this.blackList = new ArrayList< String >();
 		
-		for( SnapClient snapClientOnFriendList : snapClient.getFriendList() )
+		for( String snapClientOnFriendList : snapClient.getFriendList() )
 		{
-			this.friendList.add( snapClientOnFriendList.getUsername() );
+			this.friendList.add( snapClientOnFriendList );
 		}
 		
-		for( SnapClient snapClientOnBlackList : snapClient.getBlackList() )
+		for( String snapClientOnBlackList : snapClient.getBlackList() )
 		{
-			this.blackList.add( snapClientOnBlackList.getUsername()  );
+			this.blackList.add( snapClientOnBlackList  );
 		}
 	}
 	

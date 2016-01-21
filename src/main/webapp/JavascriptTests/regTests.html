@@ -1,0 +1,180 @@
+<html>
+<head>
+<link rel="shortcut icon" type="image/png" href="jasmine/lib/jasmine-2.4.1/jasmine_favicon.png">
+<link rel="stylesheet" type="text/css" href="jasmine/lib/jasmine-2.4.1/jasmine.css">
+
+<script type="text/javascript" src="jasmine/lib/jasmine-2.4.1/jasmine.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine-2.4.1/jasmine-html.js"></script>
+<script type="text/javascript" src="jasmine/lib/jasmine-2.4.1/boot.js"></script>
+<script type = "text/javascript" src = "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript" src="../reg.js"></script>
+<script type="text/javascript">
+
+//window.alert = function() {};
+
+describe("regTests", function() {		
+		
+		it('User Validation: Username is Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zag","userOrestis","pass","pass","zag@mailcom");
+		    var result = userValid.isFirstNameValid();
+		    var expected = true;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: LastName is Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zag","userOrestis","pass","pass","zag@mailcom");
+		    var result = userValid.isLastNameValid();
+		    var expected = true;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Username is Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zag","userOrestis","pass","pass","zag@mailcom");
+		    var result = userValid.isUsernameValid();
+		    var expected = true;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Password is Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zag","userOrestis","pass","pass","zag@mailcom");
+		    var result = userValid.isPasswordValid();
+		    var expected = true;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Email is Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zag","userOrestis","pass","pass","zag@mailcom");
+		    var result = userValid.isEmailValid();
+		    var expected = true;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: FirstName is Not Valid', function() {
+		    var userValid = new UserValidation("","Zag","userZag","pass","pass","zag@mailcom");
+		    var result = userValid.isFirstNameValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: LastName is Not Valid', function() {
+		    var userValid = new UserValidation("Orestis","","userZag","pass","pass","zag@mailcom");
+		    var result = userValid.isLastNameValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Username is Not Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zagkoumidis","","pass","pass","zag@mailcom");
+		    var result = userValid.isUsernameValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Password is Not Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zagkoumidis","userOrestis","","","zag@mailcom");
+		    var result = userValid.isPasswordValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Email is Not Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zagkoumidis","userOrestis","pass","pass","");
+		    var result = userValid.isEmailValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: User is Valid', function() {
+		    var userValid = new UserValidation("Orestis","Zagkoumidis","userOrestis","pass","pass","zag@mailcom");
+		    var result = userValid.isValid();
+		    var expected = true;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: User is Not Valid', function() {
+		    var userValid = new UserValidation("","","","","","");
+		    var result = userValid.isValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: FirstName is Not Valid (null input)', function() {
+		    var userValid = new UserValidation(null,"Zagkoumidis","userOrestis","pass","pass","zag@mailcom");
+		    var result = userValid.isFirstNameValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: LastName is Not Valid (null input)', function() {
+		    var userValid = new UserValidation("Orestis",null,"userOrestis","pass","pass","zag@mailcom");
+		    var result = userValid.isLastNameValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Username is Not Valid (null input)', function() {
+		    var userValid = new UserValidation("Orestis","Zagkoumidis",null,"pass","pass","zag@mailcom");
+		    var result = userValid.isUsernameValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Password is Not Valid (null input)', function() {
+		    var userValid = new UserValidation("Orestis","Zagkoumidis","userOrestis",null,null,"zag@mailcom");
+		    var result = userValid.isPasswordValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+		it('User Validation: Email is Not Valid (null input)', function() {
+		    var userValid = new UserValidation("Orestis","Zagkoumidis","userOrestis","pass","pass",null);
+		    var result = userValid.isEmailValid();
+		    var expected = false;
+		    
+		    expect(result).toBe(expected);
+		    
+		});
+		
+
+});
+
+</script>
+
+</head>
+<body>
+
+</body>
+
+</html>

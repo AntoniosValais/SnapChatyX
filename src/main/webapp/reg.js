@@ -79,7 +79,7 @@ function registerUser()
 		
 	
 		if ( message["result"] === "success") {
-			alert("You have signed up successfully!" + "\n" + "* " + message["result"] + " *");
+			alert("You have signed up successfully!"  + "* " + message["result"] + " *");
 
 			window.location.assign("login.html");
 
@@ -103,7 +103,7 @@ function handleResponse() {
 		var responceJson = JSON.parse(responseText);
 
 		if (responceJson.result === "success") {
-			alert("You have signed up successfully!" + "\n" + "* " + responseText + " *");
+			alert("You have signed up successfully!" + "* " + responseText + " *");
 
 			window.location.assign("login.html");
 
@@ -145,9 +145,9 @@ UserValidation.prototype.isFirstNameValid = function() {
 
 	if (!(this.firstName == null || this.firstName == "")) {
 		userFirstNameIsValid = true;
-	} else {
+	} /*else {
 		document.getElementById("firstName").value = null;
-	}
+	}*/
 
 	return userFirstNameIsValid;
 };
@@ -157,9 +157,9 @@ UserValidation.prototype.isLastNameValid = function() {
 
 	if (!(this.lastName == null || this.lastName == "")) {
 		userLastNameIsValid = true;
-	} else {
+	} /*else {
 		document.getElementById("lastName").value = null;
-	}
+	}*/
 
 	return userLastNameIsValid;
 };
@@ -169,9 +169,9 @@ UserValidation.prototype.isUsernameValid = function() {
 
 	if (!(this.username == null || this.username == "")) {
 		userUsernameIsValid = true;
-	} else {
+	} /*else {
 		document.getElementById("username").value = null;
-	}
+	}*/
 
 	return userUsernameIsValid;
 };
@@ -181,10 +181,10 @@ UserValidation.prototype.isPasswordValid = function() {
 
 	if (!(this.password == null || this.password == "") && this.password == this.repeatedPassword) {
 		userPasswordIsValid = true;
-	} else {
+	} /*else {
 		document.getElementById("password").value = null;
 		document.getElementById("repeatedPassword").value = null;
-	}
+	}*/
 
 	return userPasswordIsValid;
 };
@@ -194,9 +194,19 @@ UserValidation.prototype.isEmailValid = function() {
 
 	if (!(this.email == null || this.email == "")) {
 		userEmailIsValid = true;
-	} else {
+	} /*else {
 		document.getElementById("password").value = null;
-	}
+	}*/
 
 	return userEmailIsValid;
 };
+function searchKeyPress(e)
+{
+    e = e || window.event;
+    if (e.keyCode == 13)
+    {
+        document.getElementById('sendRegister').click();
+        return false;
+    }
+    return true;
+}

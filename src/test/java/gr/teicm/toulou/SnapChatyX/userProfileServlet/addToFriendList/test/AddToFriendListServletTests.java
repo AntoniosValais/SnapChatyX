@@ -14,6 +14,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 import gr.teicm.toulou.SnapChatyX.model.DataAccessObject;
+import gr.teicm.toulou.SnapChatyX.model.InterfaceDataAccessObject;
 import gr.teicm.toulou.SnapChatyX.model.SnapClient;
 import gr.teicm.toulou.SnapChatyX.userAccountServlet.InterfaceServletResult;
 import gr.teicm.toulou.SnapChatyX.userProfileServlet.addToFriendListServlet.AddFriendResult;
@@ -40,6 +41,8 @@ public class AddToFriendListServletTests
 	private MultivaluedMap<String, String> parameters;
 	
 	private Gson gson;
+	
+	private InterfaceDataAccessObject dataAccessObject;
 
 	@Before
 	public void setUp()
@@ -54,9 +57,11 @@ public class AddToFriendListServletTests
 		
 		userOnFriendList.setUsername( "Valais" );
 		
-		DataAccessObject.DAO.registerSnapClient( userRequested );
+		dataAccessObject = DataAccessObject.DAO;
 		
-		DataAccessObject.DAO.registerSnapClient( userOnFriendList );
+		dataAccessObject.registerSnapClient( userRequested );
+		
+		dataAccessObject.registerSnapClient( userOnFriendList );
 		
 		parameters = new MultivaluedHashMap<String, String>();
 		
@@ -66,9 +71,9 @@ public class AddToFriendListServletTests
 	@After
 	public void cleanUp()
 	{
-		DataAccessObject.DAO.registeredSnapClients.remove( userRequested );
+		dataAccessObject.unregisterSnapClient( userRequested );
 		
-		DataAccessObject.DAO.registeredSnapClients.remove( userOnFriendList );
+		dataAccessObject.unregisterSnapClient( userOnFriendList );
 	}
 	
 	@Test
@@ -76,7 +81,7 @@ public class AddToFriendListServletTests
 	{
 		parameters.add( "user", userRequested.getUsername() );
 		
-		parameters.add( "hatesUser", userOnFriendList.getUsername() );
+		parameters.add( "lovesUser", userOnFriendList.getUsername() );
 		
 		expectedResponseJSON = gson.toJson( new AddFriendResult( Boolean.TRUE ) );
 		

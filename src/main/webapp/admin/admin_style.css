@@ -1,0 +1,74 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background: #e5fff9;
+}
+#main_wrapper {
+	position: relative;
+	width: 850px;
+	max-width:850;
+	height: 510px;
+	max-height: 510px;
+	margin: -255px 0 0 -425px;
+	left: 50%;
+	top: 50%;
+	border: ridge 5px red;
+	border-radius: 5%;
+	background: #b3b3ff;
+}
+#banList_wrapper {
+	position: relative;
+	width: 370px;
+	float: left;
+	border: ridge 5px purple;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+#banListTitle {
+	position: relative;
+	width: 100px;
+	left: 36%;
+	margin-top: 5px;
+}
+#bannedUserList {
+	position: relative;
+	border: dashed 1.5px red;
+	height: 400px;
+	overflow: auto;
+	margin: 10px;
+}
+#banListMenu{
+	position: relative;
+	margin-top: 10px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+#adminList_wrapper {
+	position: relative;
+	width: 400px;
+	float: right;
+	border: ridge 5px purple;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+#adminListTitle {
+	position: relative;
+	width: 100px;
+	left: 40%;
+	margin-top: 5px;
+}
+#adminList {
+	position: relative;
+	border: dashed 1.5px red;
+	height: 400px;
+	margin: 10px;
+	overflow: auto;
+}
+#adminListMenu{
+	position: relative;
+	margin-top: 10px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
