@@ -187,7 +187,7 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		try
 		{
 			String username = user.get( "username" ).toString();
-
+			
 			String password = user.get( "pass" ).toString();
 
 			System.out.println( username + " " + password );
@@ -198,6 +198,12 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 
 				if( registeredUser.getUsername().equals( username ) && registeredUser.getPassword().equals( password ) )
 				{
+					
+					if( banList.contains( username ) )
+					{
+						return "{\"result\":\"You are banned from the application!\"}";
+					}				
+					
 					System.out.println( username + "exists corrent Log in" );
 
 					SnapClient loggedInSnapClient = this.getRegisteredSnapClientWithUsername( username );

@@ -8,17 +8,22 @@
 		<script type="text/javascript" src="userProfile.js"></script>
 	</head>
 	<body>
-		<div id = "userName"></div>
-		<div id = "email"></div>
-		<div id = "location"></div>
-		
-		<br/>
-		<span>
-			<button type="button" id="addToFriendlistButton" onclick="addToFriendList()">Add to friendlist</button>
-		</span>
-		
-		<span>
-			<button type="button" id="addToBlacklistButton" onclick="addToBlackList()">Add to blacklist</button>
-		</span>
+		<div id = "info">
+			<div id = "userName"></div>
+			<div id = "email"></div>
+			<div id = "location"></div>
+			
+			<br/>
+			<span>
+				<button type="button" id="addToFriendlistButton" onclick="addToFriendList()">Add to friendlist</button>
+			</span>
+			
+			<span>
+				<button type="button" id="addToBlacklistButton" onclick="addToBlackList()">Add to blacklist</button>
+			</span>
+		</div>
+		<div id = "noProfile">
+			<h id = "message">Username does not exist!</h>
+		</div>
 	</body>
 </html>
