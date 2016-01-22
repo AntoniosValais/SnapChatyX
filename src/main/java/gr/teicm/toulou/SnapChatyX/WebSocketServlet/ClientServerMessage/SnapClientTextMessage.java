@@ -1,16 +1,23 @@
 package gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage;
 
-/*
-*
-* @Author AntoniosValais
-*
-*/
+import org.mongodb.morphia.annotations.Embedded;
+import org.mongodb.morphia.annotations.Transient;
 
+/**
+ * 
+ * 
+ * @author AntoniosValais
+ */
+@Embedded
 public class SnapClientTextMessage
 {
 	private String senderUsername;
 	private String messageText;
+	
+	@Transient
 	private Integer timeToLive;
+	
+	@Transient
 	private String messageId;
 	
 	public SnapClientTextMessage()

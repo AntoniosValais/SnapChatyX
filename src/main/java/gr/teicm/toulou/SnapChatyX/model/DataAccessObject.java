@@ -64,6 +64,7 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 	@Override
 	public String saveLocation( DBObject location )
 	{
+		
 		try
 		{
 			String usernameOnLocationDATA = location.get( "username" ).toString();
@@ -81,7 +82,6 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 			System.out.println( e );
 			return "{\"result\":\"internal error\"}";
 		}
-
 	}
 
 
@@ -91,6 +91,7 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 	{
 
 		SnapClient newUser = new SnapClient();
+		
 		try
 		{
 
