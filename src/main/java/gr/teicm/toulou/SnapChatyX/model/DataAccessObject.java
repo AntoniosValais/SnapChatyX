@@ -14,10 +14,6 @@ import javax.websocket.Session;
 import com.mongodb.DBObject;
 
 import gr.teicm.toulou.SnapChatyX.WebSocketServlet.ClientServerMessage.SnapClientTextMessage;
-import gr.teicm.toulou.SnapChatyX.service.ISnapClientService;
-import gr.teicm.toulou.SnapChatyX.service.IUserHistoryService;
-import gr.teicm.toulou.SnapChatyX.service.SnapClientService;
-import gr.teicm.toulou.SnapChatyX.service.UserHistoryService;
 
 public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHistoryDAO
 {
@@ -68,36 +64,17 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 	@Override
 	public String saveLocation( DBObject location )
 	{
-//		try
-//		{
-//			String usernameOnLocationDATA = location.get( "username" ).toString();
-//
-//			SnapClient snapClientToUpdate = this.getOnlineSnapClientWithUsername( usernameOnLocationDATA );
-//
-//			//snapClientToUpdate.setLatitude( (Double) location.get( "latitude" ) );
-//			//snapClientToUpdate.setLongitude( (Double) location.get( "longitude" ) );
-//			snapClientToUpdate.setLocationName( (String) location.get("location") );
-//
-//			return "{\"result\":\"success\"}";
-//		}
-//		catch( Exception e )
-//		{
-//			System.out.println( e );
-//			return "{\"result\":\"internal error\"}";
-//		}
 		
 		try
 		{
 			String usernameOnLocationDATA = location.get( "username" ).toString();
-			
-			ISnapClientService snapClientService = new SnapClientService();
-			
-			SnapClient snapClient = snapClientService.getSnapClientByUsername( usernameOnLocationDATA );
-	
-			snapClient.setLocationName( (String) location.get("location") );
-			
-			snapClientService.updateSnapClient( snapClient );
-			
+
+			SnapClient snapClientToUpdate = this.getOnlineSnapClientWithUsername( usernameOnLocationDATA );
+
+			//snapClientToUpdate.setLatitude( (Double) location.get( "latitude" ) );
+			//snapClientToUpdate.setLongitude( (Double) location.get( "longitude" ) );
+			snapClientToUpdate.setLocationName( (String) location.get("location") );
+
 			return "{\"result\":\"success\"}";
 		}
 		catch( Exception e )
@@ -115,57 +92,9 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 
 		SnapClient newUser = new SnapClient();
 		
-//		try
-//		{
-//
-//			if(user.get("username") == null)
-//			{
-//				newUser.setUsername( "" );
-//			}else{
-//				newUser.setUsername( user.get( "username" ).toString() );
-//			}
-//			if(user.get("password") == null)
-//			{
-//				newUser.setPassword( "" );
-//			}else{
-//				newUser.setPassword( user.get( "password" ).toString() );
-//			}
-//			if(user.get("firstName")==null){
-//				newUser.setFirstName( "" );
-//			}else{
-//				newUser.setFirstName( user.get( "firstName" ).toString() );
-//			}
-//
-//			if(user.get("lastName") == null){
-//				newUser.setLastName( "" );
-//			}else{
-//				newUser.setLastName( user.get( "lastName" ).toString() );
-//			}
-//				
-//			if(user.get( "email" ) == null)
-//			{
-//				newUser.setEmail( "" );
-//			}else{
-//				newUser.setEmail( user.get( "email" ).toString() );
-//			}
-//			this.registeredSnapClients.add( newUser );
-//
-//			List< SnapClientTextMessage > newUserMessageList = new ArrayList< SnapClientTextMessage >();
-//
-//			snapClientTextMessageMap.put( newUser, newUserMessageList );
-//
-//			System.out.println( "signup user " + newUser.getUsername() );
-//
-//			return "{\"result\":\"success\"}";
-//		}
-//		catch( Exception e )
-//		{
-//			e.printStackTrace();
-//			return "{\"result\":\"internal error\"}";
-//		}
-		
 		try
 		{
+
 			if(user.get("username") == null)
 			{
 				newUser.setUsername( "" );
@@ -196,17 +125,15 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 			}else{
 				newUser.setEmail( user.get( "email" ).toString() );
 			}
-			
-			ISnapClientService snapClientService = new SnapClientService();
-			
-			snapClientService.createSnapClient( newUser );
-			
+			this.registeredSnapClients.add( newUser );
+
 			List< SnapClientTextMessage > newUserMessageList = new ArrayList< SnapClientTextMessage >();
 
 			snapClientTextMessageMap.put( newUser, newUserMessageList );
 
+			System.out.println( "signup user " + newUser.getUsername() );
+
 			return "{\"result\":\"success\"}";
-			
 		}
 		catch( Exception e )
 		{
@@ -422,7 +349,6 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 				
 				this.getUserHistoryByUsername(userTextMessage.getSenderUsername()).getMessageList().add(userTextMessage);
 				
-				this.setMessageListOnUserHistory( userTextMessage );
 			} else {
 				
 				UserHistory userHistory = new UserHistory(userTextMessage.getSenderUsername(), snapClientMessageList);
@@ -435,27 +361,6 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		}
 
 		return Boolean.FALSE;
-	}
-	
-	private Boolean setMessageListOnUserHistory( SnapClientTextMessage userTextMessage )
-	{
-		IUserHistoryService userHistoryService = new UserHistoryService();
-		
-		try
-		{
-			IUserHistory userHistory = userHistoryService.getUserHistoryByUsername( userTextMessage.getSenderUsername() );
-			
-			userHistory.getMessageList().add( userTextMessage );
-			
-			userHistoryService.updateUserHistory( userHistory );
-			
-			return Boolean.TRUE;
-			
-		}
-		catch( Exception e)
-		{
-			return Boolean.FALSE;
-		}
 	}
 
 	@Override
@@ -596,11 +501,7 @@ public enum DataAccessObject implements IDAO,InterfaceDataAccessObject,IUserHist
 		
 		if (! this.usernameExistsInUserHistoryList(userHistory.getUsername())) {
 			
-			//userHistoryList.add(userHistory);
-			
-			IUserHistoryService userHistoryService = new UserHistoryService();
-			
-			//TODO: userHistoryService.
+			userHistoryList.add(userHistory);
 			
 			return true;
 			
