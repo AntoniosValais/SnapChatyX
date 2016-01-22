@@ -23,7 +23,7 @@ import gr.teicm.toulou.SnapChatyX.service.UserHistoryService;
  * 
  * @author Stamatios Tsalikis
  */
-@Path("histories/user-histories")
+//@Path("histories/user-histories")
 @Deprecated
 public class UserHistoryResource implements IUserHistoryResource {
 	
@@ -45,12 +45,12 @@ public class UserHistoryResource implements IUserHistoryResource {
 		
 	}
 	
-	// http://localhost:8080/SnapChatyX/webapi/histories/user-histories/user-history/mitsos
-	@GET
-	@Path("user-history/{username}")
-	@Consumes(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.TEXT_PLAIN)
-	public Response getUserHistoryByUsername(@PathParam("username") final String username) {
+//	@GET 								
+//	@Path("user-history/{username}")
+//	@Consumes(MediaType.TEXT_PLAIN)
+//	@Produces(MediaType.TEXT_PLAIN)
+	public Response getUserHistoryByUsername(/*@PathParam("username")*/ final String username) {
+		// http://localhost:8080/SnapChatyX/webapi/histories/user-histories/user-history/mitsos
 		
 		System.out.println("A GET request made in UserHistoryResource with username: " + username);
 		
