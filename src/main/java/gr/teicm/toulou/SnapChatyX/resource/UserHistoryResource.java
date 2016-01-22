@@ -24,6 +24,7 @@ import gr.teicm.toulou.SnapChatyX.service.UserHistoryService;
  * @author Stamatios Tsalikis
  */
 @Path("histories/user-histories")
+@Deprecated
 public class UserHistoryResource implements IUserHistoryResource {
 	
 	private IUserHistoryService service;
